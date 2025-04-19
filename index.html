@@ -3,156 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Šepot lesa - Interaktívna audiohra</title>
+    <title>Šepot lesa - Interaktívna Audiohra</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* Vlastné CSS pre efekty a animácie */
-        @keyframes pulse {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        @keyframes flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 0.05; }
-            20%, 24%, 55% { opacity: 0.2; }
-        }
-
-        @keyframes glitch {
-            0% { transform: none; opacity: 1; }
-            7% { transform: skew(-0.5deg, -0.9deg); opacity: 0.75; }
-            10% { transform: none; opacity: 1; }
-            27% { transform: none; opacity: 1; }
-            30% { transform: skew(0.8deg, -0.1deg); opacity: 0.75; }
-            35% { transform: none; opacity: 1; }
-            52% { transform: none; opacity: 1; }
-            55% { transform: skew(-1deg, 0.2deg); opacity: 0.75; }
-            50% { transform: none; opacity: 1; }
-            72% { transform: none; opacity: 1; }
-            75% { transform: skew(0.4deg, 1deg); opacity: 0.75; }
-            80% { transform: none; opacity: 1; }
-            100% { transform: none; opacity: 1; }
-        }
-
-        /* Štýl pre scrollbar (voliteľné) */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1f2937; /* tmavý podklad */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #9333ea; /* fialová */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ec4899; /* ružová */
-        }
-
-        /* Zabezpečenie, aby obsah nebol prekrytý fixným fog efektom */
+        /* Základné štýly pre telo a plynulé posúvanie */
         body {
-            position: relative;
-            z-index: 1;
+            background-color: #000;
+            color: #e5e7eb; /* Svetlo šedá pre text */
+            font-family: system-ui, sans-serif; /* Použitie system-ui */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Animácia pre prvky objavujúce sa pri skrolovaní */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Statický šum - placeholder (can be enhanced with JS/CSS if needed) */
+        .static-noise {
+             /* Basic noise effect using repeating gradient */
+            background: repeating-linear-gradient(rgba(255,255,255,0.02) 0 1px, transparent 1px 2px),
+                        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 2px);
+        }
+        /* Gradient texty pre zvýraznenie */
+        .frequency-text, .gradient-text {
+            background: linear-gradient(to right, #9333ea, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Štýlovanie audio prehrávača */
+        audio {
+            filter: contrast(70%) brightness(150%); /* Subtle styling */
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px; /* Add some space above the player */
         }
 
-        /* Zabezpečenie, že audio prehrávač je vždy viditeľný */
-        audio {
-            min-height: 50px; /* Alebo iná vhodná výška */
+        /* --- Glitch Efekt --- */
+        .glitch-effect { position: relative; color: white; display: inline-block; /* Ensure it wraps content */ }
+        .glitch-effect::before, .glitch-effect::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black; /* Match body background */
+            clip-path: inset(50% 0 50% 0);
+        }
+        .glitch-effect::before {
+            left: -1px;
+            text-shadow: 1px 0 cyan;
+            animation: glitch-anim-before 3s infinite linear alternate-reverse;
+            mix-blend-mode: screen; /* Use screen or difference */
+        }
+        .glitch-effect::after {
+            left: 1px;
+            text-shadow: -1px 0 red;
+            animation: glitch-anim-after 2s infinite linear alternate-reverse;
+            mix-blend-mode: screen; /* Use screen or difference */
+        }
+        /* Keyframes for Glitch Effect */
+        @keyframes glitch-anim-before { 0%, 100% { clip-path: inset(40% 0 60% 0); transform: translate(0, 0); } 5% { clip-path: inset(20% 0 15% 0); transform: translate(-5px, 2px); } 10% { clip-path: inset(80% 0 5% 0); transform: translate(3px, -1px); } 15% { clip-path: inset(5% 0 90% 0); transform: translate(-4px, 3px); } 20% { clip-path: inset(60% 0 38% 0); transform: translate(2px, -2px); } 25% { clip-path: inset(10% 0 85% 0); transform: translate(-3px, 4px); } 30% { clip-path: inset(90% 0 1% 0); transform: translate(4px, -3px); } 35% { clip-path: inset(30% 0 65% 0); transform: translate(-2px, 1px); } 40% { clip-path: inset(70% 0 25% 0); transform: translate(5px, -4px); } 45% { clip-path: inset(50% 0 48% 0); transform: translate(-1px, 2px); } 50% { clip-path: inset(25% 0 70% 0); transform: translate(3px, -1px); } 55% { clip-path: inset(85% 0 10% 0); transform: translate(-4px, 3px); } 60% { clip-path: inset(45% 0 50% 0); transform: translate(1px, -2px); } 65% { clip-path: inset(5% 0 92% 0); transform: translate(-2px, 4px); } 70% { clip-path: inset(95% 0 2% 0); transform: translate(4px, -3px); } 75% { clip-path: inset(35% 0 60% 0); transform: translate(-3px, 1px); } 80% { clip-path: inset(65% 0 30% 0); transform: translate(2px, -4px); } 85% { clip-path: inset(15% 0 80% 0); transform: translate(-1px, 2px); } 90% { clip-path: inset(75% 0 20% 0); transform: translate(3px, -1px); } 95% { clip-path: inset(28% 0 68% 0); transform: translate(-4px, 3px); } }
+        @keyframes glitch-anim-after { 0%, 100% { clip-path: inset(60% 0 40% 0); transform: translate(0, 0); } 4% { clip-path: inset(10% 0 85% 0); transform: translate(4px, -2px); } 8% { clip-path: inset(90% 0 5% 0); transform: translate(-2px, 1px); } 12% { clip-path: inset(25% 0 70% 0); transform: translate(5px, -3px); } 16% { clip-path: inset(70% 0 28% 0); transform: translate(-3px, 2px); } 20% { clip-path: inset(20% 0 75% 0); transform: translate(2px, -4px); } 24% { clip-path: inset(80% 0 8% 0); transform: translate(-5px, 3px); } 28% { clip-path: inset(40% 0 55% 0); transform: translate(1px, -1px); } 32% { clip-path: inset(75% 0 22% 0); transform: translate(-4px, 4px); } 36% { clip-path: inset(52% 0 45% 0); transform: translate(3px, -2px); } 40% { clip-path: inset(18% 0 78% 0); transform: translate(-2px, 1px); } 44% { clip-path: inset(88% 0 2% 0); transform: translate(4px, -3px); } 48% { clip-path: inset(30% 0 68% 0); transform: translate(-1px, 2px); } 52% { clip-path: inset(68% 0 29% 0); transform: translate(3px, -4px); } 56% { clip-path: inset(8% 0 90% 0); transform: translate(-4px, 1px); } 60% { clip-path: inset(55% 0 40% 0); transform: translate(2px, -2px); } 64% { clip-path: inset(22% 0 72% 0); transform: translate(-3px, 3px); } 68% { clip-path: inset(92% 0 5% 0); transform: translate(5px, -1px); } 72% { clip-path: inset(48% 0 50% 0); transform: translate(-2px, 4px); } 76% { clip-path: inset(5% 0 88% 0); transform: translate(1px, -3px); } 80% { clip-path: inset(60% 0 35% 0); transform: translate(-4px, 1px); } 84% { clip-path: inset(32% 0 62% 0); transform: translate(3px, -2px); } 88% { clip-path: inset(85% 0 12% 0); transform: translate(-1px, 4px); } 92% { clip-path: inset(42% 0 55% 0); transform: translate(4px, -1px); } 96% { clip-path: inset(12% 0 82% 0); transform: translate(-2px, 3px); } }
+        /* --- Koniec Glitch Efektu --- */
+
+        /* Animácia pre jemné blikanie */
+        @keyframes flicker {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.1; }
+        }
+        /* Animácia pre pulzovanie */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        /* CSS PRE VLASTNÉ GRAFY (adaptované pre tmavú tému) */
+        .charts-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+        .chart {
+            background-color: #111827; /* Tmavšie pozadie pre graf */
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            padding: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 450px; /* Maximálna šírka grafu */
+            flex: 1 1 400px; /* Flexibilita pre responzivitu */
+        }
+        .chart h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #e5e7eb; /* Svetlý text */
+            border-bottom: 1px solid #374151; /* Tmavší okraj */
+            padding-bottom: 10px;
+            /* GLOW EFEKT */
+            text-shadow: 0 0 8px rgba(196, 181, 253, 0.5); /* Jemná fialová žiara */
+        }
+        .gender-chart { position: relative; margin: 0 auto; }
+        .pie-container {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 0 auto; /* Centrovanie */
+        }
+        /* Stredový kruh pre informácie */
+        .pie-center {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #000; /* Čierne pozadie stredu */
+            color: #e5e7eb; /* Svetlý text */
+            border: 1px solid #374151; /* Tmavší okraj */
+            border-radius: 50%;
+            top: 50px; /* Centrovanie */
+            left: 50px; /* Centrovanie */
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 13px;
+            font-weight: normal;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 1.2em; /* Ensure text fits */
+        }
+        /* Hover efekt pre SVG výseky */
+        .pie-container svg path {
+            transition: opacity 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .pie-container svg path:hover {
+            opacity: 0.8;
+        }
+        /* Legenda pre koláčový graf */
+        .gender-legend { margin-top: 30px; }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: #d1d5db; /* Svetlo šedá pre text legendy */
+        }
+        .legend-item:hover { background-color: #1f2937; } /* Tmavšie pozadie pri hoveri */
+        .color-box {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Jemný okraj */
+        }
+        .legend-text { flex-grow: 1; }
+        .legend-percent { font-weight: bold; color: #e5e7eb; } /* Svetlý text pre percentá */
+        /* Stĺpcový graf veku */
+        .age-chart {
+            height: 350px; /* Výška kontajnera grafu */
+            position: relative;
+            margin-top: 30px;
+            padding-left: 40px; /* Priestor pre Y os */
+        }
+        .bar-container {
+            position: relative;
+            height: 300px; /* Výška oblasti so stĺpcami */
+            display: flex;
+            align-items: flex-end; /* Stĺpce rastú zdola */
+            margin-bottom: 40px; /* Priestor pre X os (label) */
+            padding-right: 10px; /* Malý padding vpravo */
+            border-left: 1px solid #374151; /* Y os */
+            border-bottom: 1px solid #374151; /* X os */
+        }
+        .bar-group {
+            flex: 1; /* Rovnaká šírka pre skupiny stĺpcov */
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 0 4px; /* Medzera medzi skupinami */
+            position: relative;
+        }
+        .bar {
+            width: 70%; /* Šírka stĺpca v rámci skupiny */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            border-radius: 3px 3px 0 0; /* Zaoblené horné rohy */
+        }
+        .bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.02); /* Jemné zväčšenie pri hoveri */
+            transform-origin: bottom;
+        }
+        .bar-label {
+            position: absolute;
+            bottom: -30px; /* Pozícia pod X osou */
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: #9ca3af; /* Šedá pre labely */
+        }
+        /* Tooltip pre stĺpcový graf */
+        .tooltip {
+            position: fixed; /* Fixná pozícia vzhľadom na viewport */
+            background-color: rgba(0, 0, 0, 0.85); /* Tmavý priesvitný tooltip */
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            pointer-events: none; /* Aby neblokoval myš */
+            z-index: 100;
+            opacity: 0; /* Skrytý defaultne */
+            transition: opacity 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            white-space: nowrap; /* Aby sa text nezalamoval */
+        }
+        /* Y os pre stĺpcový graf */
+        .y-axis {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            top: 0; /* Natiahnutie na výšku .bar-container */
+            height: 300px; /* Presná výška osi */
+            width: 35px; /* Šírka oblasti pre labely Y osi */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Rovnomerné rozloženie labelov */
+        }
+        .y-label {
+            font-size: 11px;
+            color: #9ca3af; /* Šedá pre labely osi */
+            position: relative;
+            text-align: right;
+            padding-right: 5px;
+        }
+        /* Čiara vedľa labelu Y osi (voliteľné) */
+        .y-line {
+            position: absolute;
+            left: 100%; /* Začína hneď za labelom */
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(100vw - 30px); /* Šírka cez celý graf, obmedzená max-width */
+            max-width: 400px; /* Max šírka čiary */
+            height: 1px;
+            background-color: #374151; /* Farba čiary */
+            z-index: -1; /* Pod stĺpcami */
+        }
+        /* Názov pod grafom (napr. "Vekové skupiny") */
+        .chart-title {
+            display: block;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
+            color: #9ca3af; /* Šedá */
         }
     </style>
 </head>
 <body class="bg-black text-gray-100 font-sans">
-    <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.03), transparent);"></div>
 
-    <header class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+    <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.03), transparent)"></div>
+    <div class="fixed inset-0 pointer-events-none z-40 opacity-5"><div class="absolute inset-0 static-noise"></div></div>
+
+    <header id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
         <div class="absolute inset-0 bg-gradient-to-b from-black to-gray-900 opacity-95 z-0"></div>
-
         <div class="absolute inset-0 opacity-30 z-0">
-            <img src="https://i.imgur.com/ST2nkj5.png"
-                 alt="Pozadie lesa"
-                 class="w-full h-full object-cover"
-                 onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/000000/FFFFFF?text=Obrázok+sa+nepodarilo+načítať'; this.alt='Záložný obrázok';">
+            <img src="https://i.imgur.com/ST2nkj5.png" alt="Pozadie lesa" class="w-full h-full object-cover"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/000000/FFFFFF?text=Obrázok+sa+nepodarilo+načítať'; this.alt='Záložný obrázok pozadia';">
         </div>
-
-        <div class="absolute inset-0 z-0 pointer-events-none opacity-20" style="background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px);"></div>
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-20" style="background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px)"></div>
 
         <div class="container mx-auto px-4 text-center z-10">
-            <div class="mb-2 text-xs md:text-sm tracking-widest glitch-effect font-medium" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; animation: glitch 5s linear infinite;">127.5 MHz</div>
-
-            <h1 class="text-5xl md:text-7xl font-bold mb-4 text-white relative">
+            <div class="frequency-text mb-2 text-xs md:text-sm tracking-widest font-medium">127.5 MHz</div>
+            <h1 class="glitch-effect text-5xl md:text-7xl font-bold mb-4 text-white relative" data-text="Šepot lesa">
                 Šepot lesa
-                <span class="absolute inset-0 opacity-50 blur-sm" style="animation: pulse 3s infinite alternate; background: radial-gradient(circle, rgba(147, 51, 234, 0.3), transparent 70%); border-radius: 50%;"></span>
+                <span class="absolute inset-0 opacity-50 blur-sm" style="animation: pulse 3s infinite alternate; background: radial-gradient(circle, rgba(147, 51, 234, 0.3), transparent 70%); border-radius: 50%"></span>
             </h1>
-
-            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-                Interaktívna audiohra o tichu, vine a hľadaní pravdy v hlbinách lesa.
-            </p>
-
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Interaktívna audiohra o tichu, vine a hľadaní pravdy v hlbinách lesa.</p>
             <div class="my-3 opacity-80">
-                <span class="inline-block w-16 h-px bg-purple-500"></span>
-                <span class="mx-2 text-xs tracking-widest font-medium">HOLLOW</span>
-                <span class="inline-block w-16 h-px bg-pink-500"></span>
+                <span class="inline-block w-16 h-px bg-purple-500 align-middle"></span>
+                <span class="mx-2 text-xs tracking-widest font-medium align-middle">HOLLOW</span>
+                <span class="inline-block w-16 h-px bg-pink-500 align-middle"></span>
             </div>
-
             <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
                 <a href="#tracks" class="px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group">
-                    <span class="relative z-10">Vypočuť ukážku</span>
+                    <span class="relative z-10">Prehrať ukážku</span>
                     <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
                 </a>
-                <a href="#contact" class="px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group">
+                 <a href="#contact" class="px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group">
                     <span class="relative z-10">Kontaktovať autora</span>
                     <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
                 </a>
             </div>
         </div>
-
         <div class="absolute bottom-0 left-0 right-0 h-32 opacity-20 z-0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-full">
-                <path fill="#000000" d="M0,96L48,128C96,160,192,224,288,224C384,224,480,160,576,138.7C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                <path fill="#000000" fill-opacity="1" d="M0,96L48,128C96,160,192,224,288,224C384,224,480,160,576,138.7C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
             </svg>
         </div>
-
         <div class="absolute bottom-10 left-0 right-0 text-center z-10">
-            <a href="#about" class="text-white opacity-70 hover:opacity-100 transition-opacity">
+            <a href="#about" aria-label="Posunúť na sekciu O hre" class="text-white opacity-70 hover:opacity-100 transition-opacity">
                 <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
             </a>
         </div>
-
-        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="animation: flicker 8s infinite alternate;">
+        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="animation: flicker 8s infinite alternate">
             <div class="absolute inset-0 bg-black"></div>
         </div>
     </header>
 
     <section id="about" class="py-20 px-4 relative">
-        <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.03) 1px, transparent 1px); background-size: 20px 20px;"></div>
-
+        <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
         <div class="container mx-auto max-w-4xl">
-            <h2 class="text-4xl font-bold mb-2 text-center">O hre</h2>
+            <h2 class="text-4xl font-bold mb-3 text-center">O hre</h2>
             <div class="text-center mb-10">
                 <div class="inline-block">
-                    <span class="text-xs tracking-widest font-medium" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">HLAS LESA</span>
+                    <span class="frequency-text text-xs tracking-widest font-medium">HLAS LESA</span>
                     <div class="h-px w-full bg-gradient-to-r from-purple-500 to-pink-500 mt-1"></div>
                 </div>
             </div>
-
-            <div class="bg-black bg-opacity-40 p-8 rounded-2xl shadow-2xl border border-gray-800 backdrop-filter backdrop-blur-md relative overflow-hidden">
-                <div class="absolute inset-0 z-0 opacity-[0.02]">
-                     <div style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\"><path d=\"M10 0L0 10h10v10L20 10h-10V0z\" fill=\"%23FFFFFF\"/></svg>'); background-size: 20px 20px;"></div>
+            <div class="bg-black bg-opacity-40 p-8 rounded-2xl shadow-2xl border border-gray-800 backdrop-filter backdrop-blur-md relative overflow-hidden scroll-animate">
+                 <div class="absolute inset-0 z-0 opacity-[0.02]">
+                     <div class="w-full h-full" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22><path d=%22M10 0L0 10h10v10L20 10h-10V0z%22 fill=%22%23FFFFFF%22/></svg>'); background-size: 20px 20px"></div>
+                 </div>
+                <div class="relative z-10 text-lg leading-relaxed">
+                  <p>Audiohra Šepot lesa je <span class="gradient-text font-semibold">mysteriózny príbeh</span> s <span class="gradient-text font-semibold">psychologickými a hororovými prvkami</span>. Hráč sa stáva Jakubom Horákom, ktorý sa vracia do rodnej dediny, aby odhalil pravdu o zmiznutí svojho brata.</p>
+                  <p class="mt-4">Každý track je <span class="gradient-text font-semibold">interaktívny</span> a obsahuje <span class="gradient-text font-semibold">rozhodnutia</span>, ktoré vedú k rôznym vetvám príbehu.</p>
+                  <p class="mt-6 font-medium">100 % pôvodný scenár a herecké výkony</p>
+                  <p class="mt-2 font-medium"><span class="gradient-text font-semibold">Viacero možných ciest a koncov</span></p>
+                  <p class="mt-2 font-medium">Vysoká úroveň zvukovej produkcie</p>
+                  <p class="mt-2 font-medium">Ideálne pre distribúciu cez Spotify, podcastové siete, audio platformy</p>
                 </div>
-
-                <div class="relative z-10">
-                    <p class="text-lg leading-relaxed">
-                        <span class="font-bold text-xl" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">Šepot lesa</span> je interaktívna audiohra odohrávajúca sa v rodnej dedine hlavnej postavy, novinára Jakuba Horáka, ktorý sa po rokoch vracia odhaliť pravdu o <span style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;" class="font-semibold">zmiznutí svojho brata Samuela</span>. Hra má viacero koncov, obsahuje viacero paralelných liniek a rozhodnutí, ktoré ovplyvnia dej.
-                    </p>
-                    <p class="text-lg leading-relaxed mt-4">
-                        Je nahraná ako plnohodnotný dramatický zážitok s profesionálnymi hercami a zvukovým dizajnom. V hre sa objavuje tajomná frekvencia <span style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;" class="font-semibold">127.5 MHz</span>, entita „<span style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">Hollow</span>" a kult „<span style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">Hlas lesa</span>".
-                    </p>
-                </div>
-
-                <div class="absolute inset-0 pointer-events-none" style="background: repeating-linear-gradient(transparent, transparent 2px, rgba(0, 0, 0, 0.05) 2px, rgba(0, 0, 0, 0.05) 4px); z-index: 11;"></div>
-
+                <div class="absolute inset-0 pointer-events-none" style="background: repeating-linear-gradient(transparent, transparent 2px, rgba(0, 0, 0, 0.05) 2px, rgba(0, 0, 0, 0.05) 4px); z-index: 11"></div>
                 <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
                     <div class="absolute top-0 right-0 w-4 h-4 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-1/2 -translate-y-1/2 opacity-70"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+    </div>
+
+    <section id="partner-benefits" class="py-20 px-4 relative bg-gray-900 bg-opacity-30">
+        <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="text-4xl font-bold mb-3 text-center">Pre partnerov</h2>
+            <div class="text-center mb-10">
+                <div class="inline-block">
+                    <span class="frequency-text text-xs tracking-widest font-medium">UNIKÁTNY MARKETINGOVÝ NÁSTROJ</span>
+                    <div class="h-px w-full bg-gradient-to-r from-purple-500 to-pink-500 mt-1"></div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="scroll-animate bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Inovatívny formát s rastúcim potenciálom</h3>
+                    <p class="text-gray-300">Prvá slovenská interaktívna audiohra na Spotify kombinuje rýchlo rastúci trend audiokníh a gamifikácie. Unikátny produkt, ktorý môže osloviť široké spektrum poslucháčov a vytvoriť novú kategóriu.</p>
+                </div>
+                <div class="scroll-animate bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-users"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Existujúca fanúšikovská základňa</h3>
+                    <p class="text-gray-300">Vďaka etablovanému podcastu Krvavý Dobšinský má hra prístup k lojálnej komunite poslucháčov, ktorí majú záujem o podobný obsah. Minimalizuje sa tak riziko a náklady na marketing v počiatočnej fáze.</p>
+                </div>
+                <div class="scroll-animate bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-sync-alt"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Vysoká miera znovuhrateľnosti</h3>
+                    <p class="text-gray-300">Viacero rozhodnutí a koncov dáva hráčom dôvod vracať sa a objavovať všetky vetvy príbehu. To zvyšuje čas strávený s obsahom a potenciálne zvyšuje výnosy z platformových metrík.</p>
+                </div>
+                <div class="scroll-animate bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-expand-arrows-alt"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Možnosť rozšírenia do série</h3>
+                    <p class="text-gray-300">Šepot lesa je prvou časťou potenciálnej série, ktorá môže postupne rozširovať publikum. Funguje ako pilotný projekt pre etablovanie nového formátu s možnosťou dlhodobého rastu.</p>
+                </div>
+            </div>
+            <div class="scroll-animate bg-black bg-opacity-70 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-bold mb-4">Technické špecifikácie</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <ul class="space-y-3">
+                                <li class="flex items-start"><span class="text-purple-500 mr-2 pt-1"><i class="fas fa-check"></i></span><span>36 profesionálne nahraných zvukových stôp</span></li>
+                                <li class="flex items-start"><span class="text-purple-500 mr-2 pt-1"><i class="fas fa-check"></i></span><span>Celková dĺžka: približne 84 minút obsahu</span></li>
+                                <li class="flex items-start"><span class="text-purple-500 mr-2 pt-1"><i class="fas fa-check"></i></span><span>3 rôzne zakončenia s unikátnymi rozuzleniami</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="space-y-3">
+                                <li class="flex items-start"><span class="text-purple-500 mr-2 pt-1"><i class="fas fa-check"></i></span><span>Pripravené na distribúciu v štandardných audio formátoch</span></li>
+                                <li class="flex items-start"><span class="text-purple-500 mr-2 pt-1"><i class="fas fa-check"></i></span><span>Komplexná naratívna štruktúra s rôznymi kombináciami ciest</span></li>
+                                <li class="flex items-start"><span class="text-purple-500 mr-2 pt-1"><i class="fas fa-check"></i></span><span>Originálne zvukové efekty a hudobné spracovanie</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-lg text-center">
+                        <p>Kompletný materiál je pripravený pre okamžitú distribúciu</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,82 +425,80 @@
         <div class="container mx-auto">
             <h2 class="text-4xl font-bold mb-10 text-center">Tracklist</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2 track-card">
+                <div class="scroll-animate bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2">
                     <div class="aspect-square mb-4 overflow-hidden rounded-md">
-                        <img src="https://cdn.midjourney.com/492ba641-df8c-4f60-aa1d-ef2fde96dcea/0_1.png" alt="Artwork pre Track 1" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok'; this.alt='Záložný obrázok';">
+                        <img src="https://cdn.midjourney.com/492ba641-df8c-4f60-aa1d-ef2fde96dcea/0_1.png" alt="Artwork pre Track 01: Cesta domov" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok+1'; this.alt='Záložný obrázok pre Track 1';">
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Track 01: Návrat</h3>
-                    <p class="text-gray-300 mb-4 text-sm">Jakub prichádza do rodnej dediny po rokoch absencie. Začína objavovať stopy vedúce k záhade zmiznutia jeho brata.</p>
-                    <audio controls class="w-full">
+                    <h3 class="text-xl font-bold mb-2">Track 01: Cesta domov</h3>
+                    <p class="text-gray-300 mb-4 text-sm">Jakub sa vracia do rodnej dediny Čierny Potok, kde ho čakajú spomienky a nezodpovedané otázky.</p>
+                    <audio controls preload="metadata">
                         <source src="https://raw.githubusercontent.com/Vlado361/Audiohra-/main/1_Cesta%20domov.mp3" type="audio/mpeg">
                         Váš prehliadač nepodporuje HTML5 audio.
                     </audio>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2 track-card">
+                <div class="scroll-animate bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2">
                     <div class="aspect-square mb-4 overflow-hidden rounded-md">
-                        <img src="https://cdn.midjourney.com/6cf957bc-499b-431d-9b7a-c2b089594e4a/0_3.png" alt="Artwork pre Track 2" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok'; this.alt='Záložný obrázok';">
+                        <img src="https://cdn.midjourney.com/6cf957bc-499b-431d-9b7a-c2b089594e4a/0_3.png" alt="Artwork pre Track 02: Zastavený čas pri kaplnke" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok+2'; this.alt='Záložný obrázok pre Track 2';">
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Track 02: Staré rany</h3>
-                    <p class="text-gray-300 mb-4 text-sm">Rozhovor s matkou odhaľuje bolestivé spomienky. Jakubove prvé zistenia o Samuelovom záujme o miestne legendy.</p>
-                    <audio controls class="w-full">
+                    <h3 class="text-xl font-bold mb-2">Track 02: Zastavený čas pri kaplnke</h3>
+                    <p class="text-gray-300 mb-4 text-sm">Ticho cintorína pod starou kaplnkou. Miesto, kde sa zastavil čas a ozývajú sa ozveny minulosti.</p>
+                    <audio controls preload="metadata">
                         <source src="https://raw.githubusercontent.com/Vlado361/Sepot_Lesa/main/2_Zastaveny_cas%20pri%20kaplnke.mp3" type="audio/mpeg">
                         Váš prehliadač nepodporuje HTML5 audio.
                     </audio>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2 track-card">
+                <div class="scroll-animate bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2">
                     <div class="aspect-square mb-4 overflow-hidden rounded-md">
-                        <img src="https://cdn.midjourney.com/2923fa72-adbf-45fe-919f-0fe2db046ff8/0_1.png" alt="Artwork pre Track 3" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok'; this.alt='Záložný obrázok';">
+                        <img src="https://cdn.midjourney.com/2923fa72-adbf-45fe-919f-0fe2db046ff8/0_1.png" alt="Artwork pre Track 03: Rádiová veža" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok+3'; this.alt='Záložný obrázok pre Track 3';">
                     </div>
                     <h3 class="text-xl font-bold mb-2">Track 03: Rádiová veža</h3>
-                    <p class="text-gray-300 mb-4 text-sm">Jakub objavuje bratov denník s poznámkami o frekvencii 127.5 MHz. Prvé zmienky o entite "Hollow" sa začínajú objavovať.</p>
-                    <audio controls class="w-full">
+                    <p class="text-gray-300 mb-4 text-sm">Zhrdzavená veža, ktorú mali dávno odstaviť. Aké tajomstvá skrýva jej tiché vysielanie?</p>
+                    <audio controls preload="metadata">
                         <source src="https://raw.githubusercontent.com/Vlado361/Sepot_Lesa/main/3_Radiova_veza.mp3" type="audio/mpeg">
                         Váš prehliadač nepodporuje HTML5 audio.
                     </audio>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2 track-card">
+                <div class="scroll-animate bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2">
                     <div class="aspect-square mb-4 overflow-hidden rounded-md">
-                        <img src="https://cdn.midjourney.com/2fbafcd6-5051-454a-b93e-0e78d3b1d072/0_3.png" alt="Artwork pre Track 4" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok'; this.alt='Záložný obrázok';">
+                        <img src="https://cdn.midjourney.com/2fbafcd6-5051-454a-b93e-0e78d3b1d072/0_3.png" alt="Artwork pre Track 04: Výstup do neznáma" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok+4'; this.alt='Záložný obrázok pre Track 4';">
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Track 04: Nočná frekvencia</h3>
-                    <p class="text-gray-300 mb-4 text-sm">Jakub sa rozhodne naladiť na frekvenciu 127.5 MHz. Zvláštne zvuky a šepoty lesa sa začínajú ozývať z rádia.</p>
-                    <audio controls class="w-full">
+                    <h3 class="text-xl font-bold mb-2">Track 04: Výstup do neznáma</h3>
+                    <p class="text-gray-300 mb-4 text-sm">Rebrík vŕzga pod nohami a šepoty silnejú. Cesta nahor vedie k odhaleniam, alebo do pasce.</p>
+                    <audio controls preload="metadata">
                         <source src="https://raw.githubusercontent.com/Vlado361/Sepot_Lesa/main/4_Vystup_do_neznama.mp3" type="audio/mpeg">
                         Váš prehliadač nepodporuje HTML5 audio.
                     </audio>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2 track-card">
+                <div class="scroll-animate bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2">
                     <div class="aspect-square mb-4 overflow-hidden rounded-md">
-                        <img src="https://cdn.midjourney.com/ece7f546-fdb8-445e-a266-3f7f248dd86e/0_0.png" alt="Artwork pre Track 5" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok'; this.alt='Záložný obrázok';">
+                        <img src="https://cdn.midjourney.com/ece7f546-fdb8-445e-a266-3f7f248dd86e/0_0.png" alt="Artwork pre Track 05: Technická miestnosť" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok+5'; this.alt='Záložný obrázok pre Track 5';">
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Track 05: Starý známy</h3>
-                    <p class="text-gray-300 mb-4 text-sm">Stretnutie s Petrom, kamarátom z detstva, ktorý teraz pracuje ako lesník. Zdá sa, že o zmiznutí Samuela vie viac, než priznáva.</p>
-                    <audio controls class="w-full">
+                    <h3 class="text-xl font-bold mb-2">Track 05: Technická miestnosť</h3>
+                    <p class="text-gray-300 mb-4 text-sm">V opustenej miestnosti nachádza starú nahrávku. Hlas z minulosti odhaľuje časť skladačky.</p>
+                    <audio controls preload="metadata">
                         <source src="https://raw.githubusercontent.com/Vlado361/Sepot_Lesa/main/5_technicka_miestnost.mp3" type="audio/mpeg">
                         Váš prehliadač nepodporuje HTML5 audio.
                     </audio>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2 track-card">
+                <div class="scroll-animate bg-gray-900 bg-opacity-60 p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-purple-500/20 transform transition-all duration-300 hover:-translate-y-2">
                     <div class="aspect-square mb-4 overflow-hidden rounded-md">
-                        <img src="https://cdn.midjourney.com/b4365dbd-bbd3-494f-a2fb-c58ab8060252/0_2.png" alt="Artwork pre Track 6" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok'; this.alt='Záložný obrázok';">
+                        <img src="https://cdn.midjourney.com/cbc5ebad-159e-43a7-8736-440ea6ca732f/0_3.png" alt="Artwork pre Track 06: Temný les" class="w-full h-full object-cover transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x400/374151/FFFFFF?text=Obrázok+6'; this.alt='Záložný obrázok pre Track 6';">
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Track 06: Hlas lesa</h3>
-                    <p class="text-gray-300 mb-4 text-sm">Prvá zmienka o kulte "Hlas lesa". Jakub sa dozvedá o tajných stretnutiach v hlbokých lesoch a rituáloch spájaných s miestnou legendou.</p>
-                    <audio controls class="w-full">
-                         <source src="https://raw.githubusercontent.com/Vlado361/Sepot_Lesa/main/6_temny_les.mp3" type="audio/mpeg">
+                    <h3 class="text-xl font-bold mb-2">Track 06: Temný les</h3>
+                    <p class="text-gray-300 mb-4 text-sm">Stratený v lese, ktorý dýcha a sleduje. Každý tieň a zvuk môže znamenať nebezpečenstvo.</p>
+                    <audio controls preload="metadata">
+                        <source src="https://raw.githubusercontent.com/Vlado361/Sepot_Lesa/main/6_temny_les.mp3" type="audio/mpeg">
                         Váš prehliadač nepodporuje HTML5 audio.
                     </audio>
                 </div>
-
                 <div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center mt-6">
-                    <p class="text-gray-400">
-                        [Pre úplnú verziu by tu bolo všetkých 36 trackov...]
-                    </p>
+                    <p class="text-gray-400">[Pre úplnú verziu by tu bolo všetkých 36 trackov a ich prepojenia...]</p>
                 </div>
             </div>
         </div>
@@ -254,45 +511,31 @@
     <section id="appeal" class="py-20 px-4 bg-black bg-opacity-50">
         <div class="container mx-auto max-w-4xl">
             <h2 class="text-4xl font-bold mb-10 text-center">Psychologický horor s dušou slovenského folklóru</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 feature-card">
-                    <div class="mb-5 text-purple-500 text-2xl">
-                        <i class="fas fa-headphones-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Unikátny formát audiohry na Spotify</h3>
-                    <p class="text-gray-300 text-sm">Šepot lesa využíva Spotify ako platformu pre interaktívnu audiohru, čo prináša prístupnosť a jednoduchosť používania na rôznych zariadeniach.</p>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-headphones-alt"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Unikátny formát audiohry</h3>
+                    <p class="text-gray-300 text-sm">Ponorte sa do príbehu len pomocou zvuku. Interaktívne prvky vás vtiahnu priamo do deja.</p>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 feature-card">
-                    <div class="mb-5 text-purple-500 text-2xl">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Prepojenie s realitou a ľudskou psychológiou</h3>
-                    <p class="text-gray-300 text-sm">Hra skúma temnú stránku ľudskej mysle, strachy, vinu a hanbu, čím vytvára hlboký psychologický zážitok pre poslucháča.</p>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Prepojenie s ľudskou psychológiou</h3>
+                    <p class="text-gray-300 text-sm">Témy viny, straty a hľadania pravdy rezonujú hlboko a nútia k zamysleniu.</p>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 feature-card">
-                    <div class="mb-5 text-purple-500 text-2xl">
-                        <i class="fas fa-tree"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Temná, poetická atmosféra slovenských hôr</h3>
-                    <p class="text-gray-300 text-sm">Autentické zachytenie slovenského prostredia, folklóru a legiend vytvára jedinečnú atmosféru, ktorá rezonuje s domácim publikom.</p>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-tree"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Temná, poetická atmosféra</h3>
+                    <p class="text-gray-300 text-sm">Inšpirované slovenskými horami a folklórom, hra vytvára jedinečný pocit izolácie a tajomna.</p>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 feature-card">
-                    <div class="mb-5 text-purple-500 text-2xl">
-                        <i class="fas fa-microphone-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Profesionálne nahrávky a zvukový dizajn</h3>
-                    <p class="text-gray-300 text-sm">Hlas hlavnej postavy nahrávaný profesionálne (Isomic + UAD/FabFilter) v štúdiovej kvalite pre maximálny zvukový zážitok.</p>
+                 <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-microphone-alt"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Profesionálny zvukový dizajn</h3>
+                    <p class="text-gray-300 text-sm">Kvalitné nahrávky, herecké výkony a originálne zvukové efekty pre maximálny zážitok.</p>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 md:col-span-2 feature-card">
-                    <div class="mb-5 text-purple-500 text-2xl">
-                        <i class="fas fa-route"></i>
-                    </div>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 md:col-span-2">
+                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-route"></i></div>
                     <h3 class="text-xl font-bold mb-3">Rozhodnutia, ktoré ovplyvňujú koniec</h3>
-                    <p class="text-gray-300 text-sm">Príbeh sa mení podľa rozhodnutí poslucháča, čo zvyšuje znovuhrateľnosť a záujem publika vracať sa k hre opakovane. Viacero možných koncov ponúka rozdielne vysvetlenia tajomstva.</p>
+                    <p class="text-gray-300 text-sm">Vaše voľby tvarujú príbeh a vedú k jednému z viacerých možných zakončení. Znovuhrateľnosť zaručená.</p>
                 </div>
             </div>
         </div>
@@ -304,54 +547,105 @@
 
     <section id="stats" class="py-20 px-4">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-4xl font-bold mb-3 text-center">Dosah a komunita</h2>
-            <p class="text-xl text-center mb-6 max-w-3xl mx-auto text-gray-300">
-                Podcast <span class="font-bold" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">Krvavý Dobšinský</span> bude hlavným propagačným kanálom pre uvedenie hry Šepot lesa na Spotify.
-            </p>
-            <div class="text-center mb-10">
-                 <div class="mx-auto w-24 md:w-32 mb-4">
-                     <img src="https://i.imgur.com/F9fKCIr.png" alt="Krvavý Dobšinský logo" class="w-full opacity-80">
-                 </div>
-                <span class="text-lg font-semibold">4,8</span>
-                <i class="fas fa-star text-yellow-400 mx-1"></i>
-                <span class="text-gray-400 text-sm">(zo 485 hodnotení)</span>
-            </div>
+            <h2 class="text-4xl font-bold mb-10 text-center">Dosah a komunita</h2>
+            <p class="text-xl text-center mb-12 max-w-3xl mx-auto text-gray-300">Podcast <span class="font-bold gradient-text">Krvavý Dobšinský</span> bude hlavným propagačným kanálom, využívajúc existujúcu a angažovanú komunitu.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 stats-card">
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">846,548</div>
-                    <div class="text-lg text-gray-300">celkových prehratí</div>
-                </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 stats-card">
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">8,591</div>
+                 <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">1 000 000+</div>
+                     <div class="text-lg text-gray-300">celkových prehratí</div>
+                 </div>
+                 <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">8 591</div>
                     <div class="text-lg text-gray-300">sledovateľov na Spotify</div>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 stats-card">
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">22,183</div>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">22 183</div>
                     <div class="text-lg text-gray-300">streamov za posledných 30 dní</div>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 stats-card">
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">5,505</div>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">5 505</div>
                     <div class="text-lg text-gray-300">hodín počúvania mesačne</div>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 stats-card">
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">29</div>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">29</div>
                     <div class="text-lg text-gray-300">nových followerov mesačne</div>
                 </div>
-
-                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 stats-card">
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" style="background: linear-gradient(to right, #9333ea, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent;">84%</div>
-                    <div class="text-lg text-gray-300">konverzia (3,369 poslucháčov po ukážke)</div>
+                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">84%</div>
+                    <div class="text-lg text-gray-300">konverzia (3 369 poslucháčov po ukážke)</div>
                 </div>
             </div>
-
             <div class="mt-12 text-center">
-                <p class="text-lg text-gray-300">
-                    Vďaka vybudovanej komunite a vysokému engagementu dokážeme osloviť relevantné publikum bez potreby ďalšej investície do reklamy.
-                </p>
+                <p class="text-lg text-gray-300">Vďaka vybudovanej komunite má projekt Šepot lesa silný základ pre úspešné uvedenie na trh.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+    </div>
+
+    <section id="target-audience" class="py-20 px-4">
+        <div class="container mx-auto max-w-6xl">
+             <h2 class="text-4xl font-bold mb-3 text-center">Cieľová skupina</h2>
+             <div class="text-center mb-10">
+                 <div class="inline-block">
+                     <span class="frequency-text text-xs tracking-widest font-medium">DEMOGRAFICKÉ ÚDAJE (SPOTIFY)</span>
+                     <div class="h-px w-full bg-gradient-to-r from-purple-500 to-pink-500 mt-1"></div>
+                 </div>
+             </div>
+
+             <div class="scroll-animate">
+                 <div class="charts-container">
+                    <div class="chart">
+                        <h2>Pohlavie</h2>
+                        <div class="gender-chart">
+                            <div class="pie-container" id="pie-chart">
+                                </div>
+                            <div class="pie-center" id="pie-info"></div>
+                            <div class="gender-legend" id="gender-legend">
+                                </div>
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <h2>Vek</h2>
+                        <div class="age-chart">
+                            <div id="age-tooltip" class="tooltip"></div>
+                            <div class="y-axis" id="y-axis-labels">
+                                </div>
+                            <div class="bar-container" id="age-bars">
+                                </div>
+                        </div>
+                        <span class="chart-title">Vekové skupiny</span>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </section>
+
+     <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+    </div>
+
+    <section id="author" class="py-20 px-4 relative bg-gray-900 bg-opacity-30">
+        <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
+        <div class="container mx-auto max-w-4xl">
+             <h2 class="text-4xl font-bold mb-10 text-center">O autorovi</h2>
+            <div class="scroll-animate bg-black bg-opacity-50 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
+                <div class="flex-shrink-0 w-56 h-56 rounded-full overflow-hidden border-4 border-purple-500/50 mx-auto md:mx-0">
+                    <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="w-full h-full object-cover"
+                         onerror="this.onerror=null; this.src='https://placehold.co/224x224/1f2937/FFFFFF?text=Foto'; this.alt='Záložný obrázok autora';"/>
+                </div>
+                <div class="text-lg text-center md:text-left">
+                    <h3 class="text-3xl font-bold mb-3 gradient-text">Vladimír Seman</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Vladimír je kreatívny tvorca s vášňou pre rozprávanie príbehov, ktoré rezonujú dlho po tom, ako odznie posledné slovo. Je autorom úspešného podcastu Krvavý Dobšinský, v ktorom klasické rozprávky ožívajú v temnejšom a napínavejšom šate. Jeho cit pre atmosféru, zvukový dizajn a psychologickú hĺbku príbehov si získal tisíce poslucháčov.
+                        <br><br>
+                        Najnovšie sa Vladimír ponoril do sveta interaktívneho storytellingu – Šepot lesa je jeho autorská audiohra s 36 unikátnymi trackmi, ktoré spájajú horor, emócie a voľby poslucháča do intenzívneho zážitku. Každý detail – od ruchov lesa po hlas v tvojej hlave – je vytvorený s dôrazom na autenticitu, kvalitu a ponor do príbehu.
+                        <br><br>
+                        Jeho cieľom nie je len rozprávať príbehy, ale otvárať brány do svetov, ktoré si poslucháč pamätá s husou kožou ešte dlho po vypnutí prehrávača.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -362,35 +656,36 @@
 
     <section id="contact" class="py-20 px-4">
         <div class="container mx-auto max-w-2xl">
-            <h2 class="text-4xl font-bold mb-10 text-center">Kontakt</h2>
-            <div class="bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg">
+             <h2 class="text-4xl font-bold mb-10 text-center">Kontakt</h2>
+            <div class="scroll-animate bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg">
                 <div class="text-center mb-6">
                     <h3 class="text-2xl font-bold mb-1">Vladimír Seman / Krvavý Dobšinský</h3>
-                    <p class="text-lg text-gray-300">krvavydobsinsky@gmail.com</p>
+                    <p class="text-lg mt-2">
+                        <a href="tel:+421940400222" class="font-semibold hover:opacity-80 transition-opacity gradient-text">+421 940 400 222</a>
+                    </p>
                 </div>
-                <form name="contact" netlify class="space-y-6">
+                <form name="contact" class="space-y-6" netlify>
+                    <input type="hidden" name="form-name" value="contact" />
+                    <p class="hidden"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
                     <div>
                         <label for="name" class="block text-sm font-medium mb-1 text-gray-300">Meno</label>
-                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white">
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="Vaše meno"/>
                     </div>
-
                     <div>
                         <label for="email" class="block text-sm font-medium mb-1 text-gray-300">E-mail</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white">
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="vas@email.sk"/>
                     </div>
-
                     <div>
                         <label for="message" class="block text-sm font-medium mb-1 text-gray-300">Správa</label>
-                        <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white"></textarea>
+                        <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="Vaša správa..."></textarea>
                     </div>
-
                     <div class="text-center">
                         <button type="submit" class="px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group">
                             <span class="relative z-10">Odoslať správu</span>
                             <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
                         </button>
                     </div>
-                </form>
+                 </form>
             </div>
         </div>
     </section>
@@ -399,66 +694,382 @@
         <div class="container mx-auto">
             <p>© 2025 Šepot lesa | Všetky práva vyhradené</p>
             <div class="mt-4 flex justify-center space-x-4">
-                <a href="https://open.spotify.com/show/1jpZ723mEpLld7bZeZ2wdE?si=kbLG6uAaTRuVDCEScLavyQ" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-500 transition-colors">
-                    <i class="fab fa-spotify text-xl"></i>
-                </a>
-                <a href="https://www.instagram.com/krvavydobsinsky/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-500 transition-colors">
-                    <i class="fab fa-instagram text-xl"></i>
-                </a>
-                <a href="https://www.facebook.com/vlado.seman" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-purple-500 transition-colors">
-                    <i class="fab fa-facebook text-xl"></i>
-                </a>
-                </div>
+                <a href="https://open.spotify.com/show/1jpZ723mEpLld7bZeZ2wdE?si=kbLG6uAaTRuVDCEScLavyQ" target="_blank" rel="noopener noreferrer" aria-label="Spotify profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-spotify text-xl"></i></a>
+                <a href="https://www.instagram.com/krvavydobsinsky/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                 <a href="https://www.facebook.com/vlado.seman" target="_blank" rel="noopener noreferrer" aria-label="Facebook profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Funkcia pre plynulé posúvanie
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetElement = document.querySelector(this.getAttribute('href'));
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
+        // --- Dáta pre grafy (konštanty pre lepšiu čitateľnosť) ---
+        const genderData = [
+            { name: 'Ženy', value: 47.4, color: '#6A16FF' }, // Fialová
+            { name: 'Muži', value: 42.2, color: '#2E055C' }, // Tmavofialová
+            { name: 'Nešpecifikované', value: 9.0, color: '#C5C6FF' }, // Svetlofialová
+            { name: 'Nebinárne', value: 1.4, color: '#E3E2FF' }  // Veľmi svetlofialová
+        ];
+        const ageData = [
+            { group: '0-17', value: 1.2 },
+            { group: '18-22', value: 7.0 },
+            { group: '23-27', value: 17.9 },
+            { group: '28-34', value: 28.2 },
+            { group: '35-44', value: 28.3 },
+            { group: '45-59', value: 15.4 },
+            { group: '60+', value: 2.1 },
+            { group: 'Nezadané', value: 0.0 }
+        ];
+        // Paleta farieb pre stĺpcový graf
+        const ageBarColors = ['#6A16FF', '#5a30df', '#7c3aed', '#9333ea', '#a78bfa', '#c4b5fd', '#ddd6fe', '#e3e2ff'];
+
+        // --- Funkcie pre generovanie grafov ---
+
+        /**
+         * Vytvorí SVG koláčový graf pre dáta o pohlaví.
+         */
+        function createSVGPieChart() {
+             const pieContainer = document.getElementById('pie-chart');
+             const pieInfo = document.getElementById('pie-info');
+             if (!pieContainer || !pieInfo) {
+                 console.error("Chýba element #pie-chart alebo #pie-info pre koláčový graf.");
+                 return;
+             }
+             pieContainer.innerHTML = ''; // Vyčistenie pred generovaním
+
+             const svgNS = "http://www.w3.org/2000/svg";
+             const svg = document.createElementNS(svgNS, "svg");
+             svg.setAttribute("width", "200");
+             svg.setAttribute("height", "200");
+             svg.setAttribute("viewBox", "-1 -1 102 102"); // Malý padding pre okraje
+             svg.style.transform = "rotate(-90deg)"; // Začiatok od 12 hodín
+
+             let cumulativePercent = 0;
+             const centerX = 50;
+             const centerY = 50;
+             const radius = 50;
+
+            genderData.forEach(item => {
+                if (item.value <= 0) return; // Preskočiť nulové hodnoty
+
+                const startPercent = cumulativePercent;
+                cumulativePercent += item.value;
+                const endPercent = cumulativePercent;
+
+                // Výpočet súradníc pre výsek
+                const startAngle = (startPercent / 100) * 2 * Math.PI;
+                const endAngle = (endPercent / 100) * 2 * Math.PI;
+                const startX = centerX + radius * Math.cos(startAngle);
+                const startY = centerY + radius * Math.sin(startAngle);
+                const endX = centerX + radius * Math.cos(endAngle);
+                const endY = centerY + radius * Math.sin(endAngle);
+
+                // Určenie, či je oblúk väčší ako 180 stupňov
+                const largeArcFlag = (endPercent - startPercent) > 50 ? 1 : 0;
+
+                // Vytvorenie SVG elementu <path>
+                const path = document.createElementNS(svgNS, "path");
+                const pathData = [
+                    `M ${centerX},${centerY}`, // Začiatok v strede
+                    `L ${startX},${startY}`, // Čiara k začiatku oblúka
+                    `A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX},${endY}`, // Oblúk
+                    'Z' // Zatvorenie cesty späť do stredu
+                ].join(' ');
+                path.setAttribute('d', pathData);
+                path.setAttribute('fill', item.color);
+                path.setAttribute('stroke', '#000'); // Tenký čierny okraj pre oddelenie
+                path.setAttribute('stroke-width', '0.5');
+                path.setAttribute('data-name', item.name); // Uloženie dát pre interakciu
+                path.setAttribute('data-value', item.value.toString());
+
+                // Event Listeners pre interaktivitu
+                path.addEventListener('mouseover', function() {
+                    if(pieInfo) {
+                        pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
+                        pieInfo.style.color = '#FFF'; // Zvýraznenie textu v strede
+                        pieInfo.style.fontWeight = 'normal';
+                    }
+                    highlightLegendItem(item.name); // Zvýraznenie v legende
+                    path.style.opacity = '0.8'; // Zníženie opacity výseku
+                });
+                path.addEventListener('mouseout', function() {
+                    if(pieInfo) {
+                        pieInfo.textContent = ''; // Vyčistenie textu v strede
+                        pieInfo.style.color = '#e5e7eb';
+                        pieInfo.style.fontWeight = 'normal';
+                    }
+                    resetLegendHighlight(); // Reset legendy
+                    path.style.opacity = '1'; // Vrátenie opacity
+                });
+
+                svg.appendChild(path);
+            });
+
+            // Vytvorenie vnútorného kruhu (donut efekt)
+            const circle = document.createElementNS(svgNS, "circle");
+            circle.setAttribute('cx', String(centerX));
+            circle.setAttribute('cy', String(centerY));
+            circle.setAttribute('r', '30'); // Polomer vnútorného kruhu
+            circle.setAttribute('fill', '#111827'); // Farba pozadia grafu
+            svg.appendChild(circle);
+
+            pieContainer.appendChild(svg); // Pridanie SVG do DOM
+            pieInfo.textContent = ''; // Zabezpečenie, že stred je prázdny na začiatku
+            // pieContainer.appendChild(pieInfo); // pieInfo je už v DOM, len ho aktualizujeme
+        }
+
+        /**
+         * Vytvorí legendu pre koláčový graf pohlavia.
+         */
+        function createGenderLegend() {
+            const legendContainer = document.getElementById('gender-legend');
+            const pieInfo = document.getElementById('pie-info'); // Prepojenie s pieInfo pre hover efekt
+            if (!legendContainer || !pieInfo) {
+                console.error("Chýba element #gender-legend alebo #pie-info pre legendu.");
+                return;
+            }
+            legendContainer.innerHTML = ''; // Vyčistenie pred generovaním
+
+            genderData.forEach(item => {
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.dataset.name = item.name; // Uloženie mena pre prepojenie s grafom
+
+                // Farebný box
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = item.color;
+
+                // Textový popis
+                const textDiv = document.createElement('div');
+                textDiv.className = 'legend-text';
+                textDiv.textContent = item.name;
+
+                // Percentuálna hodnota
+                const percentDiv = document.createElement('div');
+                percentDiv.className = 'legend-percent';
+                percentDiv.textContent = `${item.value.toFixed(1).replace('.', ',')}%`;
+
+                legendItem.appendChild(colorBox);
+                legendItem.appendChild(textDiv);
+                legendItem.appendChild(percentDiv);
+
+                // Event Listeners pre interaktivitu
+                legendItem.addEventListener('mouseover', () => {
+                    highlightLegendItem(item.name); // Zvýraznenie tejto položky legendy
+                    if(pieInfo) {
+                        pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
+                        pieInfo.style.color = '#FFF';
+                        pieInfo.style.fontWeight = 'normal';
+                    }
+                    highlightPieSlice(item.name, true); // Zvýraznenie príslušného výseku v grafe
+                });
+                legendItem.addEventListener('mouseout', () => {
+                    resetLegendHighlight(); // Reset zvýraznenia legendy
+                    if(pieInfo) {
+                        pieInfo.textContent = '';
+                        pieInfo.style.color = '#e5e7eb';
+                        pieInfo.style.fontWeight = 'normal';
+                    }
+                    highlightPieSlice(item.name, false); // Reset zvýraznenia výseku
+                });
+
+                legendContainer.appendChild(legendItem);
+            });
+        }
+
+        /**
+         * Zvýrazní položku v legende podľa mena.
+         * @param {string} name - Meno položky na zvýraznenie.
+         */
+        function highlightLegendItem(name) {
+            document.querySelectorAll('#gender-legend .legend-item').forEach(item => {
+                item.style.backgroundColor = (item.dataset.name === name) ? '#1f2937' : ''; // Tmavšie pozadie pre aktívnu položku
+            });
+        }
+
+        /**
+         * Resetuje zvýraznenie všetkých položiek v legende.
+         */
+        function resetLegendHighlight() {
+            document.querySelectorAll('#gender-legend .legend-item').forEach(item => {
+                item.style.backgroundColor = ''; // Vrátenie pôvodného pozadia
+            });
+        }
+
+        /**
+         * Zvýrazní alebo odznačí výsek v koláčovom grafe podľa mena.
+         * @param {string} name - Meno výseku.
+         * @param {boolean} highlight - True pre zvýraznenie, false pre odznačenie.
+         */
+        function highlightPieSlice(name, highlight) {
+            document.querySelectorAll('#pie-chart svg path').forEach(path => {
+                if (path.getAttribute('data-name') === name) {
+                    path.style.opacity = highlight ? '0.8' : '1'; // Zmena opacity
+                }
+            });
+        }
+
+        /**
+         * Vytvorí stĺpcový graf pre dáta o veku.
+         */
+        function createAgeBars() {
+             const barContainer = document.getElementById('age-bars');
+             const tooltip = document.getElementById('age-tooltip');
+             const yAxisLabelsContainer = document.getElementById('y-axis-labels');
+             if (!barContainer || !tooltip || !yAxisLabelsContainer) {
+                 console.error("Chýba element #age-bars, #age-tooltip alebo #y-axis-labels pre stĺpcový graf.");
+                 return;
+             }
+             barContainer.innerHTML = ''; // Vyčistenie pred generovaním
+             yAxisLabelsContainer.innerHTML = ''; // Vyčistenie labelov osi
+
+             const maxValue = 30; // Maximálna hodnota na Y osi (napr. 30%)
+
+             // Generovanie labelov Y osi
+             const ySteps = [0, 6, 12, 18, 24, 30]; // Hodnoty na Y osi
+             ySteps.forEach(value => {
+                 const yLabelDiv = document.createElement('div');
+                 yLabelDiv.className = 'y-label';
+                 const percentagePosition = (value / maxValue) * 100; // Pozícia v percentách výšky
+                 yLabelDiv.style.position = 'absolute';
+                 yLabelDiv.style.bottom = `${percentagePosition}%`; // Pozícia odspodu
+                 yLabelDiv.style.transform = 'translateY(50%)'; // Vertikálne centrovanie textu
+                 yLabelDiv.textContent = `${value}%`;
+
+                 // Voliteľná čiara vedľa labelu
+                 const yLine = document.createElement('div');
+                 yLine.className = 'y-line';
+                 // Štýly pre y-line sú definované v CSS
+                 yLabelDiv.appendChild(yLine);
+
+                 yAxisLabelsContainer.appendChild(yLabelDiv);
+             });
+
+             // Generovanie stĺpcov
+             ageData.forEach((item, index) => {
+                 const barGroup = document.createElement('div');
+                 barGroup.className = 'bar-group';
+
+                 const bar = document.createElement('div');
+                 bar.className = 'bar';
+                 // Výpočet výšky stĺpca v percentách, orezanie na 0-100
+                 const heightPercentage = Math.max(0, Math.min(100, (item.value / maxValue) * 100));
+                 bar.style.height = `${heightPercentage}%`;
+                 bar.style.backgroundColor = ageBarColors[index % ageBarColors.length]; // Cyklické použitie farieb
+
+                 // Label pod stĺpcom (X os)
+                 const label = document.createElement('div');
+                 label.className = 'bar-label';
+                 label.textContent = item.group;
+
+                 // Event Listeners pre tooltip
+                 bar.addEventListener('mouseover', (e) => {
+                     tooltip.innerHTML = `<strong>${item.group}:</strong> ${item.value.toFixed(1).replace('.', ',')}%`;
+                     tooltip.style.opacity = '1'; // Zobrazenie tooltipu
+                     positionTooltip(e, tooltip); // Nastavenie pozície
+                 });
+                 bar.addEventListener('mousemove', (e) => {
+                     positionTooltip(e, tooltip); // Aktualizácia pozície pri pohybe myši
+                 });
+                 bar.addEventListener('mouseout', () => {
+                     tooltip.style.opacity = '0'; // Skrytie tooltipu
+                 });
+
+                 barGroup.appendChild(bar);
+                 barGroup.appendChild(label);
+                 barContainer.appendChild(barGroup);
+             });
+        }
+
+        /**
+         * Nastaví pozíciu tooltipu blízko kurzora myši.
+         * @param {MouseEvent} event - Objekt udalosti myši.
+         * @param {HTMLElement} tooltipElement - Element tooltipu.
+         */
+        function positionTooltip(event, tooltipElement) {
+            const tooltipRect = tooltipElement.getBoundingClientRect();
+            let x = event.clientX + 15; // Pozícia vpravo od kurzora
+            let y = event.clientY - 15 - tooltipRect.height; // Pozícia nad kurzorom
+
+            // Korekcia, ak by tooltip vyšiel mimo obrazovky
+            if (y < 0) { // Ak by vyšiel nad horný okraj
+                y = event.clientY + 15; // Zobraziť pod kurzorom
+            }
+            if (x + tooltipRect.width > window.innerWidth) { // Ak by vyšiel za pravý okraj
+                x = event.clientX - 15 - tooltipRect.width; // Zobraziť vľavo od kurzora
+            }
+
+            tooltipElement.style.left = `${x}px`;
+            tooltipElement.style.top = `${y}px`;
+        }
+
+        // --- Inicializácia a ostatný kód (Scroll animácie, Formulár) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializácia grafov s ošetrením chýb
+            try {
+                createSVGPieChart();
+                createGenderLegend();
+                createAgeBars();
+            } catch (error) {
+                console.error("Chyba pri inicializácii vlastných grafov:", error);
+                // Tu by mohla byť záložná logika, napr. zobrazenie statických dát
+            }
+
+            // Inicializácia scroll animácií
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            // Voliteľne odpojiť observer po animácii pre výkon
+                            // observer.unobserve(entry.target);
+                        }
+                        // Voliteľne: Odstrániť 'visible', ak element opustí viewport
+                        // else { entry.target.classList.remove('visible'); }
                     });
-                }
-            });
+                }, { threshold: 0.1 }); // Spustiť, keď je 10% elementu viditeľných
+
+                animatedElements.forEach(element => {
+                    if (element) observer.observe(element);
+                });
+            } else {
+                // Fallback pre staršie prehliadače bez IntersectionObserver
+                animatedElements.forEach(element => {
+                    if (element) element.classList.add('visible');
+                });
+            }
+
+            // Spracovanie kontaktného formulára (pre Netlify)
+            const form = document.querySelector('form[name="contact"]');
+            if (form) {
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Zabránenie predvolenému odoslaniu
+
+                    const formData = new FormData(form);
+                    fetch("/", { // Odoslanie na root pre Netlify Forms
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: new URLSearchParams(formData).toString()
+                    })
+                    .then(() => {
+                        console.log("Form successfully submitted to Netlify");
+                        // Zobrazenie správy používateľovi (lepšie ako alert)
+                        // Napr. zobraziť ďakovnú správu v rámci stránky
+                        alert('Ďakujeme za vašu správu! Bola úspešne odoslaná.');
+                        form.reset(); // Vyčistenie formulára
+                    })
+                    .catch((error) => {
+                        console.error("Form submission error:", error);
+                         // Zobrazenie chybovej správy používateľovi
+                        alert('Pri odosielaní správy nastala chyba. Skúste to prosím neskôr.');
+                    });
+                });
+            } else {
+                console.warn("Kontaktný formulár (form[name='contact']) nebol nájdený.");
+            }
         });
-
-        // Funkcia pre animácie pri posúvaní
-        const animatedElements = document.querySelectorAll('.track-card, .stats-card, .feature-card');
-
-        // Nastavenie počiatočného stavu pre animácie
-        animatedElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(20px)';
-            element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        });
-
-        // Nastavenie Intersection Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    // Voliteľné: Odpojiť observer po animácii, aby sa nespúšťala znova
-                    // observer.unobserve(entry.target);
-                } else {
-                     // Voliteľné: Resetovať animáciu, ak element opustí viewport
-                     // entry.target.style.opacity = '0';
-                     // entry.target.style.transform = 'translateY(20px)';
-                }
-            });
-        }, {
-            threshold: 0.1 // Spustiť, keď je viditeľných aspoň 10% elementu
-        });
-
-        // Pozorovanie všetkých animovaných elementov
-        animatedElements.forEach(element => {
-            observer.observe(element);
-        });
-
     </script>
+
 </body>
 </html>
