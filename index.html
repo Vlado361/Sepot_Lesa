@@ -7,15 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        /* Globálne nastavenie box-sizing pre lepšiu kontrolu rozmerov */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
         /* Základné štýly pre telo a plynulé posúvanie */
         body {
             background-color: #000;
             color: #e5e7eb; /* Svetlo šedá pre text */
             font-family: system-ui, sans-serif; /* Použitie system-ui */
             overflow-x: hidden; /* Prevent horizontal scroll */
+            margin: 0; /* Ensure no default body margin */
         }
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden; /* Also apply here for safety */
         }
         /* Animácia pre prvky objavujúce sa pri skrolovaní */
         .scroll-animate {
@@ -257,8 +263,9 @@
             left: 100%; /* Začína hneď za labelom */
             top: 50%;
             transform: translateY(-50%);
-            width: calc(100vw - 30px); /* Šírka cez celý graf, obmedzená max-width */
-            max-width: 400px; /* Max šírka čiary */
+            /* Zmena šírky čiary, aby nepretekala */
+            width: calc(100% + 20px); /* Šírka relatívna k .age-chart, pridanie paddingu */
+            max-width: 400px; /* Zachovanie max šírky */
             height: 1px;
             background-color: #374151; /* Farba čiary */
             z-index: -1; /* Pod stĺpcami */
@@ -271,6 +278,20 @@
             margin-top: 10px;
             color: #9ca3af; /* Šedá */
         }
+
+        /* Štýly pre sekciu recenzií */
+        .review-card {
+            background-color: #111827; /* Tmavšie pozadie ako grafy */
+            border: 1px solid #374151; /* Tmavší okraj */
+            backdrop-filter: blur(5px);
+        }
+        .review-card .fa-quote-left {
+            color: #a78bfa; /* Svetlofialová pre ikonu */
+        }
+        .review-author {
+            color: #9ca3af; /* Šedá pre meno autora */
+        }
+
     </style>
 </head>
 <body class="bg-black text-gray-100 font-sans">
@@ -582,6 +603,40 @@
     </section>
 
     <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+    </div>
+
+    <section id="reviews" class="py-20 px-4 relative bg-black bg-opacity-30">
+         <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="text-4xl font-bold mb-10 text-center">Ohlasy od beta poslucháčov</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="scroll-animate review-card p-6 rounded-xl shadow-lg flex flex-col">
+                    <div class="mb-4 text-2xl"><i class="fas fa-quote-left"></i></div>
+                    <blockquote class="text-gray-300 italic flex-grow mb-4">
+                        "Čakala som hocičo ale toto nie. Je to absolútne fenomenálne ! Je to niečo čo za mňa chyba na podcast scene, vtiahol ma dej až tak že som zabudla vystúpiť z elektricky"
+                    </blockquote>
+                    <p class="review-author text-right font-semibold">- Barbora Hollá</p>
+                </div>
+                <div class="scroll-animate review-card p-6 rounded-xl shadow-lg flex flex-col">
+                    <div class="mb-4 text-2xl"><i class="fas fa-quote-left"></i></div>
+                    <blockquote class="text-gray-300 italic flex-grow mb-4">
+                        "Och tak toto je bomba…! Inak veľmi desivá predstava žeby niečo také existovalo 😀 máme v okolí také miesta, kde si viem celý tento príbeh živo predstaviť a nieje mi z toho moc dobre 😀"
+                    </blockquote>
+                    <p class="review-author text-right font-semibold">- Bianka Račková</p>
+                </div>
+                <div class="scroll-animate review-card p-6 rounded-xl shadow-lg flex flex-col">
+                    <div class="mb-4 text-2xl"><i class="fas fa-quote-left"></i></div>
+                    <blockquote class="text-gray-300 italic flex-grow mb-4">
+                        "dala som si ten zákusok o jednej v noci, veľmi nápadité , zvuk"
+                    </blockquote>
+                    <p class="review-author text-right font-semibold">- Petronela Dobránska</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
     </div>
 
