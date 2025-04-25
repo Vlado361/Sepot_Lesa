@@ -13,15 +13,15 @@
         }
         /* Základné štýly pre telo a plynulé posúvanie */
         body {
-            background-color: #000;
+            background-color: #000; /* Čierne pozadie */
             color: #e5e7eb; /* Svetlo šedá pre text */
             font-family: system-ui, sans-serif; /* Použitie system-ui */
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            margin: 0; /* Ensure no default body margin */
+            overflow-x: hidden; /* Zabránenie horizontálnemu posúvaniu */
+            margin: 0; /* Odstránenie predvoleného okraja tela */
         }
         html {
-            scroll-behavior: smooth;
-            overflow-x: hidden; /* Also apply here for safety */
+            scroll-behavior: smooth; /* Plynulé posúvanie */
+            overflow-x: hidden; /* Tiež aplikovať tu pre istotu */
         }
         /* Animácia pre prvky objavujúce sa pri skrolovaní */
         .scroll-animate {
@@ -33,53 +33,53 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Statický šum - placeholder (can be enhanced with JS/CSS if needed) */
+        /* Statický šum - jednoduchý efekt */
         .static-noise {
-             /* Basic noise effect using repeating gradient */
+            /* Základný efekt šumu pomocou opakujúceho sa gradientu */
             background: repeating-linear-gradient(rgba(255,255,255,0.02) 0 1px, transparent 1px 2px),
                         repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 2px);
         }
         /* Gradient texty pre zvýraznenie */
         .frequency-text, .gradient-text {
-            background: linear-gradient(to right, #9333ea, #ec4899);
+            background: linear-gradient(to right, #9333ea, #ec4899); /* Fialovo-ružový gradient */
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
+            color: transparent; /* Text je priehľadný, vidno gradient pozadia */
         }
         /* Štýlovanie audio prehrávača */
         audio {
-            filter: contrast(70%) brightness(150%); /* Subtle styling */
-            border-radius: 5px;
-            width: 100%;
-            margin-top: 10px; /* Add some space above the player */
+            filter: contrast(70%) brightness(150%); /* Jemné štýlovanie */
+            border-radius: 5px; /* Zaoblené rohy */
+            width: 100%; /* Plná šírka */
+            margin-top: 10px; /* Priestor nad prehrávačom */
         }
 
         /* --- Glitch Efekt --- */
-        .glitch-effect { position: relative; color: white; display: inline-block; /* Ensure it wraps content */ }
+        .glitch-effect { position: relative; color: white; display: inline-block; /* Zabezpečí obtiekanie obsahu */ }
         .glitch-effect::before, .glitch-effect::after {
-            content: attr(data-text);
+            content: attr(data-text); /* Zobrazenie textu z data-text atribútu */
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: black; /* Match body background */
-            clip-path: inset(50% 0 50% 0);
+            background: black; /* Zhodné s pozadím tela */
+            clip-path: inset(50% 0 50% 0); /* Počiatočné orezanie */
         }
         .glitch-effect::before {
             left: -1px;
-            text-shadow: 1px 0 cyan;
-            animation: glitch-anim-before 3s infinite linear alternate-reverse;
-            mix-blend-mode: screen; /* Use screen or difference */
+            text-shadow: 1px 0 cyan; /* Azúrový tieň */
+            animation: glitch-anim-before 3s infinite linear alternate-reverse; /* Animácia pre ::before */
+            mix-blend-mode: screen; /* Režim prelínania */
         }
         .glitch-effect::after {
             left: 1px;
-            text-shadow: -1px 0 red;
-            animation: glitch-anim-after 2s infinite linear alternate-reverse;
-            mix-blend-mode: screen; /* Use screen or difference */
+            text-shadow: -1px 0 red; /* Červený tieň */
+            animation: glitch-anim-after 2s infinite linear alternate-reverse; /* Animácia pre ::after */
+            mix-blend-mode: screen; /* Režim prelínania */
         }
-        /* Keyframes for Glitch Effect */
+        /* Keyframes pre Glitch Efekt (komplexná animácia orezania a posunu) */
         @keyframes glitch-anim-before { 0%, 100% { clip-path: inset(40% 0 60% 0); transform: translate(0, 0); } 5% { clip-path: inset(20% 0 15% 0); transform: translate(-5px, 2px); } 10% { clip-path: inset(80% 0 5% 0); transform: translate(3px, -1px); } 15% { clip-path: inset(5% 0 90% 0); transform: translate(-4px, 3px); } 20% { clip-path: inset(60% 0 38% 0); transform: translate(2px, -2px); } 25% { clip-path: inset(10% 0 85% 0); transform: translate(-3px, 4px); } 30% { clip-path: inset(90% 0 1% 0); transform: translate(4px, -3px); } 35% { clip-path: inset(30% 0 65% 0); transform: translate(-2px, 1px); } 40% { clip-path: inset(70% 0 25% 0); transform: translate(5px, -4px); } 45% { clip-path: inset(50% 0 48% 0); transform: translate(-1px, 2px); } 50% { clip-path: inset(25% 0 70% 0); transform: translate(3px, -1px); } 55% { clip-path: inset(85% 0 10% 0); transform: translate(-4px, 3px); } 60% { clip-path: inset(45% 0 50% 0); transform: translate(1px, -2px); } 65% { clip-path: inset(5% 0 92% 0); transform: translate(-2px, 4px); } 70% { clip-path: inset(95% 0 2% 0); transform: translate(4px, -3px); } 75% { clip-path: inset(35% 0 60% 0); transform: translate(-3px, 1px); } 80% { clip-path: inset(65% 0 30% 0); transform: translate(2px, -4px); } 85% { clip-path: inset(15% 0 80% 0); transform: translate(-1px, 2px); } 90% { clip-path: inset(75% 0 20% 0); transform: translate(3px, -1px); } 95% { clip-path: inset(28% 0 68% 0); transform: translate(-4px, 3px); } }
         @keyframes glitch-anim-after { 0%, 100% { clip-path: inset(60% 0 40% 0); transform: translate(0, 0); } 4% { clip-path: inset(10% 0 85% 0); transform: translate(4px, -2px); } 8% { clip-path: inset(90% 0 5% 0); transform: translate(-2px, 1px); } 12% { clip-path: inset(25% 0 70% 0); transform: translate(5px, -3px); } 16% { clip-path: inset(70% 0 28% 0); transform: translate(-3px, 2px); } 20% { clip-path: inset(20% 0 75% 0); transform: translate(2px, -4px); } 24% { clip-path: inset(80% 0 8% 0); transform: translate(-5px, 3px); } 28% { clip-path: inset(40% 0 55% 0); transform: translate(1px, -1px); } 32% { clip-path: inset(75% 0 22% 0); transform: translate(-4px, 4px); } 36% { clip-path: inset(52% 0 45% 0); transform: translate(3px, -2px); } 40% { clip-path: inset(18% 0 78% 0); transform: translate(-2px, 1px); } 44% { clip-path: inset(88% 0 2% 0); transform: translate(4px, -3px); } 48% { clip-path: inset(30% 0 68% 0); transform: translate(-1px, 2px); } 52% { clip-path: inset(68% 0 29% 0); transform: translate(3px, -4px); } 56% { clip-path: inset(8% 0 90% 0); transform: translate(-4px, 1px); } 60% { clip-path: inset(55% 0 40% 0); transform: translate(2px, -2px); } 64% { clip-path: inset(22% 0 72% 0); transform: translate(-3px, 3px); } 68% { clip-path: inset(92% 0 5% 0); transform: translate(5px, -1px); } 72% { clip-path: inset(48% 0 50% 0); transform: translate(-2px, 4px); } 76% { clip-path: inset(5% 0 88% 0); transform: translate(1px, -3px); } 80% { clip-path: inset(60% 0 35% 0); transform: translate(-4px, 1px); } 84% { clip-path: inset(32% 0 62% 0); transform: translate(3px, -2px); } 88% { clip-path: inset(85% 0 12% 0); transform: translate(-1px, 4px); } 92% { clip-path: inset(42% 0 55% 0); transform: translate(4px, -1px); } 96% { clip-path: inset(12% 0 82% 0); transform: translate(-2px, 3px); } }
         /* --- Koniec Glitch Efektu --- */
@@ -143,7 +143,7 @@
             font-size: 13px;
             font-weight: normal;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            min-height: 1.2em; /* Ensure text fits */
+            min-height: 1.2em; /* Zabezpečenie, aby sa text zmestil */
         }
         /* Hover efekt pre SVG výseky */
         .pie-container svg path {
@@ -283,7 +283,7 @@
         .review-card {
             background-color: #111827; /* Tmavšie pozadie ako grafy */
             border: 1px solid #374151; /* Tmavší okraj */
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px); /* Efekt rozmazania pozadia */
         }
         .review-card .fa-quote-left {
             color: #a78bfa; /* Svetlofialová pre ikonu */
@@ -291,6 +291,61 @@
         .review-author {
             color: #9ca3af; /* Šedá pre meno autora */
         }
+
+        /* Štýly pre sekciu aplikácie */
+        .app-promo-card {
+             background-color: #111827; /* Tmavšie pozadie */
+             border: 1px solid #374151; /* Tmavší okraj */
+             backdrop-filter: blur(5px);
+        }
+        .install-instructions ul { list-style: none; padding-left: 0; }
+        .install-instructions li { display: flex; align-items: start; margin-bottom: 0.75rem; }
+        .install-instructions i { margin-right: 0.75rem; margin-top: 0.25rem; color: #a78bfa; width: 20px; text-align: center; }
+        #app-access-message {
+            margin-top: 1rem;
+            /* Farba sa nastavuje cez JS */
+            font-size: 0.9rem;
+            height: 1.5em; /* Rezervuje miesto, aby sa layout nerozpadol */
+            transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Plynulá zmena farby a opacity */
+            opacity: 1; /* Defaultne viditeľná, keď má obsah */
+        }
+        /* Štýl pre vstupné pole kódu */
+        #app-code-input {
+             background-color: rgba(255, 255, 255, 0.1); /* Priesvitné biele pozadie */
+             border: 1px solid #4b5563; /* Šedý okraj */
+             color: #e5e7eb; /* Svetlý text */
+             padding: 0.5rem 0.75rem;
+             border-radius: 0.375rem; /* rounded-md */
+             margin-right: 0.5rem; /* Medzera vpravo */
+             width: 150px; /* Fixná šírka pre kód */
+        }
+        #app-code-input::placeholder {
+             color: #9ca3af; /* Šedý placeholder text */
+        }
+        #app-code-input:focus {
+             outline: none;
+             border-color: #a78bfa; /* Fialový okraj pri focuse */
+             box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.3); /* Jemný glow efekt */
+        }
+        /* Štýl pre tlačidlo potvrdenia kódu */
+        #submit-code-button {
+             padding: 0.5rem 1rem;
+             font-size: 0.9rem; /* Trochu menšie písmo */
+             font-weight: 600; /* font-semibold */
+             border-radius: 0.375rem; /* rounded-md */
+             background-color: transparent;
+             color: #e5e7eb; /* white */
+             border: 2px solid #ec4899; /* pink-600 */
+             transition: all 0.3s ease;
+             text-transform: uppercase;
+             letter-spacing: 0.05em; /* tracking-wider */
+        }
+        #submit-code-button:hover {
+             background-color: #ec4899; /* Pink background on hover */
+             color: #fff;
+             box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3); /* Shadow on hover */
+        }
+
 
     </style>
 </head>
@@ -359,18 +414,18 @@
                  <div class="absolute inset-0 z-0 opacity-[0.02]">
                      <div class="w-full h-full" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22><path d=%22M10 0L0 10h10v10L20 10h-10V0z%22 fill=%22%23FFFFFF%22/></svg>'); background-size: 20px 20px"></div>
                  </div>
-                <div class="relative z-10 text-lg leading-relaxed">
-                  <p>Audiohra Šepot lesa je <span class="gradient-text font-semibold">mysteriózny príbeh</span> s <span class="gradient-text font-semibold">psychologickými a hororovými prvkami</span>. Hráč sa stáva Jakubom Horákom, ktorý sa vracia do rodnej dediny, aby odhalil pravdu o zmiznutí svojho brata.</p>
-                  <p class="mt-4">Každý track je <span class="gradient-text font-semibold">interaktívny</span> a obsahuje <span class="gradient-text font-semibold">rozhodnutia</span>, ktoré vedú k rôznym vetvám príbehu.</p>
-                  <p class="mt-6 font-medium">100 % pôvodný scenár a herecké výkony</p>
-                  <p class="mt-2 font-medium"><span class="gradient-text font-semibold">Viacero možných ciest a koncov</span></p>
-                  <p class="mt-2 font-medium">Vysoká úroveň zvukovej produkcie</p>
-                  <p class="mt-2 font-medium">Ideálne pre distribúciu cez Spotify, podcastové siete, audio platformy</p>
-                </div>
-                <div class="absolute inset-0 pointer-events-none" style="background: repeating-linear-gradient(transparent, transparent 2px, rgba(0, 0, 0, 0.05) 2px, rgba(0, 0, 0, 0.05) 4px); z-index: 11"></div>
-                <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
-                    <div class="absolute top-0 right-0 w-4 h-4 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-1/2 -translate-y-1/2 opacity-70"></div>
-                </div>
+                 <div class="relative z-10 text-lg leading-relaxed">
+                   <p>Audiohra Šepot lesa je <span class="gradient-text font-semibold">mysteriózny príbeh</span> s <span class="gradient-text font-semibold">psychologickými a hororovými prvkami</span>. Hráč sa stáva Jakubom Horákom, ktorý sa vracia do rodnej dediny, aby odhalil pravdu o zmiznutí svojho brata.</p>
+                   <p class="mt-4">Každý track je <span class="gradient-text font-semibold">interaktívny</span> a obsahuje <span class="gradient-text font-semibold">rozhodnutia</span>, ktoré vedú k rôznym vetvám príbehu.</p>
+                   <p class="mt-6 font-medium">100 % pôvodný scenár a herecké výkony</p>
+                   <p class="mt-2 font-medium"><span class="gradient-text font-semibold">Viacero možných ciest a koncov</span></p>
+                   <p class="mt-2 font-medium">Vysoká úroveň zvukovej produkcie</p>
+                   <p class="mt-2 font-medium">Ideálne pre distribúciu cez Spotify, podcastové siete, audio platformy</p>
+                 </div>
+                 <div class="absolute inset-0 pointer-events-none" style="background: repeating-linear-gradient(transparent, transparent 2px, rgba(0, 0, 0, 0.05) 2px, rgba(0, 0, 0, 0.05) 4px); z-index: 11"></div>
+                 <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+                     <div class="absolute top-0 right-0 w-4 h-4 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-1/2 -translate-y-1/2 opacity-70"></div>
+                 </div>
             </div>
         </div>
     </section>
@@ -438,6 +493,67 @@
         </div>
     </section>
 
+    <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+    </div>
+
+    <section id="app-promo" class="py-20 px-4">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="text-4xl font-bold mb-3 text-center">Mobilná aplikácia Šepot lesa</h2>
+            <div class="text-center mb-10">
+                <div class="inline-block">
+                    <span class="frequency-text text-xs tracking-widest font-medium">ROZŠÍRENÝ ZÁŽITOK</span>
+                    <div class="h-px w-full bg-gradient-to-r from-purple-500 to-pink-500 mt-1"></div>
+                </div>
+            </div>
+
+            <div class="scroll-animate bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12"> <div class="flex-shrink-0 w-full lg:w-1/3 lg:self-start"> <img src="https://i.imgur.com/mLDeQ5f.jpeg" alt="Ukážka mobilnej aplikácie Šepot lesa" class="rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full h-auto object-contain mx-auto"
+                          onerror="this.onerror=null; this.src='https://placehold.co/600x400/1f2937/FFFFFF?text=App+Preview'; this.alt='Záložný obrázok aplikácie';">
+                </div>
+
+                <div class="flex-grow text-center lg:text-left">
+                    <p class="text-lg text-gray-300 mb-4">
+                        K audiohre <span class="gradient-text font-semibold">Šepot lesa</span> existuje aj <span class="gradient-text font-semibold">hotová mobilná aplikácia (PWA)</span>, ktorá ponúka ešte hlbší ponor do príbehu a vizuálne doplnenie atmosféry.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-6">
+                        Táto aplikácia môže byť <span class="font-semibold">súčasťou balíka v prípade partnerskej spolupráce</span>.
+                    </p>
+
+                    <div class="flex items-center justify-center lg:justify-start mb-2 flex-wrap">
+                         <input type="password" id="app-code-input" placeholder="Zadajte kód..." aria-label="Prístupový kód k aplikácii">
+                         <button id="submit-code-button">
+                             Otvoriť aplikáciu
+                         </button>
+                    </div>
+
+                    <p id="app-access-message" class="text-sm h-6 mb-2 text-center lg:text-left"></p> <p class="text-xs text-gray-500 mt-1 text-center lg:text-left">Pre prístup je potrebný kód. <span class="font-semibold">Kód získate po kontaktovaní autora na <a href="tel:+421940400222" class="hover:text-purple-400">+421 940 400 222</a></span>.</p>
+
+                    <div class="mt-8 pt-6 border-t border-gray-700 install-instructions">
+                        <h4 class="text-xl font-semibold mb-4 text-gray-200">Ako nainštalovať aplikáciu (PWA):</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
+                            <div>
+                                <h5 class="font-semibold mb-2 flex items-center"><i class="fab fa-android mr-2 text-green-400"></i> Android (Chrome):</h5>
+                                <ul>
+                                    <li><i class="fas fa-ellipsis-v"></i><span>Otvorte aplikáciu v prehliadači Chrome.</span></li>
+                                    <li><i class="fas fa-download"></i><span>Ťuknite na menu (tri bodky) a vyberte <span class="font-semibold mx-1">"Inštalovať aplikáciu"</span> alebo <span class="font-semibold mx-1">"Pridať na plochu"</span>.</span></li>
+                                    <li><i class="fas fa-check"></i><span>Potvrďte inštaláciu. Ikona aplikácie sa pridá na vašu domovskú obrazovku.</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold mb-2 flex items-center"><i class="fab fa-apple mr-2"></i> Apple iOS (Safari):</h5>
+                                <ul>
+                                     <li><i class="fas fa-external-link-alt"></i><span>Otvorte aplikáciu v prehliadači Safari.</span></li>
+                                     <li><i class="fas fa-share-square"></i><span>Ťuknite na tlačidlo Zdieľať (štvorec so šípkou nahor).</span></li>
+                                     <li><i class="fas fa-plus-square"></i><span>Potiahnite nahor a vyberte <span class="font-semibold mx-1">"Pridať na plochu"</span>.</span></li>
+                                     <li><i class="fas fa-check"></i><span>Potvrďte názov a ťuknite na "Pridať". Ikona sa zobrazí na ploche.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
     </div>
@@ -533,32 +649,32 @@
         <div class="container mx-auto max-w-4xl">
             <h2 class="text-4xl font-bold mb-10 text-center">Psychologický horor s dušou slovenského folklóru</h2>
              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
-                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-headphones-alt"></i></div>
-                    <h3 class="text-xl font-bold mb-3">Unikátny formát audiohry</h3>
-                    <p class="text-gray-300 text-sm">Ponorte sa do príbehu len pomocou zvuku. Interaktívne prvky vás vtiahnu priamo do deja.</p>
-                </div>
-                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
-                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-brain"></i></div>
-                    <h3 class="text-xl font-bold mb-3">Prepojenie s ľudskou psychológiou</h3>
-                    <p class="text-gray-300 text-sm">Témy viny, straty a hľadania pravdy rezonujú hlboko a nútia k zamysleniu.</p>
-                </div>
-                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
-                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-tree"></i></div>
-                    <h3 class="text-xl font-bold mb-3">Temná, poetická atmosféra</h3>
-                    <p class="text-gray-300 text-sm">Inšpirované slovenskými horami a folklórom, hra vytvára jedinečný pocit izolácie a tajomna.</p>
-                </div>
                  <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
-                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-microphone-alt"></i></div>
-                    <h3 class="text-xl font-bold mb-3">Profesionálny zvukový dizajn</h3>
-                    <p class="text-gray-300 text-sm">Kvalitné nahrávky, herecké výkony a originálne zvukové efekty pre maximálny zážitok.</p>
-                </div>
-                <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 md:col-span-2">
-                    <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-route"></i></div>
-                    <h3 class="text-xl font-bold mb-3">Rozhodnutia, ktoré ovplyvňujú koniec</h3>
-                    <p class="text-gray-300 text-sm">Vaše voľby tvarujú príbeh a vedú k jednému z viacerých možných zakončení. Znovuhrateľnosť zaručená.</p>
-                </div>
-            </div>
+                     <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-headphones-alt"></i></div>
+                     <h3 class="text-xl font-bold mb-3">Unikátny formát audiohry</h3>
+                     <p class="text-gray-300 text-sm">Ponorte sa do príbehu len pomocou zvuku. Interaktívne prvky vás vtiahnu priamo do deja.</p>
+                 </div>
+                 <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                     <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-brain"></i></div>
+                     <h3 class="text-xl font-bold mb-3">Prepojenie s ľudskou psychológiou</h3>
+                     <p class="text-gray-300 text-sm">Témy viny, straty a hľadania pravdy rezonujú hlboko a nútia k zamysleniu.</p>
+                 </div>
+                 <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                     <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-tree"></i></div>
+                     <h3 class="text-xl font-bold mb-3">Temná, poetická atmosféra</h3>
+                     <p class="text-gray-300 text-sm">Inšpirované slovenskými horami a folklórom, hra vytvára jedinečný pocit izolácie a tajomna.</p>
+                 </div>
+                  <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300">
+                     <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-microphone-alt"></i></div>
+                     <h3 class="text-xl font-bold mb-3">Profesionálny zvukový dizajn</h3>
+                     <p class="text-gray-300 text-sm">Kvalitné nahrávky, herecké výkony a originálne zvukové efekty pre maximálny zážitok.</p>
+                 </div>
+                 <div class="scroll-animate bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 md:col-span-2">
+                     <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-route"></i></div>
+                     <h3 class="text-xl font-bold mb-3">Rozhodnutia, ktoré ovplyvňujú koniec</h3>
+                     <p class="text-gray-300 text-sm">Vaše voľby tvarujú príbeh a vedú k jednému z viacerých možných zakončení. Znovuhrateľnosť zaručená.</p>
+                 </div>
+             </div>
         </div>
     </section>
 
@@ -637,8 +753,8 @@
     </section>
 
      <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
-    </div>
+         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+     </div>
 
     <section id="target-audience" class="py-20 px-4">
         <div class="container mx-auto max-w-6xl">
@@ -652,35 +768,33 @@
 
              <div class="scroll-animate">
                  <div class="charts-container">
-                    <div class="chart">
-                        <h2>Pohlavie</h2>
-                        <div class="gender-chart">
-                            <div class="pie-container" id="pie-chart">
-                                </div>
-                            <div class="pie-center" id="pie-info"></div>
-                            <div class="gender-legend" id="gender-legend">
-                                </div>
-                        </div>
-                    </div>
-                    <div class="chart">
-                        <h2>Vek</h2>
-                        <div class="age-chart">
-                            <div id="age-tooltip" class="tooltip"></div>
-                            <div class="y-axis" id="y-axis-labels">
-                                </div>
-                            <div class="bar-container" id="age-bars">
-                                </div>
-                        </div>
-                        <span class="chart-title">Vekové skupiny</span>
-                    </div>
-                </div>
+                     <div class="chart">
+                         <h2>Pohlavie</h2>
+                         <div class="gender-chart">
+                             <div class="pie-container" id="pie-chart">
+                                 </div>
+                             <div class="pie-center" id="pie-info"></div> <div class="gender-legend" id="gender-legend">
+                                 </div>
+                         </div>
+                     </div>
+                     <div class="chart">
+                         <h2>Vek</h2>
+                         <div class="age-chart">
+                             <div id="age-tooltip" class="tooltip"></div> <div class="y-axis" id="y-axis-labels">
+                                 </div>
+                             <div class="bar-container" id="age-bars">
+                                 </div>
+                         </div>
+                         <span class="chart-title">Vekové skupiny</span>
+                     </div>
+                 </div>
              </div>
         </div>
     </section>
 
-     <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
-    </div>
+      <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative">
+          <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+      </div>
 
     <section id="author" class="py-20 px-4 relative bg-gray-900 bg-opacity-30">
         <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
@@ -721,8 +835,7 @@
                 </div>
                 <form name="contact" class="space-y-6" netlify>
                     <input type="hidden" name="form-name" value="contact" />
-                    <p class="hidden"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
-                    <div>
+                    <p class="hidden"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p> <div>
                         <label for="name" class="block text-sm font-medium mb-1 text-gray-300">Meno</label>
                         <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="Vaše meno"/>
                     </div>
@@ -803,73 +916,67 @@
              const centerY = 50;
              const radius = 50;
 
-            genderData.forEach(item => {
-                if (item.value <= 0) return; // Preskočiť nulové hodnoty
+             genderData.forEach(item => {
+                 if (item.value <= 0) return; // Preskočiť nulové hodnoty
 
-                const startPercent = cumulativePercent;
-                cumulativePercent += item.value;
-                const endPercent = cumulativePercent;
+                 const startPercent = cumulativePercent;
+                 cumulativePercent += item.value;
+                 const endPercent = cumulativePercent;
 
-                // Výpočet súradníc pre výsek
-                const startAngle = (startPercent / 100) * 2 * Math.PI;
-                const endAngle = (endPercent / 100) * 2 * Math.PI;
-                const startX = centerX + radius * Math.cos(startAngle);
-                const startY = centerY + radius * Math.sin(startAngle);
-                const endX = centerX + radius * Math.cos(endAngle);
-                const endY = centerY + radius * Math.sin(endAngle);
+                 const startAngle = (startPercent / 100) * 2 * Math.PI;
+                 const endAngle = (endPercent / 100) * 2 * Math.PI;
+                 const startX = centerX + radius * Math.cos(startAngle);
+                 const startY = centerY + radius * Math.sin(startAngle);
+                 const endX = centerX + radius * Math.cos(endAngle);
+                 const endY = centerY + radius * Math.sin(endAngle);
 
-                // Určenie, či je oblúk väčší ako 180 stupňov
-                const largeArcFlag = (endPercent - startPercent) > 50 ? 1 : 0;
+                 const largeArcFlag = (endPercent - startPercent) > 50 ? 1 : 0;
 
-                // Vytvorenie SVG elementu <path>
-                const path = document.createElementNS(svgNS, "path");
-                const pathData = [
-                    `M ${centerX},${centerY}`, // Začiatok v strede
-                    `L ${startX},${startY}`, // Čiara k začiatku oblúka
-                    `A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX},${endY}`, // Oblúk
-                    'Z' // Zatvorenie cesty späť do stredu
-                ].join(' ');
-                path.setAttribute('d', pathData);
-                path.setAttribute('fill', item.color);
-                path.setAttribute('stroke', '#000'); // Tenký čierny okraj pre oddelenie
-                path.setAttribute('stroke-width', '0.5');
-                path.setAttribute('data-name', item.name); // Uloženie dát pre interakciu
-                path.setAttribute('data-value', item.value.toString());
+                 const path = document.createElementNS(svgNS, "path");
+                 const pathData = [
+                     `M ${centerX},${centerY}`,
+                     `L ${startX},${startY}`,
+                     `A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX},${endY}`,
+                     'Z'
+                 ].join(' ');
+                 path.setAttribute('d', pathData);
+                 path.setAttribute('fill', item.color);
+                 path.setAttribute('stroke', '#000');
+                 path.setAttribute('stroke-width', '0.5');
+                 path.setAttribute('data-name', item.name);
+                 path.setAttribute('data-value', item.value.toString());
 
-                // Event Listeners pre interaktivitu
-                path.addEventListener('mouseover', function() {
-                    if(pieInfo) {
-                        pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
-                        pieInfo.style.color = '#FFF'; // Zvýraznenie textu v strede
-                        pieInfo.style.fontWeight = 'normal';
-                    }
-                    highlightLegendItem(item.name); // Zvýraznenie v legende
-                    path.style.opacity = '0.8'; // Zníženie opacity výseku
-                });
-                path.addEventListener('mouseout', function() {
-                    if(pieInfo) {
-                        pieInfo.textContent = ''; // Vyčistenie textu v strede
-                        pieInfo.style.color = '#e5e7eb';
-                        pieInfo.style.fontWeight = 'normal';
-                    }
-                    resetLegendHighlight(); // Reset legendy
-                    path.style.opacity = '1'; // Vrátenie opacity
-                });
+                 path.addEventListener('mouseover', function() {
+                     if(pieInfo) {
+                         pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
+                         pieInfo.style.color = '#FFF';
+                         pieInfo.style.fontWeight = 'normal';
+                     }
+                     highlightLegendItem(item.name);
+                     path.style.opacity = '0.8';
+                 });
+                 path.addEventListener('mouseout', function() {
+                     if(pieInfo) {
+                         pieInfo.textContent = '';
+                         pieInfo.style.color = '#e5e7eb';
+                         pieInfo.style.fontWeight = 'normal';
+                     }
+                     resetLegendHighlight();
+                     path.style.opacity = '1';
+                 });
 
-                svg.appendChild(path);
-            });
+                 svg.appendChild(path);
+             });
 
-            // Vytvorenie vnútorného kruhu (donut efekt)
-            const circle = document.createElementNS(svgNS, "circle");
-            circle.setAttribute('cx', String(centerX));
-            circle.setAttribute('cy', String(centerY));
-            circle.setAttribute('r', '30'); // Polomer vnútorného kruhu
-            circle.setAttribute('fill', '#111827'); // Farba pozadia grafu
-            svg.appendChild(circle);
+             const circle = document.createElementNS(svgNS, "circle");
+             circle.setAttribute('cx', String(centerX));
+             circle.setAttribute('cy', String(centerY));
+             circle.setAttribute('r', '30');
+             circle.setAttribute('fill', '#111827');
+             svg.appendChild(circle);
 
-            pieContainer.appendChild(svg); // Pridanie SVG do DOM
-            pieInfo.textContent = ''; // Zabezpečenie, že stred je prázdny na začiatku
-            // pieContainer.appendChild(pieInfo); // pieInfo je už v DOM, len ho aktualizujeme
+             pieContainer.appendChild(svg);
+             pieInfo.textContent = '';
         }
 
         /**
@@ -877,29 +984,26 @@
          */
         function createGenderLegend() {
             const legendContainer = document.getElementById('gender-legend');
-            const pieInfo = document.getElementById('pie-info'); // Prepojenie s pieInfo pre hover efekt
+            const pieInfo = document.getElementById('pie-info');
             if (!legendContainer || !pieInfo) {
                 console.error("Chýba element #gender-legend alebo #pie-info pre legendu.");
                 return;
             }
-            legendContainer.innerHTML = ''; // Vyčistenie pred generovaním
+            legendContainer.innerHTML = '';
 
             genderData.forEach(item => {
                 const legendItem = document.createElement('div');
                 legendItem.className = 'legend-item';
-                legendItem.dataset.name = item.name; // Uloženie mena pre prepojenie s grafom
+                legendItem.dataset.name = item.name;
 
-                // Farebný box
                 const colorBox = document.createElement('div');
                 colorBox.className = 'color-box';
                 colorBox.style.backgroundColor = item.color;
 
-                // Textový popis
                 const textDiv = document.createElement('div');
                 textDiv.className = 'legend-text';
                 textDiv.textContent = item.name;
 
-                // Percentuálna hodnota
                 const percentDiv = document.createElement('div');
                 percentDiv.className = 'legend-percent';
                 percentDiv.textContent = `${item.value.toFixed(1).replace('.', ',')}%`;
@@ -908,24 +1012,23 @@
                 legendItem.appendChild(textDiv);
                 legendItem.appendChild(percentDiv);
 
-                // Event Listeners pre interaktivitu
                 legendItem.addEventListener('mouseover', () => {
-                    highlightLegendItem(item.name); // Zvýraznenie tejto položky legendy
+                    highlightLegendItem(item.name);
                     if(pieInfo) {
                         pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
                         pieInfo.style.color = '#FFF';
                         pieInfo.style.fontWeight = 'normal';
                     }
-                    highlightPieSlice(item.name, true); // Zvýraznenie príslušného výseku v grafe
+                    highlightPieSlice(item.name, true);
                 });
                 legendItem.addEventListener('mouseout', () => {
-                    resetLegendHighlight(); // Reset zvýraznenia legendy
+                    resetLegendHighlight();
                     if(pieInfo) {
                         pieInfo.textContent = '';
                         pieInfo.style.color = '#e5e7eb';
                         pieInfo.style.fontWeight = 'normal';
                     }
-                    highlightPieSlice(item.name, false); // Reset zvýraznenia výseku
+                    highlightPieSlice(item.name, false);
                 });
 
                 legendContainer.appendChild(legendItem);
@@ -938,7 +1041,7 @@
          */
         function highlightLegendItem(name) {
             document.querySelectorAll('#gender-legend .legend-item').forEach(item => {
-                item.style.backgroundColor = (item.dataset.name === name) ? '#1f2937' : ''; // Tmavšie pozadie pre aktívnu položku
+                item.style.backgroundColor = (item.dataset.name === name) ? '#1f2937' : '';
             });
         }
 
@@ -947,7 +1050,7 @@
          */
         function resetLegendHighlight() {
             document.querySelectorAll('#gender-legend .legend-item').forEach(item => {
-                item.style.backgroundColor = ''; // Vrátenie pôvodného pozadia
+                item.style.backgroundColor = '';
             });
         }
 
@@ -959,7 +1062,7 @@
         function highlightPieSlice(name, highlight) {
             document.querySelectorAll('#pie-chart svg path').forEach(path => {
                 if (path.getAttribute('data-name') === name) {
-                    path.style.opacity = highlight ? '0.8' : '1'; // Zmena opacity
+                    path.style.opacity = highlight ? '0.8' : '1';
                 }
             });
         }
@@ -975,26 +1078,24 @@
                  console.error("Chýba element #age-bars, #age-tooltip alebo #y-axis-labels pre stĺpcový graf.");
                  return;
              }
-             barContainer.innerHTML = ''; // Vyčistenie pred generovaním
-             yAxisLabelsContainer.innerHTML = ''; // Vyčistenie labelov osi
+             barContainer.innerHTML = '';
+             yAxisLabelsContainer.innerHTML = '';
 
-             const maxValue = 30; // Maximálna hodnota na Y osi (napr. 30%)
+             const maxValue = 30; // Max hodnota Y osi
 
-             // Generovanie labelov Y osi
-             const ySteps = [0, 6, 12, 18, 24, 30]; // Hodnoty na Y osi
+             // Generovanie Y osi
+             const ySteps = [0, 6, 12, 18, 24, 30];
              ySteps.forEach(value => {
                  const yLabelDiv = document.createElement('div');
                  yLabelDiv.className = 'y-label';
-                 const percentagePosition = (value / maxValue) * 100; // Pozícia v percentách výšky
+                 const percentagePosition = (value / maxValue) * 100;
                  yLabelDiv.style.position = 'absolute';
-                 yLabelDiv.style.bottom = `${percentagePosition}%`; // Pozícia odspodu
-                 yLabelDiv.style.transform = 'translateY(50%)'; // Vertikálne centrovanie textu
+                 yLabelDiv.style.bottom = `${percentagePosition}%`;
+                 yLabelDiv.style.transform = 'translateY(50%)';
                  yLabelDiv.textContent = `${value}%`;
 
-                 // Voliteľná čiara vedľa labelu
                  const yLine = document.createElement('div');
                  yLine.className = 'y-line';
-                 // Štýly pre y-line sú definované v CSS
                  yLabelDiv.appendChild(yLine);
 
                  yAxisLabelsContainer.appendChild(yLabelDiv);
@@ -1007,27 +1108,24 @@
 
                  const bar = document.createElement('div');
                  bar.className = 'bar';
-                 // Výpočet výšky stĺpca v percentách, orezanie na 0-100
                  const heightPercentage = Math.max(0, Math.min(100, (item.value / maxValue) * 100));
                  bar.style.height = `${heightPercentage}%`;
-                 bar.style.backgroundColor = ageBarColors[index % ageBarColors.length]; // Cyklické použitie farieb
+                 bar.style.backgroundColor = ageBarColors[index % ageBarColors.length];
 
-                 // Label pod stĺpcom (X os)
                  const label = document.createElement('div');
                  label.className = 'bar-label';
                  label.textContent = item.group;
 
-                 // Event Listeners pre tooltip
                  bar.addEventListener('mouseover', (e) => {
                      tooltip.innerHTML = `<strong>${item.group}:</strong> ${item.value.toFixed(1).replace('.', ',')}%`;
-                     tooltip.style.opacity = '1'; // Zobrazenie tooltipu
-                     positionTooltip(e, tooltip); // Nastavenie pozície
+                     tooltip.style.opacity = '1';
+                     positionTooltip(e, tooltip);
                  });
                  bar.addEventListener('mousemove', (e) => {
-                     positionTooltip(e, tooltip); // Aktualizácia pozície pri pohybe myši
+                     positionTooltip(e, tooltip);
                  });
                  bar.addEventListener('mouseout', () => {
-                     tooltip.style.opacity = '0'; // Skrytie tooltipu
+                     tooltip.style.opacity = '0';
                  });
 
                  barGroup.appendChild(bar);
@@ -1043,31 +1141,25 @@
          */
         function positionTooltip(event, tooltipElement) {
             const tooltipRect = tooltipElement.getBoundingClientRect();
-            let x = event.clientX + 15; // Pozícia vpravo od kurzora
-            let y = event.clientY - 15 - tooltipRect.height; // Pozícia nad kurzorom
+            let x = event.clientX + 15;
+            let y = event.clientY - 15 - tooltipRect.height;
 
-            // Korekcia, ak by tooltip vyšiel mimo obrazovky
-            if (y < 0) { // Ak by vyšiel nad horný okraj
-                y = event.clientY + 15; // Zobraziť pod kurzorom
-            }
-            if (x + tooltipRect.width > window.innerWidth) { // Ak by vyšiel za pravý okraj
-                x = event.clientX - 15 - tooltipRect.width; // Zobraziť vľavo od kurzora
-            }
+            if (y < 0) { y = event.clientY + 15; }
+            if (x + tooltipRect.width > window.innerWidth) { x = event.clientX - 15 - tooltipRect.width; }
 
             tooltipElement.style.left = `${x}px`;
             tooltipElement.style.top = `${y}px`;
         }
 
-        // --- Inicializácia a ostatný kód (Scroll animácie, Formulár) ---
+        // --- Inicializácia a ostatný kód ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializácia grafov s ošetrením chýb
+            // Inicializácia grafov
             try {
                 createSVGPieChart();
                 createGenderLegend();
                 createAgeBars();
             } catch (error) {
                 console.error("Chyba pri inicializácii vlastných grafov:", error);
-                // Tu by mohla byť záložná logika, napr. zobrazenie statických dát
             }
 
             // Inicializácia scroll animácií
@@ -1077,51 +1169,88 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
-                            // Voliteľne odpojiť observer po animácii pre výkon
-                            // observer.unobserve(entry.target);
                         }
-                        // Voliteľne: Odstrániť 'visible', ak element opustí viewport
-                        // else { entry.target.classList.remove('visible'); }
                     });
-                }, { threshold: 0.1 }); // Spustiť, keď je 10% elementu viditeľných
+                }, { threshold: 0.1 });
 
                 animatedElements.forEach(element => {
                     if (element) observer.observe(element);
                 });
             } else {
-                // Fallback pre staršie prehliadače bez IntersectionObserver
                 animatedElements.forEach(element => {
                     if (element) element.classList.add('visible');
                 });
             }
 
-            // Spracovanie kontaktného formulára (pre Netlify)
+            // Spracovanie kontaktného formulára (Netlify)
             const form = document.querySelector('form[name="contact"]');
             if (form) {
                 form.addEventListener('submit', (event) => {
-                    event.preventDefault(); // Zabránenie predvolenému odoslaniu
-
+                    event.preventDefault();
                     const formData = new FormData(form);
-                    fetch("/", { // Odoslanie na root pre Netlify Forms
+                    fetch("/", {
                         method: "POST",
                         headers: { "Content-Type": "application/x-www-form-urlencoded" },
                         body: new URLSearchParams(formData).toString()
                     })
                     .then(() => {
                         console.log("Form successfully submitted to Netlify");
-                        // Zobrazenie správy používateľovi (lepšie ako alert)
-                        // Napr. zobraziť ďakovnú správu v rámci stránky
                         alert('Ďakujeme za vašu správu! Bola úspešne odoslaná.');
-                        form.reset(); // Vyčistenie formulára
+                        form.reset();
                     })
                     .catch((error) => {
                         console.error("Form submission error:", error);
-                         // Zobrazenie chybovej správy používateľovi
                         alert('Pri odosielaní správy nastala chyba. Skúste to prosím neskôr.');
                     });
                 });
             } else {
                 console.warn("Kontaktný formulár (form[name='contact']) nebol nájdený.");
+            }
+
+            // --- Logika pre tlačidlo spustenia aplikácie (s inline vstupom) ---
+            const codeInput = document.getElementById('app-code-input');
+            const submitButton = document.getElementById('submit-code-button');
+            const accessMessage = document.getElementById('app-access-message');
+            const correctCode = "1317795"; // Prístupový kód
+            const appUrl = "https://whisper-trails-vldseman.replit.app/"; // URL aplikácie
+
+            if (codeInput && submitButton && accessMessage) {
+                 // Funkcia na overenie kódu
+                 const checkCode = () => {
+                    const enteredCode = codeInput.value.trim(); // Získanie hodnoty a odstránenie medzier
+
+                    if (enteredCode === correctCode) {
+                        // Správny kód
+                        accessMessage.textContent = "Kód správny. Otváram aplikáciu...";
+                        accessMessage.style.color = '#34d399'; // Zelená pre úspech
+                        window.open(appUrl, '_blank'); // Otvorenie v novom tabu/okne
+                        codeInput.value = ''; // Vyčistenie vstupu
+                        // Po krátkej chvíli vymazať správu
+                        setTimeout(() => { accessMessage.textContent = ''; }, 3000);
+                    } else {
+                        // Nesprávny alebo prázdny kód
+                        accessMessage.textContent = "Nesprávny kód. Skúste znova alebo kontaktujte autora.";
+                        accessMessage.style.color = '#f87171'; // Červená pre chybu
+                        codeInput.value = ''; // Vyčistenie vstupu
+                        codeInput.focus(); // Zameranie späť na vstup
+                        // Vymazať správu po 5 sekundách
+                        setTimeout(() => { accessMessage.textContent = ''; }, 5000);
+                    }
+                 };
+
+                 // Pridanie event listenera na tlačidlo
+                 submitButton.addEventListener('click', checkCode);
+
+                 // Pridanie event listenera na stlačenie Enter vo vstupnom poli
+                 codeInput.addEventListener('keypress', (event) => {
+                     if (event.key === 'Enter') {
+                         event.preventDefault(); // Zabránenie predvolenej akcii (napr. odoslanie formulára, ak by bol)
+                         checkCode(); // Spustenie overenia kódu
+                     }
+                 });
+
+            } else {
+                 console.warn("Elementy pre zadanie kódu aplikácie (#app-code-input, #submit-code-button, #app-access-message) neboli nájdené.");
             }
         });
     </script>
