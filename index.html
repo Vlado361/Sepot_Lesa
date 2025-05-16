@@ -7,15 +7,60 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
         <style>
+            :root {
+                --color-primary-deep-purple: #581C87; /* Hlboká fialová (ako tmavý ametyst) */
+                --color-primary-deep-purple-rgb: 88, 28, 135;
+                --color-primary-purple: #7E22CE;    /* Živšia fialová */
+                --color-primary-purple-rgb: 126, 34, 206;
+                --color-primary-violet: #A78BFA;    /* Svetlejšia fialová/levanduľová */
+                --color-primary-violet-rgb: 167, 139, 250;
+                --color-accent-pink: #F472B6;        /* Jasná ružová */
+                --color-accent-pink-rgb: 244, 114, 182;
+                --color-accent-blood-red: #660000;  /* Tmavá krvavo červená pre hororové detaily (subtílne) */
+                --color-accent-blood-red-rgb: 102,0,0;
+
+                --color-bg-main: #0A0A0C;
+                --color-bg-content-box: rgba(16, 16, 20, 0.75); /* Pozadie pre väčšie kontajnerové boxy */
+                --color-bg-card: #101014;            /* Pozadie pre menšie karty/boxy */
+                --color-border-soft: #25252D;        /* Jemné orámovanie boxov */
+                --color-border-medium: #374151;      /* Pôvodný border-gray-800 */
+
+                --color-text-main: #EAEAEA;
+                --color-text-muted: #A0A0B0;
+                --color-text-subtle: #707080;
+            }
+
             /* Základné štýly */
             *, *::before, *::after { box-sizing: border-box; }
             body {
-                background-color: #000; color: #e5e7eb;
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                background-color: var(--color-bg-main); color: var(--color-text-main);
+                font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 overflow-x: hidden; margin: 0;
             }
             html { scroll-behavior: smooth; overflow-x: hidden; }
+
+            /* Creepy aura efekt na pozadí */
+            body::after {
+                content: '';
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background:
+                    radial-gradient(circle at 10% 20%, rgba(var(--color-primary-deep-purple-rgb), 0.07) 0%, transparent 40%),
+                    radial-gradient(circle at 80% 70%, rgba(var(--color-accent-blood-red-rgb), 0.05) 0%, transparent 35%);
+                background-size: 250% 250%;
+                animation: creepy-aura 25s linear infinite alternate;
+                z-index: -10;
+                pointer-events: none;
+            }
+            @keyframes creepy-aura {
+                0% { background-position: 0% 0%; }
+                100% { background-position: 100% 100%; }
+            }
+
 
             /* Hero sekcia */
             #home {
@@ -23,31 +68,31 @@
                 background-size: cover;
                 background-attachment: fixed;
             }
-            .static-noise { background: repeating-linear-gradient(rgba(255,255,255,0.02) 0 1px, transparent 1px 2px), repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 2px); }
+            .static-noise { background: repeating-linear-gradient(rgba(255,255,255,0.015) 0 1px, transparent 1px 2px), repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 2px); }
 
             /* Textové efekty */
             .frequency-text, .gradient-text {
-                background: linear-gradient(to right, #9333ea, #ec4899);
+                background: linear-gradient(to right, var(--color-primary-purple), var(--color-accent-pink));
                 -webkit-background-clip: text; background-clip: text; color: transparent;
             }
-            /* Upravený gradient pre dôležité titulky - odstránená červená */
             .gradient-text-intense {
-                background: linear-gradient(45deg, #9333ea 0%, #a78bfa 50%, #ec4899 100%);
+                background: linear-gradient(45deg, var(--color-primary-deep-purple) 0%, var(--color-primary-violet) 50%, var(--color-accent-pink) 100%);
                 -webkit-background-clip: text; background-clip: text; color: transparent;
-                text-shadow: 0 0 10px rgba(147, 51, 234, 0.3); /* Tieň upravený na fialovú */
+                text-shadow: 0 0 12px rgba(var(--color-primary-violet-rgb), 0.35);
             }
 
             /* Audio prehrávač */
             audio { filter: contrast(70%) brightness(150%); border-radius: 5px; width: 100%; margin-top: 10px; }
+            audio[data-playing="true"] { box-shadow: 0 0 15px rgba(var(--color-primary-purple-rgb), 0.4); }
 
             /* Glitch efekt */
             .glitch-effect { position: relative; color: white; display: inline-block; }
             .glitch-effect::before, .glitch-effect::after {
                 content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-                overflow: hidden; background: black; clip-path: inset(50% 0 50% 0);
+                overflow: hidden; background: var(--color-bg-main); clip-path: inset(50% 0 50% 0);
             }
-            .glitch-effect::before { left: -1px; text-shadow: 1px 0 cyan; animation: glitch-anim-before 3s infinite linear alternate-reverse; mix-blend-mode: screen; }
-            .glitch-effect::after { left: 1px; text-shadow: -1px 0 red; animation: glitch-anim-after 2s infinite linear alternate-reverse; mix-blend-mode: screen; }
+            .glitch-effect::before { left: -1px; text-shadow: 1px 0 var(--color-primary-violet); animation: glitch-anim-before 3s infinite linear alternate-reverse; mix-blend-mode: screen; }
+            .glitch-effect::after { left: 1px; text-shadow: -1px 0 var(--color-accent-blood-red); animation: glitch-anim-after 2s infinite linear alternate-reverse; mix-blend-mode: screen; }
 
             @keyframes glitch-anim-before {0%,100%{clip-path:inset(40% 0 60% 0);transform:translate(0,0)}5%{clip-path:inset(20% 0 15% 0);transform:translate(-5px,2px)}10%{clip-path:inset(80% 0 5% 0);transform:translate(3px,-1px)}15%{clip-path:inset(5% 0 90% 0);transform:translate(-4px,3px)}20%{clip-path:inset(60% 0 38% 0);transform:translate(2px,-2px)}25%{clip-path:inset(10% 0 85% 0);transform:translate(-3px,4px)}30%{clip-path:inset(90% 0 1% 0);transform:translate(4px,-3px)}35%{clip-path:inset(30% 0 65% 0);transform:translate(-2px,1px)}40%{clip-path:inset(70% 0 25% 0);transform:translate(5px,-4px)}45%{clip-path:inset(50% 0 48% 0);transform:translate(-1px,2px)}50%{clip-path:inset(25% 0 70% 0);transform:translate(3px,-1px)}55%{clip-path:inset(85% 0 10% 0);transform:translate(-4px,3px)}60%{clip-path:inset(45% 0 50% 0);transform:translate(1px,-2px)}65%{clip-path:inset(5% 0 92% 0);transform:translate(-2px,4px)}70%{clip-path:inset(95% 0 2% 0);transform:translate(4px,-3px)}75%{clip-path:inset(35% 0 60% 0);transform:translate(-3px,1px)}80%{clip-path:inset(65% 0 30% 0);transform:translate(2px,-4px)}85%{clip-path:inset(15% 0 80% 0);transform:translate(-1px,2px)}90%{clip-path:inset(75% 0 20% 0);transform:translate(3px,-1px)}95%{clip-path:inset(28% 0 68% 0);transform:translate(-4px,3px)}}
             @keyframes glitch-anim-after {0%,100%{clip-path:inset(60% 0 40% 0);transform:translate(0,0)}4%{clip-path:inset(10% 0 85% 0);transform:translate(4px,-2px)}8%{clip-path:inset(90% 0 5% 0);transform:translate(-2px,1px)}12%{clip-path:inset(25% 0 70% 0);transform:translate(5px,-3px)}16%{clip-path:inset(70% 0 28% 0);transform:translate(-3px,2px)}20%{clip-path:inset(20% 0 75% 0);transform:translate(2px,-4px)}24%{clip-path:inset(80% 0 8% 0);transform:translate(-5px,3px)}28%{clip-path:inset(40% 0 55% 0);transform:translate(1px,-1px)}32%{clip-path:inset(75% 0 22% 0);transform:translate(-4px,4px)}36%{clip-path:inset(52% 0 45% 0);transform:translate(3px,-2px)}40%{clip-path:inset(18% 0 78% 0);transform:translate(-2px,1px)}44%{clip-path:inset(88% 0 2% 0);transform:translate(4px,-3px)}48%{clip-path:inset(30% 0 68% 0);transform:translate(-1px,2px)}52%{clip-path:inset(68% 0 29% 0);transform:translate(3px,-4px)}56%{clip-path:inset(8% 0 90% 0);transform:translate(-4px,1px)}60%{clip-path:inset(55% 0 40% 0);transform:translate(2px,-2px)}64%{clip-path:inset(22% 0 72% 0);transform:translate(-3px,3px)}68%{clip-path:inset(92% 0 5% 0);transform:translate(5px,-1px)}72%{clip-path:inset(48% 0 50% 0);transform:translate(-2px,4px)}76%{clip-path:inset(5% 0 88% 0);transform:translate(1px,-3px)}80%{clip-path:inset(60% 0 35% 0);transform:translate(-4px,1px)}84%{clip-path:inset(32% 0 62% 0);transform:translate(3px,-2px)}88%{clip-path:inset(85% 0 12% 0);transform:translate(-1px,4px)}92%{clip-path:inset(42% 0 55% 0);transform:translate(4px,-1px)}96%{clip-path:inset(12% 0 82% 0);transform:translate(-2px,3px)}}
@@ -55,253 +100,250 @@
             /* Animácie */
             @keyframes flicker { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.1; } }
             @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.7; } }
-            @keyframes button-pulse { 0% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.5); } 70% { box-shadow: 0 0 0 15px rgba(147, 51, 234, 0); } 100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); } }
+            @keyframes button-pulse { 0% { box-shadow: 0 0 0 0 rgba(var(--color-primary-purple-rgb), 0.5); } 70% { box-shadow: 0 0 0 15px rgba(var(--color-primary-purple-rgb), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--color-primary-purple-rgb), 0); } }
             .cta-button-pulse { animation: button-pulse 2s infinite; }
+
+            /* Základný štýl pre "karty" / menšie boxy */
+            .modern-card {
+                background-color: var(--color-bg-card);
+                border: 1px solid var(--color-border-soft);
+                border-radius: 0.75rem; /* 12px */
+                box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+                transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+            }
+            .modern-card:hover {
+                transform: translateY(-6px) scale(1.015);
+                border-color: var(--color-primary-purple);
+                box-shadow: 0 10px 25px rgba(var(--color-primary-purple-rgb), 0.22), 0 0 0 1px var(--color-primary-purple);
+            }
+
+            /* Štýl pre väčšie kontajnerové boxy */
+            .content-container-box {
+                background-color: var(--color-bg-content-box);
+                border: 1px solid var(--color-border-soft);
+                border-radius: 1rem; /* 16px */
+                box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+                backdrop-filter: blur(10px);
+                position: relative;
+                overflow: hidden;
+                transition: border-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            }
+            .content-container-box:hover {
+              border-color: var(--color-primary-violet);
+              box-shadow: 0 10px 30px rgba(var(--color-primary-violet-rgb), 0.18);
+            }
 
             /* Grafy */
             .charts-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-            .chart { background-color: #111827; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.2); padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px; }
-            .chart h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: #e5e7eb; border-bottom: 1px solid #374151; padding-bottom: 10px; text-shadow: 0 0 8px rgba(196, 181, 253, 0.5); }
+            .chart {
+                 padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
+            }
+            .chart h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: var(--color-text-main); border-bottom: 1px solid var(--color-border-medium); padding-bottom: 10px; text-shadow: 0 0 8px rgba(var(--color-primary-violet-rgb), 0.5); }
             .gender-chart { position: relative; margin: 0 auto; }
             .pie-container { width: 200px; height: 200px; position: relative; margin: 0 auto; }
-            .pie-center { position: absolute; width: 100px; height: 100px; background: #000; color: #e5e7eb; border: 1px solid #374151; border-radius: 50%; top: 50px; left: 50px; z-index: 10; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; font-weight: normal; box-shadow: 0 0 10px rgba(0,0,0,0.1); min-height: 1.2em; }
+            .pie-center { position: absolute; width: 100px; height: 100px; background: var(--color-bg-main); color: var(--color-text-main); border: 1px solid var(--color-border-medium); border-radius: 50%; top: 50px; left: 50px; z-index: 10; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; font-weight: normal; box-shadow: 0 0 10px rgba(0,0,0,0.1); min-height: 1.2em; }
             .pie-container svg path { transition: opacity 0.2s ease-in-out; cursor: pointer; }
             .pie-container svg path:hover { opacity: 0.8; }
             .gender-legend { margin-top: 30px; }
-            .legend-item { display: flex; align-items: center; margin-bottom: 10px; justify-content: space-between; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; color: #d1d5db; }
-            .legend-item:hover { background-color: #1f2937; }
+            .legend-item { display: flex; align-items: center; margin-bottom: 10px; justify-content: space-between; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; color: var(--color-text-muted); }
+            .legend-item:hover { background-color: var(--color-border-soft); }
             .color-box { width: 15px; height: 15px; border-radius: 50%; display: inline-block; margin-right: 10px; border: 1px solid rgba(255, 255, 255, 0.1); }
             .legend-text { flex-grow: 1; }
-            .legend-percent { font-weight: bold; color: #e5e7eb; }
+            .legend-percent { font-weight: bold; color: var(--color-text-main); }
             .age-chart { height: 350px; position: relative; margin-top: 30px; padding-left: 40px; }
-            .bar-container { position: relative; height: 300px; display: flex; align-items: flex-end; margin-bottom: 40px; padding-right: 10px; border-left: 1px solid #374151; border-bottom: 1px solid #374151; }
+            .bar-container { position: relative; height: 300px; display: flex; align-items: flex-end; margin-bottom: 40px; padding-right: 10px; border-left: 1px solid var(--color-border-medium); border-bottom: 1px solid var(--color-border-medium); }
             .bar-group { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; margin: 0 4px; position: relative; }
             .bar { width: 70%; transition: all 0.2s ease-in-out; cursor: pointer; border-radius: 3px 3px 0 0; }
             .bar:hover { opacity: 0.8; transform: scaleY(1.02); transform-origin: bottom; }
-            .bar-label { position: absolute; bottom: -30px; width: 100%; text-align: center; font-size: 11px; color: #9ca3af; }
-            .tooltip { position: fixed; background-color: rgba(0, 0, 0, 0.85); color: white; padding: 8px 12px; border-radius: 4px; font-size: 13px; pointer-events: none; z-index: 100; opacity: 0; transition: opacity 0.2s; box-shadow: 0 2px 10px rgba(0,0,0,0.2); white-space: nowrap; }
+            .bar-label { position: absolute; bottom: -30px; width: 100%; text-align: center; font-size: 11px; color: var(--color-text-subtle); }
+            .tooltip { position: fixed; background-color: rgba(10,10,12, 0.9); color: white; padding: 8px 12px; border-radius: 4px; font-size: 13px; pointer-events: none; z-index: 100; opacity: 0; transition: opacity 0.2s; box-shadow: 0 2px 10px rgba(0,0,0,0.3); white-space: nowrap; border: 1px solid var(--color-border-soft) }
             .y-axis { position: absolute; left: 0; bottom: 0; top: 0; height: 300px; width: 35px; display: flex; flex-direction: column; justify-content: space-between; }
-            .y-label { font-size: 11px; color: #9ca3af; position: relative; text-align: right; padding-right: 5px; }
-            .y-line { position: absolute; left: 100%; top: 50%; transform: translateY(-50%); width: calc(100vw - 50px); max-width: 400px; height: 1px; background-color: #374151; z-index: -1; }
-            .chart-title { display: block; font-size: 12px; text-align: center; margin-top: 10px; color: #9ca3af; }
+            .y-label { font-size: 11px; color: var(--color-text-subtle); position: relative; text-align: right; padding-right: 5px; }
+            .y-line { position: absolute; left: 100%; top: 50%; transform: translateY(-50%); width: calc(100vw - 50px); max-width: 400px; height: 1px; background-color: var(--color-border-medium); z-index: -1; }
+            .chart-title { display: block; font-size: 12px; text-align: center; margin-top: 10px; color: var(--color-text-subtle); }
 
             /* Recenzie */
-            .review-card { background-color: #111827; border: 1px solid #374151; backdrop-filter: blur(5px); }
-            .review-card .fa-quote-left { color: #a78bfa; }
-            .review-author { color: #9ca3af; }
+            .review-card {
+                backdrop-filter: blur(5px);
+            }
+            .review-card .fa-quote-left { color: var(--color-primary-violet); }
+            .review-author { color: var(--color-text-muted); }
 
             /* Ripple efekt tlačidla */
             .button-ripple { position: relative; overflow: hidden; }
-            .button-ripple > span.ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple-animation 0.6s linear; background-color: rgba(255, 255, 255, 0.5); pointer-events: none; }
+            .button-ripple > span.ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple-animation 0.6s linear; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
             @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
 
-            /* Hover efekty pre sekcie */
-            #tracks .bg-gray-900 { transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; }
-            #tracks .bg-gray-900:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 12px 28px rgba(147, 51, 234, 0.25); }
+            img.interactive-hover {
+                transition: filter 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+                filter: grayscale(50%) brightness(0.85) contrast(1.05);
+                border-radius: 0.5rem;
+            }
+            img.interactive-hover:hover {
+                filter: grayscale(0%) brightness(1) contrast(1);
+                transform: scale(1.03);
+                box-shadow: 0 0 18px 4px rgba(var(--color-primary-purple-rgb), 0.35),
+                            0 0 7px 2px rgba(var(--color-accent-pink-rgb), 0.25);
+            }
+            #tracks .modern-card { transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; }
+            #tracks .modern-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 12px 28px rgba(var(--color-primary-purple-rgb), 0.25); }
             #tracks img { transition: filter 0.4s ease, transform 0.4s ease; filter: grayscale(80%); }
-            #tracks .bg-gray-900:hover img { filter: grayscale(0); transform: scale(1.05); }
-            #partner-benefits .bg-black, #reviews .review-card, #appeal .bg-gray-900, #stats .bg-gray-900, #author .bg-black, #contact .bg-black, #player-content .bg-black, #player-content .bg-gray-900 {
-                transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out; border-color: #374151;
-            }
-            #partner-benefits .bg-black:hover, #reviews .review-card:hover, #appeal .bg-gray-900:hover, #stats .bg-gray-900:hover, #author .bg-black:hover, #contact .bg-black:hover, #player-content .bg-black:hover, #player-content .bg-gray-900:hover {
-                transform: translateY(-6px) scale(1.02); box-shadow: 0 10px 25px rgba(147, 51, 234, 0.2); border-color: #a78bfa;
-            }
-            audio[data-playing="true"] { box-shadow: 0 0 15px rgba(147, 51, 234, 0.4); }
+            #tracks .modern-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+
             .hidden { display: none !important; }
 
             /* Štýly pre sekciu Hráč */
-            #player-content .character-card { background-color: #111827; border: 1px solid #374151; backdrop-filter: blur(5px); }
+            #player-content .character-card {
+                 backdrop-filter: blur(5px);
+            }
             #player-content .character-card img { aspect-ratio: 1 / 1; object-fit: cover; }
             #player-about-image { max-height: 400px; object-fit: cover; }
+
 
             /* Základné štýly pre content-block (flexbox) */
             .content-block { display: flex; flex-direction: column; align-items: center; gap: 4rem; }
             .content-block.reverse { flex-direction: column-reverse; }
             @media (min-width: 768px) {
-                .content-block { flex-direction: row; align-items: center; }
+                .content-block { flex-direction: row; align-items: center; } /* Zmenené z center na flex-start pre lepšie zarovnanie ak je rôzna výška */
                 .content-block.reverse { flex-direction: row-reverse; }
             }
             .content-block .text-content, .content-block .image-content { flex: 1; width: 100%; }
             @media (min-width: 768px) { .content-block .text-content, .content-block .image-content { width: auto; } }
 
-            /* Upravené štýly pre obtekanie textu okolo obrázka v sekcii Autor */
-            /* Obrázok je teraz vnútri .text-content a pláva */
+            /* Optimalizované obtekanie textu okolo obrázka v sekcii Autor */
             #author .content-block .text-content .author-image-float,
-            #player-creator .content-block .text-content .author-image-float { /* Pridaný selektor pre player-creator */
-                float: left; /* Obrázok bude obtekaný textom */
-                margin-right: 2rem; /* Odsadenie od textu */
-                margin-bottom: 1rem; /* Odsadenie pod obrázkom */
-                max-width: 250px; /* Maximálna šírka obrázka */
-                height: auto; /* Zachovanie pomeru strán */
-                border-radius: 9999px; /* Plne zaoblené */
-                border: 4px solid rgba(147, 83, 234, 0.5); /* Okraj */
+            #player-creator .content-block .text-content .author-image-float {
+                float: left;
+                margin-right: 0.5rem; /* Menší margin, hlavné odsadenie rieši shape-margin */
+                margin-bottom: 1rem;
+                max-width: 250px;
+                width: 40%; /* Umožní obrázku byť menší ak je málo miesta, ale max 250px */
+                height: auto;
+                border-radius: 50%; /* Pre shape-outside: circle() a vizuálny efekt */
+                border: 4px solid rgba(var(--color-primary-purple-rgb), 0.5);
+                shape-outside: circle(50%);
+                shape-margin: 1.5rem; /* Odsadenie textu od kruhového tvaru */
             }
+
+            /* Clearfix pre kontajner s floatovaným obrázkom */
+            #author .content-block .text-content,
+            #player-creator .content-block .text-content {
+                overflow: hidden; /* Jednoduchší clearfix, alternatívne pseudo-element ::after */
+            }
+            /* Ak by overflow: hidden spôsobovalo problémy, použiť toto:
+            #author .content-block .text-content::after,
+            #player-creator .content-block .text-content::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            */
+
              /* Pre mobilné zobrazenie (pod 768px) zrušíme float a zarovnáme obrázok na stred */
             @media (max-width: 767px) {
                 #author .content-block .text-content .author-image-float,
-                #player-creator .content-block .text-content .author-image-float { /* Pridaný selektor pre player-creator */
-                    float: none; /* Zrušiť float */
-                    margin-right: auto; /* Zarovnať na stred */
-                    margin-left: auto; /* Zarovnať na stred */
-                    display: block; /* Zobraziť ako blokový element pre margin auto */
-                    margin-bottom: 2rem; /* Väčšie odsadenie pod obrázkom na mobile */
+                #player-creator .content-block .text-content .author-image-float {
+                    float: none;
+                    margin-right: auto;
+                    margin-left: auto;
+                    display: block;
+                    margin-bottom: 2rem;
+                    width: 60%; /* Na mobile môže byť obrázok trochu väčší percentuálne */
+                    max-width: 200px; /* Ale nie príliš veľký absolútne */
+                    shape-outside: none; /* Zrušiť shape-outside */
+                    shape-margin: 0;     /* Zrušiť shape-margin */
                 }
-                 /* Text v sekcii Autor a Player Creator na mobile zarovnáme na stred */
                 #author .content-block .text-content,
-                #player-creator .content-block .text-content { /* Pridaný selektor pre player-creator */
+                #player-creator .content-block .text-content {
                     text-align: center;
+                    overflow: visible; /* Na mobile nepotrebujeme clearfix, ak float nie je aktívny */
                 }
             }
+
 
             /* Upravené vertikálne medzery medzi sekciami */
-            section {
-                padding-top: 4rem; /* py-16 */
-                padding-bottom: 4rem; /* py-16 */
-                padding-left: 1rem; /* px-4 */
-                padding-right: 1rem; /* px-4 */
-            }
+            section { padding-top: 4rem; padding-bottom: 4rem; padding-left: 1rem; padding-right: 1rem; }
 
             /* Oddeľovač sekcií */
-            .section-divider { height: 1px; width: 80%; margin: 4rem auto; background: linear-gradient(to right, transparent, #9333ea, #ec4899, transparent); position: relative; animation: pulse-divider 3s infinite alternate; }
-            .section-divider::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); width: 10px; height: 10px; background: linear-gradient(to right, #9333ea, #ec4899); border-radius: 50%; box-shadow: 0 0 8px rgba(147, 51, 234, 0.7); animation: pulse-dot 3s infinite alternate; }
+            .section-divider { height: 1px; width: 80%; margin: 4rem auto; background: linear-gradient(to right, transparent, var(--color-primary-deep-purple), var(--color-accent-pink), transparent); position: relative; animation: pulse-divider 3s infinite alternate; }
+            .section-divider::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); width: 10px; height: 10px; background: linear-gradient(to right, var(--color-primary-purple), var(--color-accent-pink)); border-radius: 50%; box-shadow: 0 0 8px rgba(var(--color-primary-purple-rgb), 0.7); animation: pulse-dot 3s infinite alternate; }
             @keyframes pulse-divider { 0% { opacity: 0.7; } 100% { opacity: 1; } }
-            @keyframes pulse-dot { 0% { transform: translate(-50%, -50%) scale(0.8); box-shadow: 0 0 5px rgba(147, 51, 234, 0.5); } 100% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 15px rgba(236, 72, 153, 0.8); } }
+            @keyframes pulse-dot { 0% { transform: translate(-50%, -50%) scale(0.8); box-shadow: 0 0 6px rgba(var(--color-primary-purple-rgb), 0.5); } 100% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 18px rgba(var(--color-accent-pink-rgb), 0.8); } }
 
             /* Modal (GDPR) */
-            .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; backdrop-filter: blur(3px); }
+            .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.88); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; backdrop-filter: blur(4px); }
             .modal-overlay.visible { opacity: 1; visibility: visible; }
-            .modal-content { background-color: #111827; color: #e5e7eb; padding: 30px; border-radius: 10px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s ease-out, opacity 0.3s ease-out; border: 1px solid #4b0082; box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3); }
+            .modal-content { background-color: var(--color-bg-card); color: var(--color-text-main); padding: 30px; border-radius: 10px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s ease-out, opacity 0.3s ease-out; border: 1px solid var(--color-primary-purple); box-shadow: 0 10px 30px rgba(var(--color-primary-purple-rgb), 0.35); }
             .modal-overlay.visible .modal-content { transform: translateY(0) scale(1); opacity: 1; }
-            .modal-content h3 { font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center; color: #a78bfa; }
-            .modal-content p { margin-bottom: 15px; line-height: 1.6; font-size: 15px; color: #d1d5db; }
-            .modal-content a { color: #a78bfa; text-decoration: underline; }
-            .modal-content a:hover { color: #c4b5fd; }
+            .modal-content h3 { font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center; color: var(--color-primary-violet); }
+            .modal-content p { margin-bottom: 15px; line-height: 1.6; font-size: 15px; color: var(--color-text-muted); }
+            .modal-content a { color: var(--color-primary-violet); text-decoration: underline; }
+            .modal-content a:hover { color: var(--color-accent-pink); }
             .modal-footer { margin-top: 25px; text-align: center; }
-            .modal-close-button { padding: 10px 25px; font-size: 1rem; font-weight: 600; border-radius: 6px; background-color: #9333ea; color: white; border: none; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; box-shadow: 0 4px 10px rgba(147, 51, 234, 0.4); }
-            .modal-close-button:hover { background-color: #7e22ce; transform: translateY(-2px); }
+            .modal-close-button { padding: 10px 25px; font-size: 1rem; font-weight: 600; border-radius: 6px; background-color: var(--color-primary-purple); color: white; border: none; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; box-shadow: 0 4px 10px rgba(var(--color-primary-purple-rgb), 0.4); }
+            .modal-close-button:hover { background-color: var(--color-primary-deep-purple); transform: translateY(-2px); }
             .modal-close-button:active { transform: scale(0.98) translateY(0); }
 
             /* App Download Sekcia */
             .app-download-section {
-                background: linear-gradient(135deg, #1a112a 0%, #0d0617 100%); /* Deep purple gradient */
-                border-radius: 1.5rem; /* 2xl */
-                padding: 4rem 2rem; /* Upravené na py-16 */
-                margin: 4rem auto; /* Upravené na my-16 */
-                text-align: center;
-                box-shadow: 0 25px 50px -12px rgba(120, 0, 255, 0.25), 0 0 15px rgba(236, 72, 153, 0.2); /* Enhanced shadow */
-                border: 1px solid #4a00e0; /* Indigo border */
-                position: relative;
-                overflow: hidden; /* For pseudo-elements */
+                background: linear-gradient(135deg, var(--color-primary-deep-purple) 0%, #08040E 100%);
+                border-radius: 1.5rem; padding: 4rem 2rem; margin: 4rem auto; text-align: center;
+                box-shadow: 0 25px 50px -12px rgba(var(--color-primary-purple-rgb), 0.3), 0 0 15px rgba(var(--color-accent-pink-rgb), 0.25);
+                border: 1px solid var(--color-primary-purple);
+                position: relative; overflow: hidden;
             }
-            .app-download-section::before { /* Subtle animated background pattern */
-                content: "";
-                position: absolute;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background-image: radial-gradient(circle at 20% 20%, rgba(147, 51, 234, 0.08) 0%, transparent 40%),
-                                 radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.06) 0%, transparent 30%);
-                background-size: 300% 300%;
-                animation: bg-pan 15s linear infinite;
-                z-index: 0;
+            .app-download-section::before {
+                content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+                background-image: radial-gradient(circle at 20% 20%, rgba(var(--color-primary-purple-rgb), 0.1) 0%, transparent 40%),
+                                 radial-gradient(circle at 80% 70%, rgba(var(--color-accent-pink-rgb), 0.08) 0%, transparent 30%);
+                background-size: 300% 300%; animation: bg-pan 15s linear infinite; z-index: 0;
             }
             @keyframes bg-pan { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
-
-            .app-download-content { position: relative; z-index: 1; } /* Content above pseudo-element */
-
+            .app-download-content { position: relative; z-index: 1; }
             .app-download-title {
-                font-size: 2.8rem; /* text-5xl */
-                font-weight: 800; /* font-extrabold */
-                color: #fff;
-                margin-bottom: 1rem; /* mb-4 */
-                text-shadow: 0 2px 15px rgba(236, 72, 153, 0.5);
+                font-size: 2.8rem; font-weight: 800; color: #fff; margin-bottom: 1rem;
+                text-shadow: 0 2px 15px rgba(var(--color-accent-pink-rgb), 0.5);
             }
-            .app-download-subtitle {
-                font-size: 1.25rem; /* text-xl */
-                color: #d1d5db; /* text-gray-300 */
-                margin-bottom: 2.5rem; /* mb-10 */
-                max-width: 600px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+            .app-download-subtitle { font-size: 1.25rem; color: var(--color-text-muted); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
             .app-download-favicon {
-                width: 10rem; /* w-40 */
-                height: 10rem; /* h-40 */
-                object-fit: contain;
-                margin-bottom: 2rem; /* mb-8 */
-                filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.4));
-                border-radius: 1.5rem; /* rounded-2xl for a softer look than full */
+                width: 10rem; height: 10rem; object-fit: contain; margin-bottom: 2rem;
+                filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.4)); border-radius: 1.5rem;
                 transition: transform 0.3s ease-in-out;
             }
             .app-download-favicon:hover { transform: scale(1.05); }
-
             .app-download-qr-container {
-                margin-bottom: 2rem; /* mb-8 */
-                display: inline-block;
-                padding: 0.75rem; /* p-3 */
-                background-color: rgba(255,255,255,0.05);
-                border-radius: 1rem; /* rounded-xl */
-                border: 1px solid rgba(255,255,255,0.1);
+                margin-bottom: 2rem; display: inline-block; padding: 0.75rem;
+                background-color: rgba(255,255,255,0.05); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1);
             }
-            .app-download-qr {
-                width: 11rem; /* w-44 */
-                height: 11rem; /* h-44 */
-                border-radius: 0.5rem; /* rounded-lg */
-                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            }
-            /* Upravené pre zarovnanie tlačidla na stred */
-            .app-download-button-container {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 1.5rem; /* mb-6 */
-            }
+            .app-download-qr { width: 11rem; height: 11rem; border-radius: 0.5rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+            .app-download-button-container { display: flex; justify-content: center; margin-bottom: 1.5rem; }
             .app-store-button {
-                display: inline-flex; /* For icon alignment */
-                align-items: center;
-                justify-content: center;
-                background-image: linear-gradient(to right, #8A2387, #E94057, #F27121); /* Vibrant gradient */
-                color: #ffffff;
-                font-weight: bold;
-                padding: 1rem 2.5rem; /* py-4 px-10 for bigger button */
-                border-radius: 9999px; /* rounded-full */
-                box-shadow: 0 10px 20px rgba(233, 64, 87, 0.3); /* shadow-lg with button color */
-                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition */
-                transform: translateY(0);
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+                display: inline-flex; align-items: center; justify-content: center;
+                background-image: linear-gradient(to right, var(--color-primary-purple), var(--color-accent-pink), #B71C1C); /* Tmavšia červená na konci */
+                color: #ffffff; font-weight: bold; padding: 1rem 2.5rem; border-radius: 9999px;
+                box-shadow: 0 10px 20px rgba(var(--color-accent-pink-rgb), 0.3);
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateY(0);
+                text-transform: uppercase; letter-spacing: 0.05em;
             }
-            .app-store-button:hover {
-                transform: translateY(-3px) scale(1.03);
-                box-shadow: 0 15px 25px rgba(233, 64, 87, 0.4);
-            }
-            .app-store-button:active {
-                transform: translateY(-1px) scale(1.01);
-                box-shadow: 0 8px 15px rgba(233, 64, 87, 0.3);
-            }
-            .app-store-button i.fa-apple {
-                margin-right: 0.75rem; /* mr-3 */
-                font-size: 1.5rem; /* text-2xl */
-            }
-            .app-download-text {
-                margin-top: 1.5rem; /* mt-6 */
-                font-size: 0.875rem; /* text-sm */
-                color: #9ca3af; /* text-gray-400 */
-            }
+            .app-store-button:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 25px rgba(var(--color-accent-pink-rgb), 0.4); }
+            .app-store-button:active { transform: translateY(-1px) scale(1.01); box-shadow: 0 8px 15px rgba(var(--color-accent-pink-rgb), 0.3); }
+            .app-store-button i.fa-apple { margin-right: 0.75rem; font-size: 1.5rem; }
+            .app-download-text { margin-top: 1.5rem; font-size: 0.875rem; color: var(--color-text-subtle); }
 
         </style>
     </head>
-    <body class="bg-black text-gray-100 font-sans">
-        <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.03), transparent)"></div>
+    <body class="bg-black text-gray-100 font-sans"> <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(var(--color-accent-pink-rgb), 0.03), transparent)"></div>
         <div class="fixed inset-0 pointer-events-none z-40 opacity-5"><div class="absolute inset-0 static-noise"></div></div>
 
         <header id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black" style="background-image: url('https://i.imgur.com/ST2nkj5.png');">
-            <div class="absolute inset-0 bg-gradient-to-b from-black to-gray-900 opacity-95 z-0"></div>
-            <div class="absolute inset-0 z-0 pointer-events-none opacity-20" style="background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px)"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-gray-900/90 opacity-95 z-0"></div> <div class="absolute inset-0 z-0 pointer-events-none opacity-20" style="background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px)"></div>
             <div class="container mx-auto px-4 text-center z-10">
                 <div class="frequency-text mb-2 text-xs md:text-sm tracking-widest font-medium">127.5 MHz</div>
                 <h1 class="glitch-effect text-5xl md:text-7xl font-bold mb-4 text-white relative" data-text="Šepot lesa">
                     Šepot lesa
-                <span class="absolute inset-0 opacity-50 blur-sm" style="animation: pulse 3s infinite alternate; background: radial-gradient(circle, rgba(147, 51, 234, 0.3), transparent 70%); border-radius: 50%"></span>
+                <span class="absolute inset-0 opacity-50 blur-sm" style="animation: pulse 3s infinite alternate; background: radial-gradient(circle, rgba(var(--color-primary-purple-rgb), 0.3), transparent 70%); border-radius: 50%"></span>
                 </h1>
-                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Interaktívna audiohra o tichu, vine a hľadaní pravdy v hlbinách lesa.</p>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200">Interaktívna audiohra o tichu, vine a hľadaní pravdy v hlbinách lesa.</p>
                 <div class="my-3 opacity-80">
                     <span class="inline-block w-16 h-px bg-purple-500 align-middle"></span>
                     <span class="mx-2 text-xs tracking-widest font-medium align-middle">HOLLOW</span>
@@ -316,8 +358,7 @@
                     </button>
                 </div>
             </div>
-            <div class="absolute bottom-0 left-0 right-0 h-32 opacity-20 z-0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-full"><path fill="#000000" fill-opacity="1" d="M0,96L48,128C96,160,192,224,288,224C384,224,480,160,576,138.7C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg></div>
-            <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="animation: flicker 8s infinite alternate"><div class="absolute inset-0 bg-black"></div></div>
+            <div class="absolute bottom-0 left-0 right-0 h-32 opacity-20 z-0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="w-full h-full"><path fill="#0A0A0C" fill-opacity="1" d="M0,96L48,128C96,160,192,224,288,224C384,224,480,160,576,138.7C672,117,768,139,864,165.3C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg></div> <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="animation: flicker 8s infinite alternate"><div class="absolute inset-0 bg-black"></div></div>
         </header>
 
         <div id="main-content-wrapper" class="hidden">
@@ -325,7 +366,7 @@
 
                 <section class="app-download-section" data-aos="zoom-in-up" data-aos-duration="1000">
                     <div class="app-download-content container mx-auto max-w-3xl">
-                        <h2 class="app-download-title gradient-text">Šepot Lesa: Mobilný Zážitok Čaká!</h2>
+                        <h2 class="app-download-title gradient-text">Šepot lesa: mobilný zážitok čaká!</h2>
                         <p class="app-download-subtitle">Ako partner máte jedinečnú príležitosť nahliadnuť do plného potenciálu našej interaktívnej audiohry prostredníctvom dedikovanej mobilnej aplikácie. Ponorte sa do príbehu ešte dnes!</p>
                         <img src="https://i.imgur.com/YrOja3j.png" alt="Šepot lesa Favicon" class="mx-auto app-download-favicon">
                         <div class="app-download-qr-container">
@@ -341,32 +382,32 @@
                 <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="partner-intro" class="relative">
-                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
+                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
                     <div class="container mx-auto max-w-4xl text-center">
-                           <h2 class="text-4xl font-bold mb-3 gradient-text-intense" data-aos="fade-up">Spojme Sily: Exkluzívne pre Partnerov Budúcnosti!</h2>
-                           <div class="text-center mb-10" data-aos="fade-up" data-aos-delay="100">
+                            <h2 class="text-4xl font-bold mb-3 gradient-text-intense" data-aos="fade-up">Spojme sily: exkluzívne pre partnerov budúcnosti!</h2>
+                            <div class="text-center mb-10" data-aos="fade-up" data-aos-delay="100">
                                 <div class="inline-block">
                                     <span class="frequency-text text-xs tracking-widest font-medium">SPOLUPRÁCA S HOLLOW</span>
                                     <div class="h-px w-full bg-gradient-to-r from-purple-500 to-pink-500 mt-1"></div>
                                 </div>
-                           </div>
-                           <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                            </div>
+                            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-gray-300" data-aos="fade-up" data-aos-delay="200">
                                 Objavte strhujúci potenciál prvej slovenskej interaktívnej audiohry a staňte sa kľúčovou súčasťou tohto revolučného projektu, ktorý mení pravidlá hry.
-                           </p>
-                           <a href="#contact" class="button-ripple px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group inline-block" data-aos="fade-up" data-aos-delay="300">
-                                <span class="relative z-10">Chcem Byť Pri Tom!</span>
+                            </p>
+                            <a href="#contact" class="button-ripple px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group inline-block" data-aos="fade-up" data-aos-delay="300">
+                                <span class="relative z-10">Chcem byť pri tom!</span>
                                 <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
-                           </a>
+                            </a>
                     </div>
                 </section>
 
-                <div class="section-divider" data-aos="fade-up"></div>
+                    <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="about" class="relative">
-                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
+                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
                     <div class="container mx-auto max-w-6xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Odhaľte Srdce Šepotu Lesa: Príbeh, Ktorý Vás Nepustí</h2>
-                        <div class="content-block bg-black bg-opacity-40 p-8 rounded-2xl shadow-2xl border border-gray-800 backdrop-filter backdrop-blur-md relative overflow-hidden" data-aos="zoom-in" data-aos-delay="100">
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Odhaľte srdce Šepotu lesa: príbeh, ktorý vás nepustí</h2>
+                        <div class="content-block content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
                              <div class="absolute inset-0 z-0 opacity-[0.02]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22><path d=%22M10 0L0 10h10v10L20 10h-10V0z%22 fill=%22%23FFFFFF%22/></svg>'); background-size: 20px 20px"></div>
                             <div class="text-content relative z-10 text-lg leading-relaxed text-gray-300" data-aos="fade-right" data-aos-delay="200">
                                 <p>Audiohra Šepot lesa je <span class="gradient-text font-semibold">mrazivý mysteriózny príbeh</span> s hlbokými <span class="gradient-text font-semibold">psychologickými a hororovými prvkami</span>. Hráč sa vtelením do Jakuba Horáka vracia do rodnej dediny, aby rozlúštil záhadu zmiznutia svojho brata.</p>
@@ -378,62 +419,58 @@
                                 </ul>
                             </div>
                             <div class="image-content relative z-10" data-aos="fade-left" data-aos-delay="300">
-                                <img src="https://cdn.midjourney.com/db7e3133-07ee-47ea-ac55-c95d991fc74d/0_3.png" alt="Ilustračný obrázok lesa pre sekciu O hre" class="rounded-lg shadow-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x300/1f2937/FFFFFF?text=O+hre'; this.alt='Záložný obrázok O hre';">
+                                <img src="https://cdn.midjourney.com/db7e3133-07ee-47ea-ac55-c95d991fc74d/0_3.png" alt="Ilustračný obrázok lesa pre sekciu O hre" class="rounded-lg shadow-lg interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x300/1f2937/FFFFFF?text=O+hre'; this.alt='Záložný obrázok O hre';">
                             </div>
                         </div>
                     </div>
                 </section>
 
-                   <div class="section-divider" data-aos="fade-up"></div>
+                    <div class="section-divider" data-aos="fade-up"></div>
 
-                <section id="partner-benefits" class="relative bg-gray-900 bg-opacity-30">
-                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
+                <section id="partner-benefits" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-5xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Prečo Práve Vy? Odomknite Jedinečné Výhody Partnerstva!</h2>
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Prečo práve vy? odomknite jedinečné výhody partnerstva!</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                            <div class="bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-                                <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-rocket"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Revolučný Formát s Nekonečným Potenciálom Rast!</h3>
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="100"> <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-rocket"></i></div>
+                                <h3 class="text-xl font-bold mb-3">Revolučný formát s nekonečným potenciálom rastu!</h3>
                                 <p class="text-gray-300">Prvá slovenská interaktívna audiohra spája explozívne rastúci trend audiokníh a gamifikácie. Staňte sa súčasťou unikátneho produktu, ktorý definuje novú kategóriu a uchváti široké publikum.</p>
                             </div>
-                            <div class="bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="200">
                                 <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-heart"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Vášnivá a Lojálna Fanúšikovská Základňa Už Čaká!</h3>
+                                <h3 class="text-xl font-bold mb-3">Vášnivá a lojálna fanúšikovská základňa už čaká!</h3>
                                 <p class="text-gray-300">Vďaka kultovému podcastu Krvavý Dobšinský vstupujeme na trh s vernou komunitou, ktorá túži po tomto obsahu. Minimalizujte riziko a maximalizujte počiatočný úspech.</p>
                             </div>
-                            <div class="bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="300">
                                 <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-infinity"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Návyková Znovuhrateľnosť, Ktorá Vás Nepustí!</h3>
+                                <h3 class="text-xl font-bold mb-3">Návyková znovuhrateľnosť, ktorá vás nepustí!</h3>
                                 <p class="text-gray-300">Množstvo rozhodnutí a alternatívnych koncov láka hráčov vracať sa a odhaľovať každé tajomstvo príbehu. Zvyšuje to čas strávený s obsahom a otvára dvere k novým možnostiam.</p>
                             </div>
-                            <div class="bg-black bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="400">
                                 <div class="mb-4 text-purple-500 text-2xl"><i class="fas fa-layer-group"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Sága, Ktorá Ešte Len Začína Svoj Epický Príbeh!</h3>
+                                <h3 class="text-xl font-bold mb-3">Sága, ktorá ešte len začína svoj epický príbeh!</h3>
                                 <p class="text-gray-300">Šepot lesa je len prvou kapitolou. Ako pilotný projekt etabluje nový formát s obrovským potenciálom pre dlhodobý rast a budovanie rozsiahleho univerza.</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                   <div class="section-divider" data-aos="fade-up"></div>
+                    <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="stats" class="relative">
                     <div class="container mx-auto max-w-6xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Pulzujúca Komunita: Náš Spoločný Dosah a Energia!</h2>
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Pulzujúca komunita: náš spoločný dosah a energia!</h2>
                         <p class="text-xl text-center mb-12 max-w-3xl mx-auto text-gray-300" data-aos="fade-up" data-aos-delay="100">
                             Legendárny podcast <span class="font-bold gradient-text">Krvavý Dobšinský</span> slúži ako mocný odrazový mostík, využívajúc svoju existujúcu a hlboko angažovanú komunitu, pripravenú na nové dobrodružstvá.
                         </p>
                         <div class="charts-container" data-aos="fade-up" data-aos-delay="200">
-                            <div class="chart">
-                                <h2>Demografia: Kto načúva šepotu? (Pohlavie)</h2>
+                            <div class="chart modern-card"> <h2>Demografia: kto načúva šepotu? (pohlavie)</h2>
                                 <div class="gender-chart">
                                     <div class="pie-container" id="pie-chart"></div>
                                     <div class="pie-center" id="pie-info"></div>
                                     <div class="gender-legend" id="gender-legend"></div>
                                 </div>
                             </div>
-                            <div class="chart">
-                                <h2>Demografia: Vekové ozveny lesa</h2>
+                            <div class="chart modern-card"> <h2>Demografia: vekové ozveny lesa</h2>
                                 <div class="age-chart">
                                     <div id="age-tooltip" class="tooltip"></div>
                                     <div class="y-axis" id="y-axis-labels"></div>
@@ -443,81 +480,79 @@
                             </div>
                         </div>
                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-                                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="300">
                                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">1 000 000+</div>
                                     <div class="text-lg text-gray-300">strhujúcich prehratí, ktoré otriasli éterom</div>
                                 </div>
-                                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="zoom-in" data-aos-delay="400">
+                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="400">
                                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">8 591</div>
                                     <div class="text-lg text-gray-300">vernostných sledovateľov na Spotify, pripravených na viac</div>
                                 </div>
-                                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="zoom-in" data-aos-delay="500">
+                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="500">
                                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">22 183</div>
                                     <div class="text-lg text-gray-300">streamov za posledných 30 dní – oheň, ktorý nehasne</div>
                                 </div>
-                                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="zoom-in" data-aos-delay="600">
+                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="600">
                                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">5 505</div>
                                     <div class="text-lg text-gray-300">hodín napínavého počúvania mesačne, ktoré vás pohltia</div>
                                 </div>
-                                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="zoom-in" data-aos-delay="700">
+                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="700">
                                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">29</div>
                                     <div class="text-lg text-gray-300">nových zvedavých followerov mesačne, hladných po príbehoch</div>
                                 </div>
-                                <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl text-center border border-gray-800 shadow-lg backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="zoom-in" data-aos-delay="800">
+                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="800">
                                     <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">84%</div>
                                     <div class="text-lg text-gray-300">konverzia (3 369 uchvátených poslucháčov po prvej ukážke)</div>
                                 </div>
                            </div>
                          <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="900">
-                               <p class="text-lg text-gray-300">Vďaka tejto vášnivej a oddanej komunite má projekt Šepot lesa mimoriadne silný základ pre explozívny úspech na trhu – buďte pri tom!</p>
-                           </div>
+                                <p class="text-lg text-gray-300">Vďaka tejto vášnivej a oddanej komunite má projekt Šepot lesa mimoriadne silný základ pre explozívny úspech na trhu – buďte pri tom!</p>
+                            </div>
                     </div>
                 </section>
 
-                   <div class="section-divider" data-aos="fade-up"></div>
+                    <div class="section-divider" data-aos="fade-up"></div>
 
-                <section id="appeal" class="relative bg-black bg-opacity-50">
-                    <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Mrazivý Folklór & Psychologická Hĺbka: Ponorte Sa Do Zážitku!</h2>
+                <section id="appeal" class="relative"> <div class="container mx-auto max-w-4xl">
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Mrazivý folklór & psychologická hĺbka: ponorte sa do zážitku!</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="100">
                                 <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-headphones-alt"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Revolučný Audio Zážitok, Ktorý Vás Pohltí</h3>
+                                <h3 class="text-xl font-bold mb-3">Revolučný audio zážitok, ktorý vás pohltí</h3>
                                 <p class="text-gray-300 text-sm">Nechajte sa pohltiť príbehom len prostredníctvom zvuku. Interaktívne prvky vás vtiahnu priamo do srdca deja, kde každý šepot má svoj osudový význam.</p>
                             </div>
-                            <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="200">
                                 <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-brain"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Cesta do Najtemnejších Hlbín Ľudskej Duše</h3>
+                                <h3 class="text-xl font-bold mb-3">Cesta do najtemnejších hlbín ľudskej duše</h3>
                                 <p class="text-gray-300 text-sm">Témy viny, straty a zúfalého hľadania pravdy rezonujú hlboko v každom z nás a nútia k zamysleniu nad vlastnými tieňmi a skrytými túžbami.</p>
                             </div>
-                            <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="300">
                                 <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-leaf"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Temná Poézia Slovenských Lesov, Kde Tajomstvo Žije</h3>
+                                <h3 class="text-xl font-bold mb-3">Temná poézia slovenských lesov, kde tajomstvo žije</h3>
                                 <p class="text-gray-300 text-sm">Inšpirované tajomnými slovenskými horami a prastarým folklórom, hra vytvára jedinečný, mrazivý pocit izolácie a všadeprítomného, dychberúceho tajomna.</p>
                             </div>
-                            <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="400">
                                 <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-microphone-alt"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Majstrovský Zvukový Dizajn, Ktorý Cítite na Koži</h3>
-                                <p class="text-300 text-sm">Krištáľovo čisté nahrávky, strhujúce herecké výkony a originálne zvukové efekty zaručujú maximálny, zimomriavky naháňajúci zážitok, ktorý vás nepustí.</p>
+                                <h3 class="text-xl font-bold mb-3">Majstrovský zvukový dizajn, ktorý cítite na koži</h3>
+                                <p class="text-gray-300 text-sm">Krištáľovo čisté nahrávky, strhujúce herecké výkony a originálne zvukové efekty zaručujú maximálny, zimomriavky naháňajúci zážitok, ktorý vás nepustí.</p>
                             </div>
-                            <div class="bg-gray-900 bg-opacity-70 p-6 rounded-xl shadow-lg border border-gray-800 backdrop-filter backdrop-blur-sm hover:shadow-purple-500/20 transition-all duration-300 md:col-span-2" data-aos="fade-up" data-aos-delay="500">
+                            <div class="modern-card p-6 md:col-span-2" data-aos="fade-up" data-aos-delay="500">
                                 <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-map-signs"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Vaše Voľby Píšu Osud: Odvážite sa Rozhodnúť?</h3>
+                                <h3 class="text-xl font-bold mb-3">Vaše voľby píšu osud: odvážite sa rozhodnúť?</h3>
                                 <p class="text-gray-300 text-sm">Každé vaše rozhodnutie dramaticky tvaruje príbeh a vedie k jednému z viacerých šokujúcich zakončení. Znovuhrateľnosť je zaručená – odvážite sa odhaliť všetky tajomstvá, ktoré les skrýva?</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                   <div class="section-divider" data-aos="fade-up"></div>
+                    <div class="section-divider" data-aos="fade-up"></div>
 
-                <section id="author" class="relative bg-gray-900 bg-opacity-30">
-                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
+                <section id="author" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Spoznajte Tvorcu Záhadného Sveta: Vladimír Seman</h2>
-                        <div class="content-block bg-black bg-opacity-50 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="100">
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Spoznajte tvorcu záhadného sveta: Vladimír Seman</h2>
+                        <div class="content-block content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
                              <div class="text-lg text-center md:text-left text-content" data-aos="fade-left" data-aos-delay="300">
-                                <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="author-image-float" data-aos="fade-right" data-aos-delay="200">
+                                <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="author-image-float interactive-hover" data-aos="fade-right" data-aos-delay="200">
                                 <h3 class="text-3xl font-bold mb-3 gradient-text">Vladimír Seman</h3>
                                 <p class="text-gray-300 leading-relaxed">
                                     Vladimír je vizionársky tvorca s neutíchajúcou vášňou pre rozprávanie príbehov, ktoré zanechávajú hlbokú stopu v duši poslucháča. Je autorom kultového podcastu Krvavý Dobšinský, kde klasické rozprávky ožívajú v temnejšom, dychberúcom šate, odhaľujúc ich skryté, mrazivé podtóny. Jeho majstrovský cit pre atmosféru, podmanivý zvukový dizajn a psychologickú hĺbku postáv si získal srdcia tisícov verných poslucháčov.
@@ -530,36 +565,36 @@
                     </div>
                 </section>
 
-                   <div class="section-divider" data-aos="fade-up"></div>
+                    <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="contact" class="relative">
                     <div class="container mx-auto max-w-2xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Napíšte Nám: Začnime Spolu Tvoriť Príbeh Plný Napätia!</h2>
-                        <div class="bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="100">
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Napíšte nám: začnime spolu tvoriť príbeh plný napätia!</h2>
+                        <div class="content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
                             <div class="text-center mb-6">
                                 <h3 class="text-2xl font-bold mb-1">Vladimír Seman / Krvavý Dobšinský</h3>
                                 <p class="text-lg mt-2">
-                                    <a href="tel:+421940400222" class="font-semibold hover:opacity-80 transition-opacity gradient-text">+421 940 400 222 – Vaša priama linka do temnoty</a>
+                                    <a href="tel:+421940400222" class="font-semibold hover:opacity-80 transition-opacity gradient-text">+421 940 400 222 – vaša priama linka do temnoty</a>
                                 </p>
                             </div>
                             <form class='space-y-6' method='post' name='contact'>
                                 <input type="hidden" name="form-name" value="contact"/>
                                 <p class="hidden"><label>Don’t fill this out if you’re human: <input name="bot-field"/></label></p>
                                 <div>
-                                    <label for="partner-name" class="block text-sm font-medium mb-1 text-gray-300">Vaše Meno (alebo Alias v Lese)</label>
+                                    <label for="partner-name" class="block text-sm font-medium mb-1 text-gray-300">Vaše meno (alebo alias v lese)</label>
                                     <input type="text" id="partner-name" name="name" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="Zadajte vaše meno..."/>
                                 </div>
                                 <div>
-                                    <label for="partner-email" class="block text-sm font-medium mb-1 text-gray-300">Váš E-mail (Pre Tajné Odkazy)</label>
+                                    <label for="partner-email" class="block text-sm font-medium mb-1 text-gray-300">Váš e-mail (pre tajné odkazy)</label>
                                     <input type="email" id="partner-email" name="email" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="vas@email.sk"/>
                                 </div>
                                 <div>
-                                    <label for="partner-message" class="block text-sm font-medium mb-1 text-gray-300">Vaša Správa (Čo Vám Šepká Les?)</label>
+                                    <label for="partner-message" class="block text-sm font-medium mb-1 text-gray-300">Vaša správa (čo vám šepká les?)</label>
                                     <textarea id="partner-message" name="message" rows="4" required class="w-full px-4 py-2 rounded-md bg-gray-800 bg-opacity-50 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 text-white" placeholder="Napíšte nám o vašich nápadoch, snoch, či nočných morách..."></textarea>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="button-ripple px-8 py-3 text-lg font-semibold rounded-md bg-transparent text-white border-2 border-purple-600 relative overflow-hidden transition-all duration-300 hover:text-white hover:shadow-lg hover:shadow-purple-500/30 uppercase tracking-wider group">
-                                        <span class="relative z-10">Odoslať Správu Osudu</span>
+                                        <span class="relative z-10">Odoslať správu osudu</span>
                                         <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
                                     </button>
                                 </div>
@@ -568,7 +603,7 @@
                     </div>
                 </section>
 
-                <footer class="py-8 bg-black bg-opacity-70 text-center text-gray-400 backdrop-filter backdrop-blur-lg mt-16">
+                <footer class="py-8 text-center text-gray-400 mt-16" style="background-color: rgba(10,10,12,0.7); backdrop-filter: blur(8px);">
                     <div class="container mx-auto">
                         <p>© 2025 Šepot lesa | Všetky práva vyhradené Temnotou a Jej Strážcami</p>
                         <div class="mt-4 flex justify-center space-x-4">
@@ -576,9 +611,9 @@
                             <a href="https://www.instagram.com/krvavydobsinsky/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
                             <a href="https://www.facebook.com/vlado.seman" target="_blank" rel="noopener noreferrer" aria-label="Facebook profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
                         </div>
-                         <div class="mt-6">
-                               <button id="open-gdpr-modal" class="text-sm text-gray-400 hover:text-purple-400 underline">Zásady ochrany osobných údajov (GDPR)</button>
-                           </div>
+                           <div class="mt-6">
+                                <button id="open-gdpr-modal" class="text-sm text-gray-400 hover:text-purple-400 underline">Zásady ochrany osobných údajov (GDPR)</button>
+                            </div>
                     </div>
                 </footer>
             </main>
@@ -587,7 +622,7 @@
 
                 <section class="app-download-section" data-aos="zoom-in-up" data-aos-duration="1000">
                     <div class="app-download-content container mx-auto max-w-3xl">
-                        <h2 class="app-download-title gradient-text">Ponorte sa do Zážitku Ako Nikdy Predtým!</h2>
+                        <h2 class="app-download-title gradient-text">Ponorte sa do zážitku ako nikdy predtým!</h2>
                         <p class="app-download-subtitle">Stiahnite si mobilnú aplikáciu Šepot lesa a nechajte sa úplne pohltiť interaktívnym príbehom, ktorý vám nedá spať!</p>
                         <img src="https://i.imgur.com/YrOja3j.png" alt="Šepot lesa Favicon" class="mx-auto app-download-favicon">
                         <div class="app-download-qr-container">
@@ -600,70 +635,85 @@
                         <p class="app-download-text">Naskenujte QR kód alebo kliknite na tlačidlo a vstúpte do sveta, kde každý tieň skrýva tajomstvo.</p>
                     </div>
                 </section>
-                <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative"><div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div></div>
-
-                <section id="player-about" class="relative">
-                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
+                <div class="section-divider my-16" data-aos="fade-up"></div> <section id="player-about" class="relative">
+                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
                     <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Vstúpte do Šepotu Lesa: Vaše Mrazivé Dobrodružstvo Práve Začína!</h2>
-                        <div class="content-block bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg flex flex-col md:flex-row items-center gap-8" data-aos="zoom-in" data-aos-delay="100"> <div class="md:w-2/3 text-lg leading-relaxed text-gray-300 text-content"> <p>Vitajte, odvážlivec, v audiohre Šepot lesa. Ste Jakub Horák, novinár na stope pravdy, ktorý sa vracia do svojej rodnej, tajomstvami opradenej dediny Čierny Potok. Vaša misia: odhaliť desivé okolnosti zmiznutia vášho brata Samuela. Polícia prípad chladne uzavrela, no vy cítite, že dedina a jej temné lesy skrývajú oveľa zlovestnejšie tajomstvá, ktoré čakajú na prebudenie.</p>
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Vstúpte do Šepotu lesa: vaše mrazivé dobrodružstvo práve začína!</h2>
+                        <div class="content-block content-container-box p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="md:w-2/3 text-lg leading-relaxed text-gray-300 text-content">
+                                <p>Vitajte, odvážlivec, v audiohre Šepot lesa. Ste Jakub Horák, novinár na stope pravdy, ktorý sa vracia do svojej rodnej, tajomstvami opradenej dediny Čierny Potok. Vaša misia: odhaliť desivé okolnosti zmiznutia vášho brata Samuela. Polícia prípad chladne uzavrela, no vy cítite, že dedina a jej temné lesy skrývajú oveľa zlovestnejšie tajomstvá, ktoré čakajú na prebudenie.</p>
                                 <p class="mt-4">Vašou úlohou je robiť osudové rozhodnutia, riešiť mrazivé hádanky a pozorne načúvať každému šepotu, ktorý sa ozýva z hlbín. Každá voľba vás neúprosne posunie ďalej príbehom a odhalí nové, často znepokojujúce stopy. Zvuky, zlovestné čísla a skryté odkazy, na ktoré narazíte, môžu byť kľúčom k rozlúšteniu záhad Čierneho Potoka a entity známej ako <span class="gradient-text font-semibold">Hollow</span>. Nasledujte šepot, no pamätajte – neverte všetkému, čo počujete, lebo les má tisíc očí a ešte viac lží... Vaša odvaha bude vaším jediným sprievodcom.</p>
                             </div>
-                            <div class="md:w-1/3 flex-shrink-0 image-content"> <img id="player-about-image" src="https://cdn.midjourney.com/db7e3133-07ee-47ea-ac55-c95d991fc74d/0_3.png" alt="Ilustračný obrázok lesa pre sekciu O hre" class="w-full rounded-lg shadow-lg" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Les'; this.alt='Záložný obrázok lesa';">
+                            <div class="md:w-1/3 flex-shrink-0 image-content">
+                                <img id="player-about-image" src="https://cdn.midjourney.com/db7e3133-07ee-47ea-ac55-c95d991fc74d/0_3.png" alt="Ilustračný obrázok lesa pre sekciu O hre" class="w-full rounded-lg shadow-lg max-h-[450px] object-cover interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Les'; this.alt='Záložný obrázok lesa';">
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative"><div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div></div>
+                <div class="section-divider my-16" data-aos="fade-up"></div>
 
                 <section id="player-characters" class="relative">
                     <div class="container mx-auto max-w-6xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Spoznajte Obyvateľov Temného Lesa: Kto Je Priateľ a Kto Zradca?</h2>
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Spoznajte obyvateľov temného lesa: kto je priateľ a kto zradca?</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div class="character-card p-6 rounded-xl shadow-lg flex flex-col" data-aos="fade-up" data-aos-delay="100">
-                                <img src="https://cdn.midjourney.com/128bfaee-12e9-4624-8702-6e3abe20af6a/0_1.png" alt="Obrázok postavy Jakub Horák" class="w-full mb-4 rounded-md shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Jakub'; this.alt='Záložný obrázok postavy Jakub Horák';">
-                                <h3 class="text-2xl font-bold mb-2 gradient-text">Jakub Horák <span class="text-base text-gray-400 normal-case">(Vy, Hľadajúci Pravdu!)</span></h3>
+                            <div class="character-card modern-card p-6 flex flex-col" data-aos="fade-up" data-aos-delay="100">
+                                <img src="https://cdn.midjourney.com/128bfaee-12e9-4624-8702-6e3abe20af6a/0_1.png" alt="Obrázok postavy Jakub Horák" class="w-full mb-4 rounded-md shadow-md interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Jakub'; this.alt='Záložný obrázok postavy Jakub Horák';">
+                                <h3 class="text-2xl font-bold mb-2 gradient-text">Jakub Horák <span class="text-base text-gray-400 normal-case">(vy, hľadajúci pravdu!)</span></h3>
                                 <p class="text-gray-400 text-sm mb-3">Hrá: Vladimír Seman</p>
                                 <p class="text-gray-300 flex-grow">Hlavný hrdina, odvážny novinár pátrajúci po svojom stratenom bratovi Samuelovi v tajuplnej rodnej dedine Čierny Potok. Musí čeliť nielen desivým záhadám dediny, ale aj vlastným vnútorným démonom a zlovestným signálom entity Hollow, ktorá ho láka do svojich osídiel.</p>
                             </div>
-                            <div class="character-card p-6 rounded-xl shadow-lg flex flex-col" data-aos="fade-up" data-aos-delay="200">
-                                <img src="https://cdn.midjourney.com/0c09418c-9833-4969-96ee-ee623bf96498/0_3.png" alt="Obrázok postavy Samuel Horák" class="w-full mb-4 rounded-md shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Samuel'; this.alt='Záložný obrázok postavy Samuel Horák';">
-                                <h3 class="text-2xl font-bold mb-2 gradient-text">Samuel Horák <span class="text-base text-gray-400 normal-case">(Stratený Brat, Volanie z Hlbín)</span></h3>
+                            <div class="character-card modern-card p-6 flex flex-col" data-aos="fade-up" data-aos-delay="200">
+                                <img src="https://cdn.midjourney.com/0c09418c-9833-4969-96ee-ee623bf96498/0_3.png" alt="Obrázok postavy Samuel Horák" class="w-full mb-4 rounded-md shadow-md interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Samuel'; this.alt='Záložný obrázok postavy Samuel Horák';">
+                                <h3 class="text-2xl font-bold mb-2 gradient-text">Samuel Horák <span class="text-base text-gray-400 normal-case">(stratený brat, volanie z hlbín)</span></h3>
                                 <p class="text-gray-400 text-sm mb-3">Hrá: Peter Makranský</p>
                                 <p class="text-gray-300 flex-grow">Jakubov brat, zanietený dokumentarista, ktorý bez stopy zmizol v prekliatej oblasti Čierneho Potoka počas skúmania miestnych legiend, najmä tajomnej rádiovej veže a entity Hollow. Jeho osud je desivo prepojený s Hollow – buď sa stal jeho súčasťou, alebo zúfalo hľadal spôsob, ako ho zastaviť či oslobodiť uväznené duše z jeho pazúrov.</p>
+                            </div>
+                            <div class="character-card modern-card p-6 flex flex-col" data-aos="fade-up" data-aos-delay="300">
+                                <img src="https://cdn.midjourney.com/e7f12cd2-faa2-49d9-a654-8cbcf941cdc2/0_0.png" alt="Obrázok postavy Lesník" class="w-full mb-4 rounded-md shadow-md interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Lesník'; this.alt='Záložný obrázok postavy Lesník';">
+                                <h3 class="text-2xl font-bold mb-2 gradient-text">Lesník <span class="text-base text-gray-400 normal-case">(strážca tajomstiev lesa)</span></h3>
+                                <p class="text-gray-400 text-sm mb-3">Hrá: Laco Kerata</p>
+                                <p class="text-gray-300 flex-grow">Lesník (hrá Laco Kerata) je predstavený ako posledný strážca tohto miesta a jeho tajomstiev. Vie o prepojení Jakubovej rodiny s Hollow, verí v pripojenie sa k nej a snaží sa Jakuba navigovať k vodnej veži a detskému úkrytu, pričom ho vníma ako súčasť osudu miesta. Jeho motivácia je fanatická viera v Hollow ako silu spájajúcu s koreňmi zeme.</p>
+                            </div>
+                             <div class="character-card modern-card p-6 flex flex-col" data-aos="fade-up" data-aos-delay="400">
+                                <img src="https://cdn.midjourney.com/f56bdac1-0415-496f-aee9-c9aa06df954b/0_3.png" alt="Obrázok postavy Hlas z rádia" class="w-full mb-4 rounded-md shadow-md interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Rádio'; this.alt='Záložný obrázok postavy Hlas z rádia';">
+                                <h3 class="text-2xl font-bold mb-2 gradient-text">Hlas z rádia <span class="text-base text-gray-400 normal-case">(objektívny spravodajský hlas)</span></h3>
+                                <p class="text-gray-400 text-sm mb-3">Hrá: Viera Ihnátová</p>
+                                <p class="text-gray-300 flex-grow">Hlas z rádia (hrá Viera Ihnátová) je spočiatku objektívnym spravodajským hlasom, ktorý informuje o pátraní po nezvestnom dokumentaristovi Samuelovi a zmieňuje sa o kulte Hlas lesa. Slúži na úvodné zasadenie príbehu a predstavenie Samuelovho zmiznutia, spojeného s podivným rušením.</p>
                             </div>
                              </div>
                     </div>
                 </section>
-                <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative"><div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div></div>
-                <section id="player-location" class="relative bg-gray-900 bg-opacity-30">
-                    <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(147, 51, 234, 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
+                <div class="section-divider my-16" data-aos="fade-up"></div>
+                <section id="player-location" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Preskúmajte Strašidelné Zákutia Čierneho Potoka: Miesto, Kde Minulosť Neumiera</h2>
-                        <div class="content-block bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg flex flex-col md:flex-row items-center gap-8" data-aos="zoom-in" data-aos-delay="100"> <div class="md:w-2/3 text-lg leading-relaxed text-gray-300 text-content"> <p>Čierny Potok. Navonok obyčajná, zabudnutá dedina, no pod jej zdanlivo pokojným povrchom sa skrývajú hlboké a desivé tajomstvá, ktoré pulzujú prastarou energiou. Už celé desaťročia je miestom nevysvetliteľných udalostí a záhadných zmiznutí, ktoré sú šeptom spájané s prastarým kultom "Hlas lesa" a neskôr s entitou známou len ako <span class="gradient-text font-semibold">Hollow</span>.</p>
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Preskúmajte strašidelné zákutia Čierneho potoka: miesto, kde minulosť neumiera</h2>
+                        <div class="content-block content-container-box p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="md:w-2/3 text-lg leading-relaxed text-gray-300 text-content">
+                                <p>Čierny Potok. Navonok obyčajná, zabudnutá dedina, no pod jej zdanlivo pokojným povrchom sa skrývajú hlboké a desivé tajomstvá, ktoré pulzujú prastarou energiou. Už celé desaťročia je miestom nevysvetliteľných udalostí a záhadných zmiznutí, ktoré sú šeptom spájané s prastarým kultom "Hlas lesa" a neskôr s entitou známou len ako <span class="gradient-text font-semibold">Hollow</span>.</p>
                                 <p class="mt-4">História Hollow siaha prinajmenšom do krvavého roku 1944, kedy došlo k brutálnemu masakru miestnych obyvateľov, ktorých výkriky sa dodnes ozývajú v šume vetra. Zdá sa, že táto kolektívna trauma dala vzniknúť alebo prebudila entitu, ktorá je popisovaná ako rozsiahly, živý a zlovestný "koreňový systém" rozprestierajúci sa pod celým lesom, pulzujúci temnou silou. Tento systém bol znovu narušený a aktivovaný v temných 90. rokoch pri hĺbení novej, prekliatej banskej štôlne.</p>
                                 <p class="mt-4">Hollow nemilosrdne absorbuje myšlienky, spomienky a samotné vedomie ľudí, najmä tých, ktorí zažili traumu, a komunikuje prostredníctvom mrazivých šepotov a špecifického rádiového signálu (<span class="font-mono text-purple-400">127.5 MHz</span>), ktorý zosilňuje jeho desivý dosah a láka ďalšie obete. Kľúčovými miestami spojenými s Hollow sú stará, opustená rádiová veža, zlovestná vodná veža pri lome (považovaná za "bránu" alebo vstup do inej reality, odkiaľ niet návratu) a prastará studňa prezývaná "Hrdlo Pekla". Dedina a jej nekonečné lesy sú miestom, kde sa realita desivo prelína s neznámym a kde minulosť nikdy nespí, len čaká na svoju ďalšiu obeť, aby ju pohltila.</p>
                             </div>
-                            <div class="md:w-1/3 flex-shrink-0 image-content"> <img src="https://cdn.midjourney.com/b30cad26-b311-47bb-9ac6-2711f4e1b4ab/0_1.png" alt="Ilustračný obrázok lokality Čierny Potok" class="w-full rounded-lg shadow-lg max-h-[450px] object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x450/1f2937/FFFFFF?text=Čierny+Potok'; this.alt='Záložný obrázok Čierny Potok';">
+                            <div class="md:w-1/3 flex-shrink-0 image-content">
+                                <img src="https://cdn.midjourney.com/b30cad26-b311-47bb-9ac6-2711f4e1b4ab/0_1.png" alt="Ilustračný obrázok lokality Čierny Potok" class="w-full rounded-lg shadow-lg max-h-[450px] object-cover interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x450/1f2937/FFFFFF?text=Čierny+Potok'; this.alt='Záložný obrázok Čierny Potok';">
                             </div>
                         </div>
                     </div>
                 </section>
-                <div class="h-px w-4/5 mx-auto bg-gradient-to-r from-transparent via-purple-500 to-transparent my-16 relative"><div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div></div>
+                <div class="section-divider my-16" data-aos="fade-up"></div>
                 <section id="player-creator" class="relative">
                     <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Stretnite Myseľ za Záhadou: Architekt Vášho Strachu</h2>
-                        <div class="content-block bg-black bg-opacity-60 p-8 rounded-2xl shadow-xl border border-gray-800 backdrop-filter backdrop-blur-lg" data-aos="zoom-in" data-aos-delay="100">
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Stretnite myseľ za záhadou: architekt vášho strachu</h2>
+                        <div class="content-block content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
                              <div class="text-lg text-center md:text-left text-content" data-aos="fade-left" data-aos-delay="300">
-                                <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="author-image-float" data-aos="fade-right" data-aos-delay="200">
+                                <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="author-image-float interactive-hover" data-aos="fade-right" data-aos-delay="200">
                                 <h3 class="text-3xl font-bold mb-3 gradient-text">Vladimír Seman</h3>
                                 <p class="text-gray-300 leading-relaxed">Autorom interaktívnej audiohry Šepot lesa, ktorá vás vtiahne do svojich temných osídiel a nepustí, je Vladimír Seman. Je to kreatívny mág s neutíchajúcou vášňou pre rozprávanie príbehov, ktoré rezonujú v duši ešte dlho po odznení posledného slova. Je tiež autorom legendárneho podcastu Krvavý Dobšinský, v ktorom klasické rozprávky desivo pretvára do temnejšej, dychberúcej podoby, odhaľujúc ich skryté, mrazivé stránky. Jeho jedinečný cit pre atmosféru, majstrovský zvukový dizajn a psychologickú hĺbku postáv vdychujú život aj audiohre Šepot lesa, kde sa snažil vytvoriť extrémne intenzívny zážitok, spájajúci nervy drásajúci horor, surové emócie a vaše vlastné osudové voľby, ktoré rozhodnú o vašom prežití... alebo zatratení.</p>
                             </div>
                              </div>
                     </div>
                 </section>
-                <footer class="py-8 bg-black bg-opacity-70 text-center text-gray-400 backdrop-filter backdrop-blur-lg mt-16">
+                <footer class="py-8 text-center text-gray-400 mt-16" style="background-color: rgba(10,10,12,0.7); backdrop-filter: blur(8px);">
                     <div class="container mx-auto">
                         <p>© 2025 Šepot lesa | Všetky práva vyhradené Temnotou a Jej Strážcami</p>
                         <div class="mt-4 flex justify-center space-x-4">
@@ -694,17 +744,31 @@
 
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
-            // Dáta pre grafy
-            const genderData = [{ name: 'Ženy', value: 47.4, color: '#6A16FF' }, { name: 'Muži', value: 42.2, color: '#2E055C' }, { name: 'Nešpecifikované', value: 9.0, color: '#C5C6FF' }, { name: 'Nebinárne', value: 1.4, color: '#E3E2FF' }];
+            // Dáta pre grafy - farby upravené podľa novej palety
+            const genderData = [
+                { name: 'Ženy', value: 47.4, color: 'var(--color-primary-purple)' },    // #7E22CE
+                { name: 'Muži', value: 42.2, color: 'var(--color-primary-deep-purple)' }, // #581C87
+                { name: 'Nešpecifikované', value: 9.0, color: 'var(--color-primary-violet)' }, // #A78BFA
+                { name: 'Nebinárne', value: 1.4, color: '#D5C6FF' } // Ešte svetlejšia fialová
+            ];
             const ageData = [{ group: '0-17', value: 1.2 }, { group: '18-22', value: 7.0 }, { group: '23-27', value: 17.9 }, { group: '28-34', value: 28.2 }, { group: '35-44', value: 28.3 }, { group: '45-59', value: 15.4 }, { group: '60+', value: 2.1 }, { group: 'Nezadané', value: 0.0 }];
-            const ageBarColors = ['#6A16FF', '#5a30df', '#7c3aed', '#9333ea', '#a78bfa', '#c4b5fd', '#ddd6fe', '#e3e2ff'];
+            const ageBarColors = [
+                'var(--color-primary-deep-purple)',
+                'var(--color-primary-purple)',
+                '#8A4FFF', // Medzi --color-primary-purple a --color-primary-violet
+                'var(--color-primary-violet)',
+                '#C7AFFF', // Svetlejšia verzia --color-primary-violet
+                'var(--color-accent-pink)',
+                '#F6A0CC', // Svetlejšia verzia --color-accent-pink
+                '#FBCFE8'  // Veľmi svetlá ružová
+            ];
 
             // Funkcia na vytvorenie koláčového grafu
             function createSVGPieChart() {
                 const pieContainer = document.getElementById('pie-chart');
                 const pieInfo = document.getElementById('pie-info');
                 if (!pieContainer || !pieInfo) { console.error("Pie chart container or info element not found."); return; }
-                pieContainer.innerHTML = ''; // Vyčistiť kontajner pred vykreslením
+                pieContainer.innerHTML = '';
                 const svgNS = "http://www.w3.org/2000/svg";
                 const svg = document.createElementNS(svgNS, "svg");
                 svg.setAttribute("width", "200"); svg.setAttribute("height", "200"); svg.setAttribute("viewBox", "-1 -1 102 102"); svg.style.transform = "rotate(-90deg)";
@@ -713,7 +777,7 @@
                 const centerX = 50, centerY = 50, radius = 50;
 
                 genderData.forEach(item => {
-                    if (item.value <= 0) return; // Preskočiť segmenty s nulovou hodnotou
+                    if (item.value <= 0) return;
                     const startPercent = cumulativePercent;
                     cumulativePercent += item.value;
                     const endPercent = cumulativePercent;
@@ -729,75 +793,57 @@
                     const largeArcFlag = (endPercent - startPercent) > 50 ? 1 : 0;
 
                     const path = document.createElementNS(svgNS, "path");
-                    const pathData = [
-                        `M ${centerX},${centerY}`,
-                        `L ${startX},${startY}`,
-                        `A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX},${endY}`,
-                        'Z'
-                    ].join(' ');
+                    const pathData = [ `M ${centerX},${centerY}`, `L ${startX},${startY}`, `A ${radius},${radius} 0 ${largeArcFlag} 1 ${endX},${endY}`, 'Z' ].join(' ');
 
                     path.setAttribute('d', pathData);
-                    path.setAttribute('fill', item.color);
-                    path.setAttribute('stroke', '#000'); // Pridanie tenkého čierneho okraja
-                    path.setAttribute('stroke-width', '0.5');
-
-                    // Pridanie dátových atribútov pre interakciu
+                    path.setAttribute('fill', item.color.startsWith('var(') ? getComputedStyle(document.documentElement).getPropertyValue(item.color.slice(4, -1).trim()) : item.color);
+                    path.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue('--color-bg-main').trim());
+                    path.setAttribute('stroke-width', '0.75');
                     path.setAttribute('data-name', item.name);
                     path.setAttribute('data-value', item.value.toString());
 
-                    // Event listenery pre hover efekt
                     path.addEventListener('mouseover', function() {
                         if (pieInfo) {
-                             // Zobraziť informácie v strede
-                            pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
-                            pieInfo.style.color = '#FFF'; // Zmeniť farbu textu pri hover
+                            pieInfo.innerHTML = `<span style="font-weight:bold;">${item.name}:</span><br>${item.value.toFixed(1).replace('.', ',')}%`;
+                            pieInfo.style.color = '#FFF';
                         }
-                        highlightLegendItem(item.name); // Zvýrazniť položku v legende
-                        this.style.opacity = '0.8'; // Zmeniť priehľadnosť segmentu
+                        highlightLegendItem(item.name);
+                        this.style.opacity = '0.85';
                     });
-
                     path.addEventListener('mouseout', function() {
-                        if (pieInfo) {
-                            pieInfo.textContent = ''; // Skryť informácie v strede
-                            pieInfo.style.color = '#e5e7eb'; // Vrátiť pôvodnú farbu textu
-                        }
-                        resetLegendHighlight(); // Zrušiť zvýraznenie legendy
-                        this.style.opacity = '1'; // Vrátiť pôvodnú priehľadnosť segmentu
+                        if (pieInfo) { pieInfo.textContent = ''; pieInfo.style.color = 'var(--color-text-main)'; }
+                        resetLegendHighlight();
+                        this.style.opacity = '1';
                     });
-
                     svg.appendChild(path);
                 });
 
-                 // Kruh v strede grafu
-                const centerCircleFill = getComputedStyle(document.documentElement).getPropertyValue('--chart-bg-color') || '#111827'; // Získať farbu pozadia grafu
+                const centerCircleFill = getComputedStyle(document.documentElement).getPropertyValue('--color-bg-card').trim();
                 const circle = document.createElementNS(svgNS, "circle");
                 circle.setAttribute('cx', String(centerX));
                 circle.setAttribute('cy', String(centerY));
-                circle.setAttribute('r', '30'); // Polomer stredového kruhu
-                circle.setAttribute('fill', centerCircleFill); // Farba pozadia grafu
+                circle.setAttribute('r', '30');
+                circle.setAttribute('fill', centerCircleFill);
                 svg.appendChild(circle);
-
-
                 pieContainer.appendChild(svg);
-                 // Inicializovať text v strede na prázdny reťazec
                 if (pieInfo) pieInfo.textContent = '';
             }
 
-            // Funkcia na vytvorenie legendy pre koláčový graf
             function createGenderLegend() {
                 const legendContainer = document.getElementById('gender-legend');
-                const pieInfo = document.getElementById('pie-info'); // Získanie elementu pre info v strede koláča
-                if (!legendContainer || !pieInfo) return; // Kontrola existencie elementov
-                legendContainer.innerHTML = ''; // Vyčistiť kontajner pred vykreslením
+                const pieInfo = document.getElementById('pie-info');
+                if (!legendContainer || !pieInfo) return;
+                legendContainer.innerHTML = '';
 
                 genderData.forEach(item => {
                     const legendItem = document.createElement('div');
                     legendItem.className = 'legend-item';
-                    legendItem.dataset.name = item.name; // Uložiť meno pre jednoduchšie vyhľadávanie
+                    legendItem.dataset.name = item.name;
 
                     const colorBox = document.createElement('div');
                     colorBox.className = 'color-box';
-                    colorBox.style.backgroundColor = item.color;
+                    colorBox.style.backgroundColor = item.color.startsWith('var(') ? getComputedStyle(document.documentElement).getPropertyValue(item.color.slice(4, -1).trim()) : item.color;
+
 
                     const textDiv = document.createElement('div');
                     textDiv.className = 'legend-text';
@@ -811,117 +857,81 @@
                     legendItem.appendChild(textDiv);
                     legendItem.appendChild(percentDiv);
 
-                    // Event listenery pre hover efekt na legendu
                     legendItem.addEventListener('mouseover', () => {
                         highlightLegendItem(item.name);
                         if (pieInfo) {
-                            pieInfo.textContent = `${item.name}: ${item.value.toFixed(1).replace('.', ',')}%`;
+                            pieInfo.innerHTML = `<span style="font-weight:bold;">${item.name}:</span><br>${item.value.toFixed(1).replace('.', ',')}%`;
                             pieInfo.style.color = '#FFF';
                         }
-                        highlightPieSlice(item.name, true); // Zvýrazniť zodpovedajúci segment koláča
+                        highlightPieSlice(item.name, true);
                     });
-
                     legendItem.addEventListener('mouseout', () => {
                         resetLegendHighlight();
-                         if (pieInfo) {
-                            pieInfo.textContent = '';
-                            pieInfo.style.color = '#e5e7eb';
-                        }
-                        highlightPieSlice(item.name, false); // Zrušiť zvýraznenie segmentu koláča
+                         if (pieInfo) { pieInfo.textContent = ''; pieInfo.style.color = 'var(--color-text-main)'; }
+                        highlightPieSlice(item.name, false);
                     });
-
                     legendContainer.appendChild(legendItem);
                 });
             }
 
-            // Funkcia na zvýraznenie položky v legende
             function highlightLegendItem(name) {
                 document.querySelectorAll('#gender-legend .legend-item').forEach(item => {
-                    item.style.backgroundColor = (item.dataset.name === name) ? '#1f2937' : '';
+                    item.style.backgroundColor = (item.dataset.name === name) ? 'var(--color-border-soft)' : '';
                 });
             }
-
-            // Funkcia na zrušenie zvýraznenia legendy
             function resetLegendHighlight() {
-                document.querySelectorAll('#gender-legend .legend-item').forEach(item => {
-                    item.style.backgroundColor = '';
-                });
+                document.querySelectorAll('#gender-legend .legend-item').forEach(item => { item.style.backgroundColor = ''; });
             }
-
-             // Funkcia na zvýraznenie segmentu koláča
             function highlightPieSlice(name, highlight) {
                 document.querySelectorAll('#pie-chart svg path').forEach(path => {
-                    if (path.getAttribute('data-name') === name) {
-                        path.style.opacity = highlight ? '0.8' : '1';
-                    }
+                    if (path.getAttribute('data-name') === name) { path.style.opacity = highlight ? '0.85' : '1'; }
                 });
             }
 
-
-            // Funkcia na vytvorenie stĺpcového grafu
             function createAgeBars() {
                 const barContainer = document.getElementById('age-bars');
                 const tooltip = document.getElementById('age-tooltip');
                 const yAxisLabelsContainer = document.getElementById('y-axis-labels');
+                if (!barContainer || !tooltip || !yAxisLabelsContainer) { console.error("Age bar chart elements not found."); return; }
+                barContainer.innerHTML = ''; yAxisLabelsContainer.innerHTML = '';
+                const maxValue = 30;
+                const ySteps = [0, 6, 12, 18, 24, 30];
 
-                if (!barContainer || !tooltip || !yAxisLabelsContainer) {
-                    console.error("Age bar chart elements not found.");
-                    return;
-                }
-
-                barContainer.innerHTML = ''; // Vyčistiť kontajner pred vykreslením
-                yAxisLabelsContainer.innerHTML = ''; // Vyčistiť kontajner pred vykreslením
-
-                const maxValue = 30; // Maximálna hodnota na Y osi (pre lepšiu vizualizáciu)
-                const ySteps = [0, 6, 12, 18, 24, 30]; // Hodnoty pre Y os
-
-                // Vytvorenie popisov a čiar pre Y os
                 ySteps.forEach(value => {
                     const yLabelDiv = document.createElement('div');
                     yLabelDiv.className = 'y-label';
                     const percentagePosition = (value / maxValue) * 100;
                     yLabelDiv.style.position = 'absolute';
                     yLabelDiv.style.bottom = `${percentagePosition}%`;
-                    yLabelDiv.style.transform = 'translateY(50%)'; // Zarovnať text na stred čiary
+                    yLabelDiv.style.transform = 'translateY(50%)';
                     yLabelDiv.textContent = `${value}%`;
-
                     const yLine = document.createElement('div');
                     yLine.className = 'y-line';
-                    yLabelDiv.appendChild(yLine); // Pridať čiaru k popisu
-
+                    yLabelDiv.appendChild(yLine);
                     yAxisLabelsContainer.appendChild(yLabelDiv);
                 });
-
 
                 ageData.forEach((item, index) => {
                     const barGroup = document.createElement('div');
                     barGroup.className = 'bar-group';
-
                     const bar = document.createElement('div');
                     bar.className = 'bar';
-                    // Výška stĺpca ako percento z maximálnej hodnoty
                     const heightPercentage = Math.max(0, Math.min(100, (item.value / maxValue) * 100));
                     bar.style.height = `${heightPercentage}%`;
-                    bar.style.backgroundColor = ageBarColors[index % ageBarColors.length]; // Farba stĺpca
+                    const colorValue = ageBarColors[index % ageBarColors.length];
+                    bar.style.backgroundColor = colorValue.startsWith('var(') ? getComputedStyle(document.documentElement).getPropertyValue(colorValue.slice(4, -1).trim()) : colorValue;
 
                     const label = document.createElement('div');
                     label.className = 'bar-label';
-                    label.textContent = item.group; // Popis vekovej skupiny pod stĺpcom
+                    label.textContent = item.group;
 
-                    // Event listenery pre tooltip
                     bar.addEventListener('mouseover', (e) => {
                         tooltip.innerHTML = `<strong>${item.group}:</strong> ${item.value.toFixed(1).replace('.', ',')}%`;
                         tooltip.style.opacity = '1';
-                        positionTooltip(e, tooltip); // Umiestniť tooltip
+                        positionTooltip(e, tooltip);
                     });
-
-                    bar.addEventListener('mousemove', (e) => {
-                        positionTooltip(e, tooltip); // Aktualizovať pozíciu tooltipu pri pohybe myši
-                    });
-
-                    bar.addEventListener('mouseout', () => {
-                        tooltip.style.opacity = '0'; // Skryť tooltip
-                    });
+                    bar.addEventListener('mousemove', (e) => { positionTooltip(e, tooltip); });
+                    bar.addEventListener('mouseout', () => { tooltip.style.opacity = '0'; });
 
                     barGroup.appendChild(bar);
                     barGroup.appendChild(label);
@@ -929,66 +939,34 @@
                 });
             }
 
-            // Funkcia na umiestnenie tooltipu vedľa kurzora
             function positionTooltip(event, tooltipElement) {
                 const tooltipRect = tooltipElement.getBoundingClientRect();
-                let x = event.clientX + 15;
-                let y = event.clientY - 15 - tooltipRect.height;
-
-                // Zabezpečiť, aby tooltip nešiel mimo obrazovku
-                if (y < 0) {
-                    y = event.clientY + 15;
-                }
-                if (x + tooltipRect.width > window.innerWidth) {
-                    x = event.clientX - 15 - tooltipRect.width;
-                }
-
-                tooltipElement.style.left = `${x}px`;
-                tooltipElement.style.top = `${y}px`;
+                let x = event.clientX + 15; let y = event.clientY - 15 - tooltipRect.height;
+                if (y < 0) { y = event.clientY + 15; }
+                if (x + tooltipRect.width > window.innerWidth) { x = event.clientX - 15 - tooltipRect.width; }
+                tooltipElement.style.left = `${x}px`; tooltipElement.style.top = `${y}px`;
             }
 
-
-            // Vlastný alert box
             function showCustomAlert(message, type = 'success') {
                 const existingAlert = document.getElementById('custom-alert-box');
-                if (existingAlert) {
-                    existingAlert.remove(); // Odstrániť existujúci alert, ak nejaký je
-                }
-
+                if (existingAlert) { existingAlert.remove(); }
                 const alertBox = document.createElement('div');
                 alertBox.id = 'custom-alert-box';
                 Object.assign(alertBox.style, {
-                    position: 'fixed',
-                    top: '20px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    padding: '15px 25px',
-                    borderRadius: '8px',
-                    color: 'white',
-                    zIndex: '2000',
-                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-                    opacity: '0', // Začíname s priehľadnosťou 0 pre animáciu
-                    transition: 'opacity 0.5s ease-in-out',
-                    fontFamily: 'system-ui, sans-serif',
+                    position: 'fixed', top: '20px', left: '50%', transform: 'translateX(-50%)',
+                    padding: '15px 25px', borderRadius: '8px', color: 'white', zIndex: '2000',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)', opacity: '0',
+                    transition: 'opacity 0.5s ease-in-out', fontFamily: 'Inter, system-ui, sans-serif',
                     fontSize: '1rem',
-                    // Farba pozadia podľa typu správy
-                    backgroundColor: type === 'error' ? 'rgba(239, 68, 68, 0.9)' : 'rgba(52, 211, 153, 0.9)',
+                    backgroundColor: type === 'error' ? 'rgba(190, 24, 24, 0.9)' : 'rgba(var(--color-primary-purple-rgb), 0.9)', // Zmenená farba pre success
                 });
-                alertBox.textContent = message;
-                document.body.appendChild(alertBox);
-
-                // Animácia zobrazenia
-                requestAnimationFrame(() => {
-                    alertBox.style.opacity = '1';
-                });
-
-                // Skrytie a odstránenie po 4 sekundách
+                alertBox.textContent = message; document.body.appendChild(alertBox);
+                requestAnimationFrame(() => { alertBox.style.opacity = '1'; });
                 setTimeout(() => {
                     alertBox.style.opacity = '0';
                     alertBox.addEventListener('transitionend', () => alertBox.remove(), { once: true });
                 }, 4000);
             }
-
 
             document.addEventListener('DOMContentLoaded', () => {
                 const mainContentWrapper = document.getElementById('main-content-wrapper');
@@ -997,228 +975,89 @@
                 const partnerViewButton = document.getElementById('partner-view-button');
                 const playerViewButton = document.getElementById('player-view-button');
                 const backToPartnerButton = document.getElementById('back-to-partner-button');
-
                 const gdprModal = document.getElementById('gdpr-modal');
                 const openGdprModalButton = document.getElementById('open-gdpr-modal');
                 const closeGdprModalButton = document.getElementById('close-gdpr-modal');
-
                 const audioPlayers = document.querySelectorAll('audio');
                 const rippleButtons = document.querySelectorAll('.button-ripple');
 
-
-                // Funkcia na zobrazenie obsahu a posunutie
                 function showAndScroll(targetElementToShow) {
-                     // Kontrola, či elementy existujú
-                    if (!mainContentWrapper || !targetElementToShow) {
-                        console.error("Missing main wrapper or target element.");
-                        return;
-                    }
-
-                    mainContentWrapper.classList.remove('hidden'); // Zobraziť hlavný kontajner
-
-                    // Skryť/zobraziť sekcie pre partnera a hráča
+                    if (!mainContentWrapper || !targetElementToShow) { console.error("Missing main wrapper or target element."); return; }
+                    mainContentWrapper.classList.remove('hidden');
                     const isPlayerTarget = targetElementToShow.id === 'player-content';
                     partnerContent?.classList.toggle('hidden', isPlayerTarget);
                     playerContent?.classList.toggle('hidden', !isPlayerTarget);
 
-                    // Obnoviť AOS animácie pre viditeľný obsah
-                    if (typeof AOS !== 'undefined') {
-                        AOS.refresh();
-                    } else {
-                         console.warn("AOS library not found. Skipping AOS refresh.");
-                    }
+                    if (typeof AOS !== 'undefined') { AOS.refresh(); }
+                    else { console.warn("AOS library not found. Skipping AOS refresh."); }
 
-
-                    // Inicializovať grafy iba ak je zobrazený partnerský obsah
                     if (!isPlayerTarget && partnerContent && document.getElementById('pie-chart') && document.getElementById('age-bars')) {
-                         try {
-                            createSVGPieChart();
-                            createGenderLegend();
-                            createAgeBars();
-                         } catch (error) {
-                            console.error("Chyba pri inicializácii grafov:", error);
-                         }
+                         try { createSVGPieChart(); createGenderLegend(); createAgeBars(); }
+                         catch (error) { console.error("Chyba pri inicializácii grafov:", error); }
                     }
-
-                    // Posunúť stránku na začiatok hlavného obsahu
-                    setTimeout(() => {
-                         mainContentWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 50); // Malé oneskorenie pre plynulejší prechod
+                    setTimeout(() => { mainContentWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
                 }
 
+                if (playerViewButton && playerContent) { playerViewButton.addEventListener('click', () => showAndScroll(playerContent)); }
+                else { console.error("Player view button or player content not found!"); }
+                if (partnerViewButton && partnerContent) { partnerViewButton.addEventListener('click', () => showAndScroll(partnerContent)); }
+                else { console.error("Partner view button or partner content not found!"); }
+                if (backToPartnerButton && partnerContent) { backToPartnerButton.addEventListener('click', () => showAndScroll(partnerContent)); }
+                else { console.error("Back to partner button or partner content not found!"); }
 
-                // Event listenery pre tlačidlá "Pre partnerov" a "Pre hráčov"
-                if (playerViewButton && playerContent) {
-                    playerViewButton.addEventListener('click', () => showAndScroll(playerContent));
-                } else {
-                    console.error("Player view button or player content not found!");
-                }
-
-                if (partnerViewButton && partnerContent) {
-                    partnerViewButton.addEventListener('click', () => showAndScroll(partnerContent));
-                } else {
-                     console.error("Partner view button or partner content not found!");
-                }
-
-                // Event listener pre tlačidlo "Zobraziť stránku pre partnerov" (v sekcii pre hráčov)
-                 if (backToPartnerButton && partnerContent) {
-                    backToPartnerButton.addEventListener('click', () => showAndScroll(partnerContent));
-                 } else {
-                    console.error("Back to partner button or partner content not found!");
-                 }
-
-
-                // Inicializácia AOS
                 if (typeof AOS !== 'undefined') {
-                    AOS.init({
-                        duration: 800, // trvanie animácie
-                        once: true, // animovať iba raz pri scrollovaní nadol
-                        offset: 100, // spustiť animáciu 100px pred dosiahnutím elementu
-                        delay: 50, // malé oneskorenie medzi animáciami
-                        easing: 'ease-out-cubic' // typ animácie
-                    });
-                } else {
-                    console.warn("AOS library not found. Animations will not be initialized.");
-                }
+                    AOS.init({ duration: 800, once: true, offset: 100, delay: 50, easing: 'ease-out-cubic' });
+                } else { console.warn("AOS library not found. Animations will not be initialized."); }
 
-
-                // Spracovanie kontaktného formulára
                 const handleFormSubmit = (event) => {
-                    event.preventDefault(); // Zabrániť predvolenému odoslaniu formulára
-                    const form = event.target;
-                    const formData = new FormData(form);
-
-                    // Získanie tlačidla a textu na ňom
+                    event.preventDefault(); const form = event.target; const formData = new FormData(form);
                     const submitButton = form.querySelector('button[type="submit"]');
                     const buttonTextSpan = submitButton?.querySelector('.relative.z-10');
                     const originalButtonText = buttonTextSpan ? buttonTextSpan.textContent : 'Odoslať správu';
-
-                    // Zablokovať tlačidlo a zmeniť text počas odosielania
                     if (submitButton) submitButton.disabled = true;
                     if (buttonTextSpan) buttonTextSpan.textContent = 'Odosielam...';
 
-
-                    // Odoslanie formulára pomocou Fetch API (pre Netlify Forms)
-                    fetch("/", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: new URLSearchParams(formData).toString()
-                    })
-                    .then(() => {
-                        showCustomAlert('Ďakujeme za vašu správu! Bola úspešne odoslaná.');
-                        form.reset(); // Vyčistiť formulár po úspešnom odoslaní
-                    })
-                    .catch((error) => {
-                        console.error("Form submission error:", error);
-                        showCustomAlert('Pri odosielaní správy nastala chyba.', 'error');
-                    })
-                    .finally(() => {
-                        // Odblokovať tlačidlo a vrátiť pôvodný text
-                        if (submitButton) submitButton.disabled = false;
-                        if (buttonTextSpan) buttonTextSpan.textContent = originalButtonText;
-                    });
+                    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(formData).toString() })
+                    .then(() => { showCustomAlert('Ďakujeme za vašu správu! Bola úspešne odoslaná.'); form.reset(); })
+                    .catch((error) => { console.error("Form submission error:", error); showCustomAlert('Pri odosielaní správy nastala chyba.', 'error'); })
+                    .finally(() => { if (submitButton) submitButton.disabled = false; if (buttonTextSpan) buttonTextSpan.textContent = originalButtonText; });
                 };
-
-                // Pridať event listener na formulár v partnerskej sekcii
                 const partnerForm = partnerContent?.querySelector('form[name="contact"]');
-                if (partnerForm) {
-                    partnerForm.addEventListener('submit', handleFormSubmit);
-                }
+                if (partnerForm) { partnerForm.addEventListener('submit', handleFormSubmit); }
 
-
-                // Ripple efekt na tlačidlá
                 rippleButtons.forEach(button => {
                     button.addEventListener('click', function(e) {
-                        // Zabrániť vytvoreniu ripple, ak je tlačidlo disabled alebo kliknutie je na existujúci ripple
-                        if (e.target.classList.contains('ripple') || button.disabled) {
-                            return;
-                        }
-
-                        const rect = button.getBoundingClientRect();
-                        const ripple = document.createElement('span');
-                        const diameter = Math.max(button.clientWidth, button.clientHeight);
-                        const radius = diameter / 2;
-
-                        // Nastavenie pozície a veľkosti ripple
-                        Object.assign(ripple.style, {
-                            width: `${diameter}px`,
-                            height: `${diameter}px`,
-                            left: `${e.clientX - rect.left - radius}px`,
-                            top: `${e.clientY - rect.top - radius}px`,
-                        });
-
+                        if (e.target.classList.contains('ripple') || button.disabled) { return; }
+                        const rect = button.getBoundingClientRect(); const ripple = document.createElement('span');
+                        const diameter = Math.max(button.clientWidth, button.clientHeight); const radius = diameter / 2;
+                        Object.assign(ripple.style, { width: `${diameter}px`, height: `${diameter}px`, left: `${e.clientX - rect.left - radius}px`, top: `${e.clientY - rect.top - radius}px`, });
                         ripple.classList.add('ripple');
-
-                        // Odstrániť starý ripple, ak existuje
-                        const oldRipple = button.querySelector('.ripple');
-                        if (oldRipple) {
-                            oldRipple.remove();
-                        }
-
+                        const oldRipple = button.querySelector('.ripple'); if (oldRipple) { oldRipple.remove(); }
                         button.appendChild(ripple);
-
-                        // Odstrániť ripple po skončení animácie
-                        ripple.addEventListener('animationend', () => {
-                            ripple.remove();
-                        }, { once: true });
+                        ripple.addEventListener('animationend', () => { ripple.remove(); }, { once: true });
                     });
                 });
 
-                // Pozastaviť ostatné audio prehrávače pri spustení jedného
                 audioPlayers.forEach(player => {
                     player.addEventListener('play', () => {
                         audioPlayers.forEach(otherPlayer => {
-                            if (otherPlayer !== player) {
-                                otherPlayer.pause();
-                                otherPlayer.dataset.playing = 'false';
-                                otherPlayer.style.boxShadow = ''; // Odstrániť tieň
-                            }
+                            if (otherPlayer !== player) { otherPlayer.pause(); otherPlayer.dataset.playing = 'false'; otherPlayer.style.boxShadow = ''; }
                         });
                         player.dataset.playing = 'true';
-                        player.style.boxShadow = '0 0 15px rgba(147, 51, 234, 0.4)'; // Pridať tieň
+                        player.style.boxShadow = `0 0 15px rgba(${getComputedStyle(document.documentElement).getPropertyValue('--color-primary-purple-rgb').trim()}, 0.45)`;
                     });
-                    player.addEventListener('pause', () => {
-                        player.dataset.playing = 'false';
-                        player.style.boxShadow = ''; // Odstrániť tieň
-                    });
-                    player.addEventListener('ended', () => {
-                        player.dataset.playing = 'false';
-                        player.style.boxShadow = ''; // Odstrániť tieň
-                    });
+                    player.addEventListener('pause', () => { player.dataset.playing = 'false'; player.style.boxShadow = ''; });
+                    player.addEventListener('ended', () => { player.dataset.playing = 'false'; player.style.boxShadow = ''; });
                 });
 
-                // GDPR Modal funkcionalita
                 if (gdprModal && openGdprModalButton && closeGdprModalButton) {
-                    const showGdprModal = () => {
-                        gdprModal.classList.add('visible');
-                        document.body.style.overflow = 'hidden'; // Zablokovať scrollovanie pozadia
-                    };
-
-                    const hideGdprModal = () => {
-                        gdprModal.classList.remove('visible');
-                        document.body.style.overflow = ''; // Povoliť scrollovanie pozadia
-                    };
-
+                    const showGdprModal = () => { gdprModal.classList.add('visible'); document.body.style.overflow = 'hidden'; };
+                    const hideGdprModal = () => { gdprModal.classList.remove('visible'); document.body.style.overflow = ''; };
                     openGdprModalButton.addEventListener('click', showGdprModal);
                     closeGdprModalButton.addEventListener('click', hideGdprModal);
-
-                    // Zatvoriť modal kliknutím mimo obsahu
-                    gdprModal.addEventListener('click', (event) => {
-                        if (event.target === gdprModal) {
-                            hideGdprModal();
-                        }
-                    });
-
-                    // Zatvoriť modal stlačením klávesy ESC
-                    document.addEventListener('keydown', (event) => {
-                        if (event.key === 'Escape' && gdprModal.classList.contains('visible')) {
-                            hideGdprModal();
-                        }
-                    });
-                } else {
-                    console.error("GDPR modal elements not found!");
-                }
-
+                    gdprModal.addEventListener('click', (event) => { if (event.target === gdprModal) { hideGdprModal(); } });
+                    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && gdprModal.classList.contains('visible')) { hideGdprModal(); } });
+                } else { console.error("GDPR modal elements not found!"); }
             });
         </script>
     </body>
