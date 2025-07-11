@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Šepot lesa - Interaktívna Audiohra</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- Opravený atribút 'xintegrity' na 'integrity' pre správne načítanie Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,7 +96,7 @@
             .glitch-effect::after { left: 1px; text-shadow: -1px 0 var(--color-accent-blood-red); animation: glitch-anim-after 2s infinite linear alternate-reverse; mix-blend-mode: screen; }
 
             @keyframes glitch-anim-before {0%,100%{clip-path:inset(40% 0 60% 0);transform:translate(0,0)}5%{clip-path:inset(20% 0 15% 0);transform:translate(-5px,2px)}10%{clip-path:inset(80% 0 5% 0);transform:translate(3px,-1px)}15%{clip-path:inset(5% 0 90% 0);transform:translate(-4px,3px)}20%{clip-path:inset(60% 0 38% 0);transform:translate(2px,-2px)}25%{clip-path:inset(10% 0 85% 0);transform:translate(-3px,4px)}30%{clip-path:inset(90% 0 1% 0);transform:translate(4px,-3px)}35%{clip-path:inset(30% 0 65% 0);transform:translate(-2px,1px)}40%{clip-path:inset(70% 0 25% 0);transform:translate(5px,-4px)}45%{clip-path:inset(50% 0 48% 0);transform:translate(-1px,2px)}50%{clip-path:inset(25% 0 70% 0);transform:translate(3px,-1px)}55%{clip-path:inset(85% 0 10% 0);transform:translate(-4px,3px)}60%{clip-path:inset(45% 0 50% 0);transform:translate(1px,-2px)}65%{clip-path:inset(5% 0 92% 0);transform:translate(-2px,4px)}70%{clip-path:inset(95% 0 2% 0);transform:translate(4px,-3px)}75%{clip-path:inset(35% 0 60% 0);transform:translate(-3px,1px)}80%{clip-path:inset(65% 0 30% 0);transform:translate(2px,-4px)}85%{clip-path:inset(15% 0 80% 0);transform:translate(-1px,2px)}90%{clip-path:inset(75% 0 20% 0);transform:translate(3px,-1px)}95%{clip-path:inset(28% 0 68% 0);transform:translate(-4px,3px)}}
-            @keyframes glitch-anim-after {0%,100%{clip-path:inset(60% 0 40% 0);transform:translate(0,0)}4%{clip-path:inset(10% 0 85% 0);transform:translate(4px,-2px)}8%{clip-path:inset(90% 0 5% 0);transform:translate(-2px,1px)}12%{clip-path:inset(25% 0 70% 0);transform:translate(5px,-3px)}16%{clip-path:inset(70% 0 28% 0);transform:translate(-3px,2px)}20%{clip-path:inset(20% 0 75% 0);transform:translate(2px,-4px)}24%{clip-path:inset(80% 0 8% 0);transform:translate(-5px,3px)}28%{clip-path:inset(40% 0 55% 0);transform:translate(1px,-1px)}32%{clip-path:inset(75% 0 22% 0);transform:translate(-4px,4px)}36%{clip-path:inset(52% 0 45% 0);transform:translate(3px,-2px)}40%{clip-path:inset(18% 0 78% 0);transform:translate(-2px,1px)}44%{clip-path:inset(88% 0 2% 0);transform:translate(4px,-3px)}48%{clip-path:inset(30% 0 68% 0);transform:translate(-1px,2px)}52%{clip-path:inset(68% 0 29% 0);transform:translate(3px,-4px)}56%{clip-path:inset(8% 0 90% 0);transform:translate(-4px,1px)}60%{clip-path:inset(55% 0 40% 0);transform:translate(2px,-2px)}64%{clip-path:inset(22% 0 72% 0);transform:translate(-3px,3px)}68%{clip-path:inset(92% 0 5% 0);transform:translate(5px,-1px)}72%{clip-path:inset(48% 0 50% 0);transform:translate(-2px,4px)}76%{clip-path:inset(5% 0 88% 0);transform:translate(1px,-3px)}80%{clip-path:inset(60% 0 35% 0);transform:translate(-4px,1px)}84%{clip-path:inset(32% 0 62% 0);transform:translate(3px,-2px)}88%{clip-path:inset(85% 0 12% 0);transform:translate(-1px,4px)}92%{clip-path:inset(42% 0 55% 0);transform:translate(4px,-1px)}96%{clip-path:inset(12% 0 82% 0);transform:translate(-2px,3px)}}
+            @keyframes glitch-anim-after {0%,100%{clip-path:inset(60% 0 40% 0);transform:translate(0,0)}4%{clip-path:inset(10% 0 85% 0);transform:translate(4px,-2px)}8%{clip-path:inset(90% 0 5% 0);transform:translate(-2px,1px)}12%{clip-path:inset(25% 0 70% 0);transform:translate(5px,-3px)}16%{clip-path:inset(70% 0 28% 0);transform:translate(-3px,2px)}20%{clip-path:inset(20% 0 75% 0);transform:translate(2px,-4px)}24%{clip-path:inset(80% 0 8% 0);transform:translate(-5px,3px)}28%{clip-path:inset(40% 0 55% 0);transform:translate(1px,-1px)}32%{clip-path:inset(75% 0 22% 0);transform:translate(-4px,4px)}36%{clip-path:inset(52% 0 45% 0);transform:translate(3px,-2px)}40%{clip-path:inset(18% 0 78% 0);transform:translate(-2px,1px)}44%{clip-path:inset(88% 0 2% 0);transform:translate(4px,-3px)}48%{clip-path:inset(30% 0 68% 0);transform:translate(-1px,2px)}52%{clip-path:inset(68% 0 29% 0);transform:translate(3px,-4px)}56%{clip-path:inset(8% 0 90% 0);transform:translate(-4px,1px)}60%{clip-path:inset(55% 0 40% 0);transform:translate(2px,-2px)}64%{clip-path:inset(22% 0 72% 0);transform:translate(-3px,3px)}68%{clip-path:inset(92% 0 5% 0);transform:translate(5px,-1px)}72%{clip-path:inset(48% 0 50% 0);transform:translate(-2px,4px)}76%{clip:inset(5% 0 88% 0);transform:translate(1px,-3px)}80%{clip-path:inset(60% 0 35% 0);transform:translate(-4px,1px)}84%{clip-path:inset(32% 0 62% 0);transform:translate(3px,-2px)}88%{clip-path:inset(85% 0 12% 0);transform:translate(-1px,4px)}92%{clip-path:inset(42% 0 55% 0);transform:translate(4px,-1px)}96%{clip-path:inset(12% 0 82% 0);transform:translate(-2px,3px)}}
 
             /* Animácie */
             @keyframes flicker { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.1; } }
@@ -136,7 +137,7 @@
             /* Grafy */
             .charts-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
             .chart {
-                 padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
+                  padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
             }
             .chart h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: var(--color-text-main); border-bottom: 1px solid var(--color-border-medium); padding-bottom: 10px; text-shadow: 0 0 8px rgba(var(--color-primary-violet-rgb), 0.5); }
             .gender-chart { position: relative; margin: 0 auto; }
@@ -187,14 +188,14 @@
             }
             #tracks .modern-card { transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; }
             #tracks .modern-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 12px 28px rgba(var(--color-primary-purple-rgb), 0.25); }
-            #tracks img { transition: filter 0.4s ease, transform 0.4s ease; filter: grayscale(80%); }
+            #tracks img { transition: filter 0.4s ease, transform 0.4s ease; filter: grayscale(0); }
             #tracks .modern-card:hover img { filter: grayscale(0); transform: scale(1.05); }
 
             .hidden { display: none !important; }
 
             /* Štýly pre sekciu Hráč */
             #player-content .character-card {
-                 backdrop-filter: blur(5px);
+                  backdrop-filter: blur(5px);
             }
             #player-content .character-card img { aspect-ratio: 1 / 1; object-fit: cover; }
             #player-about-image { max-height: 400px; object-fit: cover; }
@@ -239,7 +240,7 @@
             }
             */
 
-             /* Pre mobilné zobrazenie (pod 768px) zrušíme float a zarovnáme obrázok na stred */
+              /* Pre mobilné zobrazenie (pod 768px) zrušíme float a zarovnáme obrázok na stred */
             @media (max-width: 767px) {
                 #author .content-block .text-content .author-image-float,
                 #player-creator .content-block .text-content .author-image-float {
@@ -251,7 +252,7 @@
                     width: 60%; /* Na mobile môže byť obrázok trochu väčší percentuálne */
                     max-width: 200px; /* Ale nie príliš veľký absolútne */
                     shape-outside: none; /* Zrušiť shape-outside */
-                    shape-margin: 0;     /* Zrušiť shape-margin */
+                    shape-margin: 0;      /* Zrušiť shape-margin */
                 }
                 #author .content-block .text-content,
                 #player-creator .content-block .text-content {
@@ -312,11 +313,16 @@
             }
             .app-download-favicon:hover { transform: scale(1.05); }
             .app-download-qr-container {
-                margin-bottom: 2rem; display: inline-block; padding: 0.75rem;
+                margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem; /* Zmena na flex pre QR kódy */
                 background-color: rgba(255,255,255,0.05); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1);
+                padding: 0.75rem; /* Pridaný padding pre kontajner QR kódov */
             }
-            .app-download-qr { width: 11rem; height: 11rem; border-radius: 0.5rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-            .app-download-button-container { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+            /* QR kódy sú skryté na malých obrazovkách (do md) */
+            .app-download-qr { width: 11rem; height: 11rem; border-radius: 0.5rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2); display: none; }
+            @media (min-width: 768px) { /* Zobraziť na md a väčších */
+                .app-download-qr { display: block; }
+            }
+            .app-download-button-container { display: flex; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; /* Pridaný gap pre tlačidlá */ }
             .app-store-button {
                 display: inline-flex; align-items: center; justify-content: center;
                 background-image: linear-gradient(to right, var(--color-primary-purple), var(--color-accent-pink), #B71C1C); /* Tmavšia červená na konci */
@@ -327,8 +333,35 @@
             }
             .app-store-button:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 25px rgba(var(--color-accent-pink-rgb), 0.4); }
             .app-store-button:active { transform: translateY(-1px) scale(1.01); box-shadow: 0 8px 15px rgba(var(--color-accent-pink-rgb), 0.3); }
-            .app-store-button i.fa-apple { margin-right: 0.75rem; font-size: 1.5rem; }
+            .app-store-button i { margin-right: 0.75rem; font-size: 1.5rem; } /* Všeobecný štýl pre ikony v tlačidlách */
             .app-download-text { margin-top: 1.5rem; font-size: 0.875rem; color: var(--color-text-subtle); }
+
+            /* Cookie Consent Modal styles */
+            #cookie-consent-modal {
+                position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                background-color: var(--color-bg-card); color: var(--color-text-main);
+                padding: 25px 30px; border-radius: 12px; max-width: 500px; width: 90%;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); z-index: 1001;
+                display: flex; flex-direction: column; gap: 15px;
+                opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+                border: 1px solid var(--color-border-soft);
+            }
+            #cookie-consent-modal.visible { opacity: 1; visibility: visible; }
+            #cookie-consent-modal p { font-size: 0.95rem; line-height: 1.5; color: var(--color-text-muted); }
+            #cookie-consent-modal .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+            #cookie-consent-modal button {
+                padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;
+                transition: background-color 0.2s ease, transform 0.1s ease;
+            }
+            #cookie-consent-modal #accept-cookies {
+                background-color: var(--color-primary-purple); color: white; border: none;
+                box-shadow: 0 4px 10px rgba(var(--color-primary-purple-rgb), 0.3);
+            }
+            #cookie-consent-modal #accept-cookies:hover { background-color: var(--color-primary-deep-purple); transform: translateY(-2px); }
+            #cookie-consent-modal #manage-cookies {
+                background-color: transparent; color: var(--color-primary-violet); border: 1px solid var(--color-primary-violet);
+            }
+            #cookie-consent-modal #manage-cookies:hover { background-color: rgba(var(--color-primary-violet-rgb), 0.1); transform: translateY(-2px); }
 
         </style>
     </head>
@@ -370,13 +403,22 @@
                         <p class="app-download-subtitle">Ako partner máte jedinečnú príležitosť nahliadnuť do plného potenciálu našej interaktívnej audiohry prostredníctvom dedikovanej mobilnej aplikácie. Ponorte sa do príbehu ešte dnes!</p>
                         <img src="https://i.imgur.com/YrOja3j.png" alt="Šepot lesa Favicon" class="mx-auto app-download-favicon">
                         <div class="app-download-qr-container">
+                            <!-- QR kód pre Apple App Store -->
                             <img src="https://i.imgur.com/lAqgjyA.jpeg" alt="QR kód pre Apple App Store" class="app-download-qr">
+                            <!-- QR kód pre Google Play Store -->
+                            <img src="https://storage.googleapis.com/vanhelsing/Google%20play.png" alt="QR kód pre Google Play Store" class="app-download-qr">
                         </div>
-                        <div class="app-download-button-container"> <a href="https://apps.apple.com/app/id6745821902" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
+                        <div class="app-download-button-container">
+                            <!-- Tlačidlo pre Apple App Store -->
+                            <a href="https://apps.apple.com/app/id6745821902" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
                                 <i class="fab fa-apple"></i> Stiahnuť na App Store
                             </a>
+                            <!-- Tlačidlo pre Google Play Store -->
+                            <a href="https://play.google.com/store/apps/details?id=com.sepotlesa.app" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
+                                <i class="fab fa-google-play"></i> Stiahnuť na Google Play
+                            </a>
                         </div>
-                        <p class="app-download-text">Naskenujte QR kód alebo kliknite na tlačidlo a odhaľte tajomstvá Čierneho Potoka.</p>
+                        <p class="app-download-text">Naskenujte QR kódy alebo kliknite na tlačidlá a odhaľte tajomstvá Čierneho Potoka.</p>
                     </div>
                 </section>
                 <div class="section-divider" data-aos="fade-up"></div>
@@ -401,14 +443,14 @@
                     </div>
                 </section>
 
-                    <div class="section-divider" data-aos="fade-up"></div>
+                        <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="about" class="relative">
                     <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
                     <div class="container mx-auto max-w-6xl">
                         <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Odhaľte srdce Šepotu lesa: príbeh, ktorý vás nepustí</h2>
                         <div class="content-block content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
-                             <div class="absolute inset-0 z-0 opacity-[0.02]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22><path d=%22M10 0L0 10h10v10L20 10h-10V0z%22 fill=%22%23FFFFFF%22/></svg>'); background-size: 20px 20px"></div>
+                               <div class="absolute inset-0 z-0 opacity-[0.02]" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22><path d=%22M10 0L0 10h10v10L20 10h-10V0z%22 fill=%22%23FFFFFF%22/></svg>'); background-size: 20px 20px"></div>
                             <div class="text-content relative z-10 text-lg leading-relaxed text-gray-300" data-aos="fade-right" data-aos-delay="200">
                                 <p>Audiohra Šepot lesa je <span class="gradient-text font-semibold">mrazivý mysteriózny príbeh</span> s hlbokými <span class="gradient-text font-semibold">psychologickými a hororovými prvkami</span>. Hráč sa vtelením do Jakuba Horáka vracia do rodnej dediny, aby rozlúštil záhadu zmiznutia svojho brata.</p>
                                 <p class="mt-4">Každý okamih je <span class="gradient-text font-semibold">interaktívny</span> a vaše <span class="gradient-text font-semibold">rozhodnutia</span> dramaticky menia smer príbehu, vedúc k mnohým prekvapivým odhaleniam.</p>
@@ -425,7 +467,7 @@
                     </div>
                 </section>
 
-                    <div class="section-divider" data-aos="fade-up"></div>
+                        <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="partner-benefits" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-5xl">
@@ -454,7 +496,7 @@
                     </div>
                 </section>
 
-                    <div class="section-divider" data-aos="fade-up"></div>
+                        <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="stats" class="relative">
                     <div class="container mx-auto max-w-6xl">
@@ -479,39 +521,39 @@
                                 <span class="chart-title">Vekové skupiny poslucháčov</span>
                             </div>
                         </div>
-                           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="300">
-                                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">1 000 000+</div>
-                                    <div class="text-lg text-gray-300">strhujúcich prehratí, ktoré otriasli éterom</div>
+                               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+                                    <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="300">
+                                        <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">1 000 000+</div>
+                                        <div class="text-lg text-gray-300">strhujúcich prehratí, ktoré otriasli éterom</div>
+                                    </div>
+                                    <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="400">
+                                        <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">8 591</div>
+                                        <div class="text-lg text-gray-300">vernostných sledovateľov na Spotify, pripravených na viac</div>
+                                    </div>
+                                    <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="500">
+                                        <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">22 183</div>
+                                        <div class="text-lg text-gray-300">streamov za posledných 30 dní – oheň, ktorý nehasne</div>
+                                    </div>
+                                    <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="600">
+                                        <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">5 505</div>
+                                        <div class="text-lg text-gray-300">hodín napínavého počúvania mesačne, ktoré vás pohltia</div>
+                                    </div>
+                                    <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="700">
+                                        <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">29</div>
+                                        <div class="text-lg text-gray-300">nových zvedavých followerov mesačne, hladných po príbehoch</div>
+                                    </div>
+                                    <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="800">
+                                        <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">84%</div>
+                                        <div class="text-lg text-gray-300">konverzia (3 369 uchvátených poslucháčov po prvej ukážke)</div>
+                                    </div>
+                               </div>
+                             <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="900">
+                                    <p class="text-lg text-gray-300">Vďaka tejto vášnivej a oddanej komunite má projekt Šepot lesa mimoriadne silný základ pre explozívny úspech na trhu – buďte pri tom!</p>
                                 </div>
-                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="400">
-                                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">8 591</div>
-                                    <div class="text-lg text-gray-300">vernostných sledovateľov na Spotify, pripravených na viac</div>
-                                </div>
-                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="500">
-                                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">22 183</div>
-                                    <div class="text-lg text-gray-300">streamov za posledných 30 dní – oheň, ktorý nehasne</div>
-                                </div>
-                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="600">
-                                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">5 505</div>
-                                    <div class="text-lg text-gray-300">hodín napínavého počúvania mesačne, ktoré vás pohltia</div>
-                                </div>
-                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="700">
-                                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">29</div>
-                                    <div class="text-lg text-gray-300">nových zvedavých followerov mesačne, hladných po príbehoch</div>
-                                </div>
-                                <div class="modern-card p-6 text-center" data-aos="zoom-in" data-aos-delay="800">
-                                    <div class="gradient-text text-3xl sm:text-4xl font-bold mb-2">84%</div>
-                                    <div class="text-lg text-gray-300">konverzia (3 369 uchvátených poslucháčov po prvej ukážke)</div>
-                                </div>
-                           </div>
-                         <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="900">
-                                <p class="text-lg text-gray-300">Vďaka tejto vášnivej a oddanej komunite má projekt Šepot lesa mimoriadne silný základ pre explozívny úspech na trhu – buďte pri tom!</p>
-                            </div>
                     </div>
                 </section>
 
-                    <div class="section-divider" data-aos="fade-up"></div>
+                        <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="appeal" class="relative"> <div class="container mx-auto max-w-4xl">
                         <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Mrazivý folklór & psychologická hĺbka: ponorte sa do zážitku!</h2>
@@ -545,13 +587,13 @@
                     </div>
                 </section>
 
-                    <div class="section-divider" data-aos="fade-up"></div>
+                        <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="author" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Spoznajte tvorcu záhadného sveta: Vladimír Seman</h2>
+                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Spoznajte tvorca záhadného sveta: Vladimír Seman</h2>
                         <div class="content-block content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
-                             <div class="text-lg text-center md:text-left text-content" data-aos="fade-left" data-aos-delay="300">
+                               <div class="text-lg text-center md:text-left text-content" data-aos="fade-left" data-aos-delay="300">
                                 <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="author-image-float interactive-hover" data-aos="fade-right" data-aos-delay="200">
                                 <h3 class="text-3xl font-bold mb-3 gradient-text">Vladimír Seman</h3>
                                 <p class="text-gray-300 leading-relaxed">
@@ -565,7 +607,7 @@
                     </div>
                 </section>
 
-                    <div class="section-divider" data-aos="fade-up"></div>
+                        <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="contact" class="relative">
                     <div class="container mx-auto max-w-2xl">
@@ -611,8 +653,8 @@
                             <a href="https://www.instagram.com/krvavydobsinsky/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
                             <a href="https://www.facebook.com/vlado.seman" target="_blank" rel="noopener noreferrer" aria-label="Facebook profil" class="text-gray-400 hover:text-purple-500 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
                         </div>
-                           <div class="mt-6">
-                                <button id="open-gdpr-modal" class="text-sm text-gray-400 hover:text-purple-400 underline">Zásady ochrany osobných údajov (GDPR)</button>
+                            <div class="mt-6">
+                                <button id="open-gdpr-modal" class="text-sm text-gray-400 hover:text-purple-400 underline">Zásady ochrany osobných údajov & Cookies</button>
                             </div>
                     </div>
                 </footer>
@@ -626,13 +668,22 @@
                         <p class="app-download-subtitle">Stiahnite si mobilnú aplikáciu Šepot lesa a nechajte sa úplne pohltiť interaktívnym príbehom, ktorý vám nedá spať!</p>
                         <img src="https://i.imgur.com/YrOja3j.png" alt="Šepot lesa Favicon" class="mx-auto app-download-favicon">
                         <div class="app-download-qr-container">
+                            <!-- QR kód pre Apple App Store -->
                             <img src="https://i.imgur.com/lAqgjyA.jpeg" alt="QR kód pre Apple App Store" class="app-download-qr">
+                            <!-- QR kód pre Google Play Store -->
+                            <img src="https://storage.googleapis.com/vanhelsing/Google%20play.png" alt="QR kód pre Google Play Store" class="app-download-qr">
                         </div>
-                        <div class="app-download-button-container"> <a href="https://apps.apple.com/app/id6745821902" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
+                        <div class="app-download-button-container">
+                            <!-- Tlačidlo pre Apple App Store -->
+                            <a href="https://apps.apple.com/app/id6745821902" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
                                <i class="fab fa-apple"></i> Stiahnuť na App Store
                             </a>
+                            <!-- Tlačidlo pre Google Play Store -->
+                            <a href="https://play.google.com/store/apps/details?id=com.sepotlesa.app" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
+                                <i class="fab fa-google-play"></i> Stiahnuť na Google Play
+                            </a>
                         </div>
-                        <p class="app-download-text">Naskenujte QR kód alebo kliknite na tlačidlo a vstúpte do sveta, kde každý tieň skrýva tajomstvo.</p>
+                        <p class="app-download-text">Naskenujte QR kódy alebo kliknite na tlačidlá a vstúpte do sveta, kde každý tieň skrýva tajomstvo.</p>
                     </div>
                 </section>
                 <div class="section-divider my-16" data-aos="fade-up"></div> <section id="player-about" class="relative">
@@ -675,7 +726,7 @@
                                 <p class="text-gray-400 text-sm mb-3">Hrá: Laco Kerata</p>
                                 <p class="text-gray-300 flex-grow">Lesník (hrá Laco Kerata) je predstavený ako posledný strážca tohto miesta a jeho tajomstiev. Vie o prepojení Jakubovej rodiny s Hollow, verí v pripojenie sa k nej a snaží sa Jakuba navigovať k vodnej veži a detskému úkrytu, pričom ho vníma ako súčasť osudu miesta. Jeho motivácia je fanatická viera v Hollow ako silu spájajúcu s koreňmi zeme.</p>
                             </div>
-                             <div class="character-card modern-card p-6 flex flex-col" data-aos="fade-up" data-aos-delay="400">
+                               <div class="character-card modern-card p-6 flex flex-col" data-aos="fade-up" data-aos-delay="400">
                                 <img src="https://cdn.midjourney.com/f56bdac1-0415-496f-aee9-c9aa06df954b/0_3.png" alt="Obrázok postavy Hlas z rádia" class="w-full mb-4 rounded-md shadow-md interactive-hover" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1f2937/FFFFFF?text=Rádio'; this.alt='Záložný obrázok postavy Hlas z rádia';">
                                 <h3 class="text-2xl font-bold mb-2 gradient-text">Hlas z rádia <span class="text-base text-gray-400 normal-case">(objektívny spravodajský hlas)</span></h3>
                                 <p class="text-gray-400 text-sm mb-3">Hrá: Viera Ihnátová</p>
@@ -705,7 +756,7 @@
                     <div class="container mx-auto max-w-4xl">
                         <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Stretnite myseľ za záhadou: architekt vášho strachu</h2>
                         <div class="content-block content-container-box p-8 rounded-2xl" data-aos="zoom-in" data-aos-delay="100">
-                             <div class="text-lg text-center md:text-left text-content" data-aos="fade-left" data-aos-delay="300">
+                               <div class="text-lg text-center md:text-left text-content" data-aos="fade-left" data-aos-delay="300">
                                 <img src="https://i.imgur.com/bc63DFL.png" alt="Fotografia autora Vladimír Seman" class="author-image-float interactive-hover" data-aos="fade-right" data-aos-delay="200">
                                 <h3 class="text-3xl font-bold mb-3 gradient-text">Vladimír Seman</h3>
                                 <p class="text-gray-300 leading-relaxed">Autorom interaktívnej audiohry Šepot lesa, ktorá vás vtiahne do svojich temných osídiel a nepustí, je Vladimír Seman. Je to kreatívny mág s neutíchajúcou vášňou pre rozprávanie príbehov, ktoré rezonujú v duši ešte dlho po odznení posledného slova. Je tiež autorom legendárneho podcastu Krvavý Dobšinský, v ktorom klasické rozprávky desivo pretvára do temnejšej, dychberúcej podoby, odhaľujúc ich skryté, mrazivé stránky. Jeho jedinečný cit pre atmosféru, majstrovský zvukový dizajn a psychologickú hĺbku postáv vdychujú život aj audiohre Šepot lesa, kde sa snažil vytvoriť extrémne intenzívny zážitok, spájajúci nervy drásajúci horor, surové emócie a vaše vlastné osudové voľby, ktoré rozhodnú o vašom prežití... alebo zatratení.</p>
@@ -729,12 +780,45 @@
             </main>
         </div>
 
+        <!-- Cookie Consent Modal -->
+        <div id="cookie-consent-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h3>Používanie cookies</h3>
+                <p>Používame cookies na zabezpečenie správneho fungovania stránky, analýzu návštevnosti a zobrazovanie personalizovanej reklamy. Kliknutím na "Prijať všetky" súhlasíte s používaním všetkých cookies. Svoj výber môžete kedykoľvek zmeniť v nastaveniach.</p>
+                <div class="button-group">
+                    <button id="accept-cookies" class="button-ripple">Prijať všetky</button>
+                    <button id="manage-cookies" class="button-ripple">Spravovať nastavenia</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GDPR Modal -->
         <div id="gdpr-modal" class="modal-overlay">
             <div class="modal-content">
-                <h3>Ochrana osobných údajov (GDPR)</h3>
+                <h3>Ochrana osobných údajov & Cookies (GDPR)</h3>
                 <p>Táto webstránka nezbiera žiadne osobné údaje okrem informácií, ktoré dobrovoľne poskytnete prostredníctvom kontaktného formulára v sekcii "Kontakt".</p>
                 <p>Údaje z kontaktného formulára (meno, e-mail, správa) sú použité výhradne na účely odpovede na váš dotaz. Tieto údaje nie sú zdieľané s tretími stranami ani použité na marketingové účely bez vášho výslovného súhlasu.</p>
-                   <p>Používame službu Netlify Forms na spracovanie odoslaných formulárov. Informácie o ich zásadách ochrany osobných údajov nájdete na ich webovej stránke.</p>
+                <p>
+                    <strong>Čo sú cookies?</strong><br>
+                    Cookies sú malé textové súbory, ktoré sa ukladajú vo vašom zariadení, aby stránka fungovala správne, aby sme mohli získať anonymné štatistiky o používaní webu a aby sme vám mohli zobrazovať relevantnú reklamu.
+                </p>
+                <p>
+                    <strong>Aké typy cookies používame?</strong>
+                    <ul>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Nevyhnutné cookies – pre základné fungovanie webu (napr. zapamätanie prihlásenia).</li>
+                        <li><i class="fas fa-chart-line text-blue-500 mr-2"></i> Analytické cookies – sledujú správanie návštevníkov (napr. Google Analytics, Markopolo.ai).</li>
+                        <li><i class="fas fa-bullhorn text-red-500 mr-2"></i> Marketingové cookies – používame ich na zobrazovanie relevantných reklám (napr. Facebook Pixel, Google Ads, MarkTag).</li>
+                    </ul>
+                </p>
+                <p>
+                    <strong>Ako spravovať cookies?</strong><br>
+                    Pri prvej návšteve stránky si môžete vybrať, ktoré cookies chcete povoliť. Svoj súhlas môžete kedykoľvek odvolať prostredníctvom [nastavení cookies] alebo v nastaveniach vášho prehliadača.
+                </p>
+                <p>
+                    <strong>Tretie strany</strong><br>
+                    Na stránke využívame aj nástroje tretích strán ako napr. Google Analytics, Meta (Facebook), Markopolo.ai, ktoré môžu zhromažďovať anonymizované údaje.
+                </p>
+                <p>Používame službu Netlify Forms na spracovanie odoslaných formulárov. Informácie o ich zásadách ochrany osobných údajov nájdete na ich webovej stránke.</p>
                 <p>Pre viac informácií o spracovaní vašich osobných údajov alebo ak máte akékoľvek otázky týkajúce sa GDPR, prosím, kontaktujte autora prostredníctvom uvedeného telefónneho čísla alebo kontaktného formulára.</p>
                 <div class="modal-footer">
                     <button id="close-gdpr-modal" class="modal-close-button">Potvrdiť</button>
@@ -867,7 +951,7 @@
                     });
                     legendItem.addEventListener('mouseout', () => {
                         resetLegendHighlight();
-                         if (pieInfo) { pieInfo.textContent = ''; pieInfo.style.color = 'var(--color-text-main)'; }
+                           if (pieInfo) { pieInfo.textContent = ''; pieInfo.style.color = 'var(--color-text-main)'; }
                         highlightPieSlice(item.name, false);
                     });
                     legendContainer.appendChild(legendItem);
@@ -978,6 +1062,10 @@
                 const gdprModal = document.getElementById('gdpr-modal');
                 const openGdprModalButton = document.getElementById('open-gdpr-modal');
                 const closeGdprModalButton = document.getElementById('close-gdpr-modal');
+                const cookieConsentModal = document.getElementById('cookie-consent-modal');
+                const acceptCookiesButton = document.getElementById('accept-cookies');
+                const manageCookiesButton = document.getElementById('manage-cookies');
+
                 const audioPlayers = document.querySelectorAll('audio');
                 const rippleButtons = document.querySelectorAll('.button-ripple');
 
@@ -992,8 +1080,8 @@
                     else { console.warn("AOS library not found. Skipping AOS refresh."); }
 
                     if (!isPlayerTarget && partnerContent && document.getElementById('pie-chart') && document.getElementById('age-bars')) {
-                         try { createSVGPieChart(); createGenderLegend(); createAgeBars(); }
-                         catch (error) { console.error("Chyba pri inicializácii grafov:", error); }
+                        try { createSVGPieChart(); createGenderLegend(); createAgeBars(); }
+                        catch (error) { console.error("Chyba pri inicializácii grafov:", error); }
                     }
                     setTimeout(() => { mainContentWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
                 }
@@ -1050,6 +1138,7 @@
                     player.addEventListener('ended', () => { player.dataset.playing = 'false'; player.style.boxShadow = ''; });
                 });
 
+                // GDPR Modal logic
                 if (gdprModal && openGdprModalButton && closeGdprModalButton) {
                     const showGdprModal = () => { gdprModal.classList.add('visible'); document.body.style.overflow = 'hidden'; };
                     const hideGdprModal = () => { gdprModal.classList.remove('visible'); document.body.style.overflow = ''; };
@@ -1058,7 +1147,34 @@
                     gdprModal.addEventListener('click', (event) => { if (event.target === gdprModal) { hideGdprModal(); } });
                     document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && gdprModal.classList.contains('visible')) { hideGdprModal(); } });
                 } else { console.error("GDPR modal elements not found!"); }
+
+                // Cookie Consent Modal logic
+                if (cookieConsentModal && acceptCookiesButton && manageCookiesButton) {
+                    const hasConsent = localStorage.getItem('cookieConsent');
+                    if (!hasConsent) {
+                        cookieConsentModal.classList.add('visible');
+                    }
+
+                    acceptCookiesButton.addEventListener('click', () => {
+                        localStorage.setItem('cookieConsent', 'accepted');
+                        cookieConsentModal.classList.remove('visible');
+                    });
+
+                    manageCookiesButton.addEventListener('click', () => {
+                        cookieConsentModal.classList.remove('visible');
+                        gdprModal.classList.add('visible'); // Open GDPR modal for managing preferences
+                        document.body.style.overflow = 'hidden';
+                    });
+                } else { console.error("Cookie consent modal elements not found!"); }
             });
         </script>
+        <script>
+            window.mtrem = window.mtrem || [];
+            function mtag() { mtrem.push(arguments) };
+            mtag("init", "https://mtag-alhb.audiohra.com", {"consent":true});
+            mtag("event", { type: "ViewContent" });
+        </script>
+        <!-- Opravená samouzatváracia značka <script /> na plnú otváraciu a zatváraciu značku -->
+        <script async type="text/javascript" src="https://mtag-alhb.audiohra.com/script"></script>
     </body>
 </html>
