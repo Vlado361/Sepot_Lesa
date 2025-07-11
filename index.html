@@ -136,7 +136,7 @@
             /* Grafy */
             .charts-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
             .chart {
-                 padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
+                    padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
             }
             .chart h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: var(--color-text-main); border-bottom: 1px solid var(--color-border-medium); padding-bottom: 10px; text-shadow: 0 0 8px rgba(var(--color-primary-violet-rgb), 0.5); }
             .gender-chart { position: relative; margin: 0 auto; }
@@ -194,7 +194,7 @@
 
             /* Štýly pre sekciu Hráč */
             #player-content .character-card {
-                 backdrop-filter: blur(5px);
+                    backdrop-filter: blur(5px);
             }
             #player-content .character-card img { aspect-ratio: 1 / 1; object-fit: cover; }
             #player-about-image { max-height: 400px; object-fit: cover; }
@@ -363,16 +363,8 @@
             #cookie-consent-modal #manage-cookies:hover { background-color: rgba(var(--color-primary-violet-rgb), 0.1); transform: translateY(-2px); }
 
         </style>
-        <script>
-            window.mtrem = window.mtrem || [];
-            function mtag() { mtrem.push(arguments) };
-            mtag("init", "https://mtag-alhb.audiohra.com", {"consent":true});
-            mtag("event", { type: "ViewContent" });
-        </script>
-        <script async type="text/javascript" src="https://mtag-alhb.audiohra.com/script"></script>
     </head>
-    <body class="bg-black text-gray-100 font-sans">
-        <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(var(--color-accent-pink-rgb), 0.03), transparent)"></div>
+    <body class="bg-black text-gray-100 font-sans"> <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(var(--color-accent-pink-rgb), 0.03), transparent)"></div>
         <div class="fixed inset-0 pointer-events-none z-40 opacity-5"><div class="absolute inset-0 static-noise"></div></div>
 
         <header id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black" style="background-image: url('https://i.imgur.com/ST2nkj5.png');">
@@ -392,12 +384,6 @@
                 <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
                     <button id="partner-view-button" class="button-ripple cta-button-pulse px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/50 uppercase tracking-wider">
                         <span class="relative z-10">Pre partnerov</span>
-                    </button>
-                    <button id="player-view-button" class="button-ripple cta-button-pulse px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/50 uppercase tracking-wider">
-                        <span class="relative z-10">Pre hráčov</span>
-                    </button>
-                    <button id="playButton" class="button-ripple cta-button-pulse px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-green-500 to-blue-500 text-white relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-green-500/50 uppercase tracking-wider">
-                        <span class="relative z-10">PRE HRÁČOV</span>
                     </button>
                 </div>
             </div>
@@ -449,7 +435,7 @@
                     </div>
                 </section>
 
-                        <div class="section-divider" data-aos="fade-up"></div>
+                                <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="about" class="relative">
                     <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.03) 1px, transparent 1px); background-size: 20px 20px"></div>
@@ -473,7 +459,7 @@
                     </div>
                 </section>
 
-                        <div class="section-divider" data-aos="fade-up"></div>
+                                <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="partner-benefits" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-5xl">
@@ -502,7 +488,7 @@
                     </div>
                 </section>
 
-                        <div class="section-divider" data-aos="fade-up"></div>
+                                <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="stats" class="relative">
                     <div class="container mx-auto max-w-6xl">
@@ -559,41 +545,41 @@
                     </div>
                 </section>
 
-                        <div class="section-divider" data-aos="fade-up"></div>
+                                <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="appeal" class="relative"> <div class="container mx-auto max-w-4xl">
-                        <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Mrazivý folklór & psychologická hĺbka: ponorte sa do zážitku!</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="100">
-                                <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-headphones-alt"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Revolučný audio zážitok, ktorý vás pohltí</h3>
-                                <p class="text-gray-300 text-sm">Nechajte sa pohltiť príbehom len prostredníctvom zvuku. Interaktívne prvky vás vtiahnu priamo do srdca deja, kde každý šepot má svoj osudový význam.</p>
-                            </div>
-                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="200">
-                                <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-brain"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Cesta do najtemnejších hlbín ľudskej duše</h3>
-                                <p class="text-gray-300 text-sm">Témy viny, straty a zúfalého hľadania pravdy rezonujú hlboko v každom z nás a nútia k zamysleniu nad vlastnými tieňmi a skrytými túžbami.</p>
-                            </div>
-                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="300">
-                                <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-leaf"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Temná poézia slovenských lesov, kde tajomstvo žije</h3>
-                                <p class="text-gray-300 text-sm">Inšpirované tajomnými slovenskými horami a prastarým folklórom, hra vytvára jedinečný, mrazivý pocit izolácie a všadeprítomného, dychberúceho tajomna.</p>
-                            </div>
-                            <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="400">
-                                <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-microphone-alt"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Majstrovský zvukový dizajn, ktorý cítite na koži</h3>
-                                <p class="text-gray-300 text-sm">Krištáľovo čisté nahrávky, strhujúce herecké výkony a originálne zvukové efekty zaručujú maximálny, zimomriavky naháňajúci zážitok, ktorý vás nepustí.</p>
-                            </div>
-                            <div class="modern-card p-6 md:col-span-2" data-aos="fade-up" data-aos-delay="500">
-                                <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-map-signs"></i></div>
-                                <h3 class="text-xl font-bold mb-3">Vaše voľby píšu osud: odvážite sa rozhodnúť?</h3>
-                                <p class="text-gray-300 text-sm">Každé vaše rozhodnutie dramaticky tvaruje príbeh a vedie k jednému z viacerých šokujúcich zakončení. Znovuhrateľnosť je zaručená – odvážite sa odhaliť všetky tajomstvá, ktoré les skrýva?</p>
-                            </div>
-                        </div>
+                                <h2 class="text-4xl font-bold mb-10 text-center gradient-text-intense" data-aos="fade-up">Mrazivý folklór & psychologická hĺbka: ponorte sa do zážitku!</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="100">
+                                        <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-headphones-alt"></i></div>
+                                        <h3 class="text-xl font-bold mb-3">Revolučný audio zážitok, ktorý vás pohltí</h3>
+                                        <p class="text-gray-300 text-sm">Nechajte sa pohltiť príbehom len prostredníctvom zvuku. Interaktívne prvky vás vtiahnu priamo do srdca deja, kde každý šepot má svoj osudový význam.</p>
+                                    </div>
+                                    <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="200">
+                                        <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-brain"></i></div>
+                                        <h3 class="text-xl font-bold mb-3">Cesta do najtemnejších hlbín ľudskej duše</h3>
+                                        <p class="text-gray-300 text-sm">Témy viny, straty a zúfalého hľadania pravdy rezonujú hlboko v každom z nás a nútia k zamysleniu nad vlastnými tieňmi a skrytými túžbami.</p>
+                                    </div>
+                                    <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="300">
+                                        <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-leaf"></i></div>
+                                        <h3 class="text-xl font-bold mb-3">Temná poézia slovenských lesov, kde tajomstvo žije</h3>
+                                        <p class="text-gray-300 text-sm">Inšpirované tajomnými slovenskými horami a prastarým folklórom, hra vytvára jedinečný, mrazivý pocit izolácie a všadeprítomného, dychberúceho tajomna.</p>
+                                    </div>
+                                    <div class="modern-card p-6" data-aos="fade-up" data-aos-delay="400">
+                                        <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-microphone-alt"></i></div>
+                                        <h3 class="text-xl font-bold mb-3">Majstrovský zvukový dizajn, ktorý cítite na koži</h3>
+                                        <p class="text-gray-300 text-sm">Krištáľovo čisté nahrávky, strhujúce herecké výkony a originálne zvukové efekty zaručujú maximálny, zimomriavky naháňajúci zážitok, ktorý vás nepustí.</p>
+                                    </div>
+                                    <div class="modern-card p-6 md:col-span-2" data-aos="fade-up" data-aos-delay="500">
+                                        <div class="mb-5 text-purple-500 text-2xl"><i class="fas fa-map-signs"></i></div>
+                                        <h3 class="text-xl font-bold mb-3">Vaše voľby píšu osud: odvážite sa rozhodnúť?</h3>
+                                        <p class="text-gray-300 text-sm">Každé vaše rozhodnutie dramaticky tvaruje príbeh a vedie k jednému z viacerých šokujúcich zakončení. Znovuhrateľnosť je zaručená – odvážite sa odhaliť všetky tajomstvá, ktoré les skrýva?</p>
+                                    </div>
+                                </div>
                     </div>
                 </section>
 
-                        <div class="section-divider" data-aos="fade-up"></div>
+                                <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="author" class="relative"> <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(rgba(var(--color-primary-purple-rgb), 0.04) 1px, transparent 1px); background-size: 25px 25px"></div>
                     <div class="container mx-auto max-w-4xl">
@@ -613,7 +599,7 @@
                     </div>
                 </section>
 
-                        <div class="section-divider" data-aos="fade-up"></div>
+                                <div class="section-divider" data-aos="fade-up"></div>
 
                 <section id="contact" class="relative">
                     <div class="container mx-auto max-w-2xl">
@@ -1086,8 +1072,6 @@
                     setTimeout(() => { mainContentWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
                 }
 
-                if (playerViewButton && playerContent) { playerViewButton.addEventListener('click', () => showAndScroll(playerContent)); }
-                else { console.error("Player view button or player content not found!"); }
                 if (partnerViewButton && partnerContent) { partnerViewButton.addEventListener('click', () => showAndScroll(partnerContent)); }
                 else { console.error("Partner view button or partner content not found!"); }
                 if (backToPartnerButton && partnerContent) { backToPartnerButton.addEventListener('click', () => showAndScroll(partnerContent)); }
@@ -1166,16 +1150,22 @@
                         document.body.style.overflow = 'hidden';
                     });
                 } else { console.error("Cookie consent modal elements not found!"); }
-
-                // New playButton logic
-                document.getElementById("playButton").addEventListener("click", function() {
-                    mtag("event", {
-                        type: "Purchase",
-                        value: "0.00", // Môžeš zmeniť
-                        currency: "EUR"
-                    });
-                });
             });
         </script>
-    </body>
+        <script>
+            window.mtrem = window.mtrem || [];
+            function mtag() { mtrem.push(arguments) };
+            mtag("init", "https://mtag-alhb.audiohra.com", {"consent":true});
+            mtag("event", { type: "ViewContent" });
+        </script>
+        <script async type="text/javascript" src="https://mtag-alhb.audiohra.com/script"></script>
+        
+        <script>
+            window.mtrem = window.mtrem || [];
+            function mtag() { mtrem.push(arguments) };
+            mtag("init", "https://mtag-nxxn.audiohra.com", {"consent":true});
+            mtag("event", { type: "ViewContent" });
+        </script>
+        <script async type="text/javascript" src="https://mtag-nxxn.audiohra.com/script"></script>
+        </body>
 </html>
