@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Šepot lesa - Interaktívna Audiohra</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <!-- Opravený atribút 'xintegrity' na 'integrity' pre správne načítanie Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,7 +136,7 @@
             /* Grafy */
             .charts-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
             .chart {
-                  padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
+                 padding: 20px; margin-bottom: 30px; width: 100%; max-width: 450px; flex: 1 1 400px;
             }
             .chart h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: var(--color-text-main); border-bottom: 1px solid var(--color-border-medium); padding-bottom: 10px; text-shadow: 0 0 8px rgba(var(--color-primary-violet-rgb), 0.5); }
             .gender-chart { position: relative; margin: 0 auto; }
@@ -184,7 +183,7 @@
                 filter: grayscale(0%) brightness(1) contrast(1);
                 transform: scale(1.03);
                 box-shadow: 0 0 18px 4px rgba(var(--color-primary-purple-rgb), 0.35),
-                            0 0 7px 2px rgba(var(--color-accent-pink-rgb), 0.25);
+                                0 0 7px 2px rgba(var(--color-accent-pink-rgb), 0.25);
             }
             #tracks .modern-card { transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; }
             #tracks .modern-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 12px 28px rgba(var(--color-primary-purple-rgb), 0.25); }
@@ -195,7 +194,7 @@
 
             /* Štýly pre sekciu Hráč */
             #player-content .character-card {
-                  backdrop-filter: blur(5px);
+                 backdrop-filter: blur(5px);
             }
             #player-content .character-card img { aspect-ratio: 1 / 1; object-fit: cover; }
             #player-about-image { max-height: 400px; object-fit: cover; }
@@ -364,8 +363,16 @@
             #cookie-consent-modal #manage-cookies:hover { background-color: rgba(var(--color-primary-violet-rgb), 0.1); transform: translateY(-2px); }
 
         </style>
+        <script>
+            window.mtrem = window.mtrem || [];
+            function mtag() { mtrem.push(arguments) };
+            mtag("init", "https://mtag-alhb.audiohra.com", {"consent":true});
+            mtag("event", { type: "ViewContent" });
+        </script>
+        <script async type="text/javascript" src="https://mtag-alhb.audiohra.com/script"></script>
     </head>
-    <body class="bg-black text-gray-100 font-sans"> <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(var(--color-accent-pink-rgb), 0.03), transparent)"></div>
+    <body class="bg-black text-gray-100 font-sans">
+        <div class="fixed inset-0 pointer-events-none z-50 opacity-50 mix-blend-screen" style="background: radial-gradient(circle at 50% 50%, rgba(var(--color-accent-pink-rgb), 0.03), transparent)"></div>
         <div class="fixed inset-0 pointer-events-none z-40 opacity-5"><div class="absolute inset-0 static-noise"></div></div>
 
         <header id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-black" style="background-image: url('https://i.imgur.com/ST2nkj5.png');">
@@ -403,17 +410,13 @@
                         <p class="app-download-subtitle">Ako partner máte jedinečnú príležitosť nahliadnuť do plného potenciálu našej interaktívnej audiohry prostredníctvom dedikovanej mobilnej aplikácie. Ponorte sa do príbehu ešte dnes!</p>
                         <img src="https://i.imgur.com/YrOja3j.png" alt="Šepot lesa Favicon" class="mx-auto app-download-favicon">
                         <div class="app-download-qr-container">
-                            <!-- QR kód pre Apple App Store -->
                             <img src="https://i.imgur.com/lAqgjyA.jpeg" alt="QR kód pre Apple App Store" class="app-download-qr">
-                            <!-- QR kód pre Google Play Store -->
                             <img src="https://storage.googleapis.com/vanhelsing/Google%20play.png" alt="QR kód pre Google Play Store" class="app-download-qr">
                         </div>
                         <div class="app-download-button-container">
-                            <!-- Tlačidlo pre Apple App Store -->
                             <a href="https://apps.apple.com/app/id6745821902" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
                                 <i class="fab fa-apple"></i> Stiahnuť na App Store
                             </a>
-                            <!-- Tlačidlo pre Google Play Store -->
                             <a href="https://play.google.com/store/apps/details?id=com.sepotlesa.app" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
                                 <i class="fab fa-google-play"></i> Stiahnuť na Google Play
                             </a>
@@ -603,7 +606,7 @@
                                 <br><br>Jeho cieľom nie je len rozprávať príbehy, ale otvárať brány do svetov, ktoré si budete pamätať s husou kožou ešte dlho po tom, ako doznie posledný tón a les stíchne... alebo nie?
                                 </p>
                             </div>
-                             </div>
+                               </div>
                     </div>
                 </section>
 
@@ -668,17 +671,13 @@
                         <p class="app-download-subtitle">Stiahnite si mobilnú aplikáciu Šepot lesa a nechajte sa úplne pohltiť interaktívnym príbehom, ktorý vám nedá spať!</p>
                         <img src="https://i.imgur.com/YrOja3j.png" alt="Šepot lesa Favicon" class="mx-auto app-download-favicon">
                         <div class="app-download-qr-container">
-                            <!-- QR kód pre Apple App Store -->
                             <img src="https://i.imgur.com/lAqgjyA.jpeg" alt="QR kód pre Apple App Store" class="app-download-qr">
-                            <!-- QR kód pre Google Play Store -->
                             <img src="https://storage.googleapis.com/vanhelsing/Google%20play.png" alt="QR kód pre Google Play Store" class="app-download-qr">
                         </div>
                         <div class="app-download-button-container">
-                            <!-- Tlačidlo pre Apple App Store -->
                             <a href="https://apps.apple.com/app/id6745821902" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
                                <i class="fab fa-apple"></i> Stiahnuť na App Store
                             </a>
-                            <!-- Tlačidlo pre Google Play Store -->
                             <a href="https://play.google.com/store/apps/details?id=com.sepotlesa.app" target="_blank" rel="noopener noreferrer" class="app-store-button button-ripple">
                                 <i class="fab fa-google-play"></i> Stiahnuť na Google Play
                             </a>
@@ -732,7 +731,7 @@
                                 <p class="text-gray-400 text-sm mb-3">Hrá: Viera Ihnátová</p>
                                 <p class="text-gray-300 flex-grow">Hlas z rádia (hrá Viera Ihnátová) je spočiatku objektívnym spravodajským hlasom, ktorý informuje o pátraní po nezvestnom dokumentaristovi Samuelovi a zmieňuje sa o kulte Hlas lesa. Slúži na úvodné zasadenie príbehu a predstavenie Samuelovho zmiznutia, spojeného s podivným rušením.</p>
                             </div>
-                             </div>
+                               </div>
                     </div>
                 </section>
                 <div class="section-divider my-16" data-aos="fade-up"></div>
@@ -761,7 +760,7 @@
                                 <h3 class="text-3xl font-bold mb-3 gradient-text">Vladimír Seman</h3>
                                 <p class="text-gray-300 leading-relaxed">Autorom interaktívnej audiohry Šepot lesa, ktorá vás vtiahne do svojich temných osídiel a nepustí, je Vladimír Seman. Je to kreatívny mág s neutíchajúcou vášňou pre rozprávanie príbehov, ktoré rezonujú v duši ešte dlho po odznení posledného slova. Je tiež autorom legendárneho podcastu Krvavý Dobšinský, v ktorom klasické rozprávky desivo pretvára do temnejšej, dychberúcej podoby, odhaľujúc ich skryté, mrazivé stránky. Jeho jedinečný cit pre atmosféru, majstrovský zvukový dizajn a psychologickú hĺbku postáv vdychujú život aj audiohre Šepot lesa, kde sa snažil vytvoriť extrémne intenzívny zážitok, spájajúci nervy drásajúci horor, surové emócie a vaše vlastné osudové voľby, ktoré rozhodnú o vašom prežití... alebo zatratení.</p>
                             </div>
-                             </div>
+                               </div>
                     </div>
                 </section>
                 <footer class="py-8 text-center text-gray-400 mt-16" style="background-color: rgba(10,10,12,0.7); backdrop-filter: blur(8px);">
@@ -780,7 +779,6 @@
             </main>
         </div>
 
-        <!-- Cookie Consent Modal -->
         <div id="cookie-consent-modal" class="modal-overlay">
             <div class="modal-content">
                 <h3>Používanie cookies</h3>
@@ -792,7 +790,6 @@
             </div>
         </div>
 
-        <!-- GDPR Modal -->
         <div id="gdpr-modal" class="modal-overlay">
             <div class="modal-content">
                 <h3>Ochrana osobných údajov & Cookies (GDPR)</h3>
@@ -1168,13 +1165,5 @@
                 } else { console.error("Cookie consent modal elements not found!"); }
             });
         </script>
-        <script>
-            window.mtrem = window.mtrem || [];
-            function mtag() { mtrem.push(arguments) };
-            mtag("init", "https://mtag-alhb.audiohra.com", {"consent":true});
-            mtag("event", { type: "ViewContent" });
-        </script>
-        <!-- Opravená samouzatváracia značka <script /> na plnú otváraciu a zatváraciu značku -->
-        <script async type="text/javascript" src="https://mtag-alhb.audiohra.com/script"></script>
     </body>
 </html>
